@@ -5,42 +5,45 @@ module.exports = async (req, res) => {
     res.setHeader('Access-Control-Allow-Methods', 'GET');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
-    const kvUrl = process.env.KV_REST_API_URL;
-    const kvToken = process.env.KV_REST_API_TOKEN;
+    // Variáveis de ambiente injetadas pela Vercel após conectar o Supabase
+    const supabaseUrl = process.env.STORAGE_URL;
+    // Aceita tanto a service role key quanto a key anônima para leitura
+    const supabaseKey = process.env.STORAGE_SERVICE_ROLE_KEY || process.env.STORAGE_ANON_KEY;
 
-    // Se o KV não estiver configurado na Vercel, a API informa de forma amigável
-    if (!kvUrl || !kvToken) {
+    // Se o Supabase não estiver configurado na Vercel, a API informa de forma amigável
+    if (!supabaseUrl || !supabaseKey) {
         return res.status(200).json({ 
             success: false, 
-            error: "Vercel KV Storage não está conectado ao projeto no painel da Vercel. Usando configurações locais padrão.",
+            error: "A integração do Supabase não está conectada ao projeto no painel da Vercel. Usando configurações locais padrão.",
             config: null 
         });
     }
 
     try {
-        // Faz a requisição REST HTTP nativa para o Vercel KV (Redis)
-        const response = await fetch(`${kvUrl}/get/elegance_barber_config`, {
+        // Faz a requisição REST HTTP nativa para o Supabase (PostgREST)
+        // Busca o campo 'dados' da tabela 'configuracoes' onde 'id' é igual a 'barber_config'
+        const response = await fetch(`${supabaseUrl}/rest/v1/configuracoes?id=eq.barber_config&select=dados`, {
             headers: {
-                Authorization: `Bearer ${kvToken}`
+                apikey: supabaseKey,
+                Authorization: `Bearer ${supabaseKey}`
             }
         });
 
         if (!response.ok) {
-            throw new Error(`Erro na resposta do servidor KV: ${response.statusText}`);
+            throw new Error(`Erro na API do Supabase (${response.status}): ${response.statusText}`);
         }
 
         const data = await response.json();
         
-        // A API REST do Redis da Vercel retorna a resposta encapsulada em {"result": "string_do_valor"}
-        if (data && data.result) {
-            const config = JSON.parse(data.result);
-            return res.status(200).json({ success: true, config });
+        // Se a consulta retornar dados válidos e a linha com as configurações existir
+        if (data && data.length > 0 && data[0].dados) {
+            return res.status(200).json({ success: true, config: data[0].dados });
         } else {
-            // Se o banco estiver vazio ou a chave não existir
-            return res.status(200).json({ success: true, config: null, info: "Chave de configuração inexistente no KV." });
+            // Se o banco estiver vazio ou o registro ainda não tiver sido criado
+            return res.status(200).json({ success: true, config: null, info: "Nenhuma configuração encontrada no Supabase." });
         }
     } catch (error) {
-        console.error("Erro ao ler dados do Vercel KV:", error);
+        console.error("Erro ao ler dados do Supabase:", error);
         return res.status(500).json({ success: false, error: `Falha na sincronização remota: ${error.message}` });
     }
 };

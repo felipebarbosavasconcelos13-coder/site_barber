@@ -1,68 +1,56 @@
-# Plano de Implementação - Sincronização em Nuvem via Vercel KV (Banco de Dados Nativo)
+# Plano de Implementação - Sincronização em Nuvem via Supabase (Postgres)
 
-Este documento descreve o plano detalhado para migrar o sistema de persistência das edições do site (que atualmente estão restritas ao `localStorage` do navegador local) para a nuvem da **Vercel** usando o recurso gratuito **Vercel KV (banco de dados Redis nativo)**. Com isso, qualquer alteração feita no painel administrativo será propagada instantaneamente para todos os visitantes do site, em qualquer navegador ou dispositivo do mundo.
+Este documento descreve o plano detalhado para integrar o banco de dados **Supabase** (que você acabou de conectar com sucesso na Vercel!) como o novo provedor de persistência global do site. As alterações feitas no painel administrativo serão gravadas no Supabase e refletidas instantaneamente para todos os visitantes do site em qualquer navegador do mundo.
 
 ---
 
-## ⚠️ Ação Requerida do Usuário (Antes ou Depois de Aplicar o Código)
+## ⚠️ Ação Requerida do Usuário (Configuração da Tabela no Supabase)
 
-Para que essa sincronização funcione, você precisará ativar o banco de dados KV na sua conta da Vercel. É gratuito e leva menos de 1 minuto:
+Como o Supabase é um banco de dados relacional (Postgres), precisamos criar uma tabela simples chamada `configuracoes` com suporte a JSON. É extremamente rápido:
 
-1. Acesse o painel da **Vercel** e clique no seu projeto da barbearia.
-2. Vá até a aba **Storage** (Armazenamento).
-3. Selecione a opção **KV (Redis)** e clique em **Create** (Criar).
-4. Siga as instruções rápidas de confirmação para associar o KV ao seu projeto.
-5. Pronto! A Vercel adicionará automaticamente as variáveis de ambiente `KV_REST_API_URL` e `KV_REST_API_TOKEN` de forma invisível nas suas Serverless Functions.
+1. Acesse o painel do seu projeto no **Supabase** (ou clique no link do seu banco gerado na Vercel).
+2. No menu lateral esquerdo, clique em **SQL Editor** (ícone de terminal `>_`).
+3. Clique em **New Query** (Nova Consulta).
+4. Cole o seguinte código SQL simples no editor:
+
+```sql
+CREATE TABLE configuracoes (
+  id TEXT PRIMARY KEY,
+  dados JSONB NOT NULL
+);
+```
+
+5. Clique no botão **Run** (Executar) no canto inferior direito.
+6. Pronto! A tabela de configurações foi criada com sucesso e está pronta para receber as edições.
 
 ---
 
 ## 🛠️ Alterações Propostas
 
-Para implementar essa arquitetura sem adicionar dependências complexas (npm), usaremos requisições REST internas direto nas Serverless Functions nativas da Vercel.
+Adaptaremos a arquitetura já desenvolvida para se comunicar com as credenciais do **Supabase** injetadas pela Vercel (`STORAGE_URL` e `STORAGE_SERVICE_ROLE_KEY` / `STORAGE_ANON_KEY`).
 
 ---
 
-### 1. Novas Rotas de API (Serverless Functions)
+### 1. Adaptação das APIs do Servidor (Serverless Functions)
 
-#### [NEW] [get-config.js](file:///c:/Users/felip/Desktop/N8N/Atigra/Pag%20barbearia/api/get-config.js)
-Criar o endpoint `/api/get-config` que lê a configuração salva no Vercel KV via chamada REST interna de forma ultra performática.
+#### [MODIFY] [get-config.js](file:///c:/Users/felip/Desktop/N8N/Atigra/Pag%20barbearia/api/get-config.js)
+Refatorar a rota `/api/get-config` para buscar a linha correspondente ao ID `'barber_config'` na tabela `configuracoes` do Supabase via chamadas REST nativas do Postgres.
 
-#### [NEW] [save-config.js](file:///c:/Users/felip/Desktop/N8N/Atigra/Pag%20barbearia/api/save-config.js)
-Criar o endpoint `/api/save-config` que recebe a nova configuração e a valida contra a senha mestra criptográfica do painel administrativo (usando hash SHA-256 no servidor) antes de salvar no Vercel KV, garantindo total segurança contra invasões e alterações não autorizadas.
-
----
-
-### 2. Sincronização na Landing Page (`index.html`)
-
-#### [MODIFY] [index.html](file:///c:/Users/felip/Desktop/N8N/Atigra/Pag%20barbearia/index.html)
-* **Carregamento Híbrido Reativo (Nuvem + Fallback Local):**
-  Ajustar o script de dinamização (`#dom-dinamizer`) para:
-  1. Primeiro, renderizar imediatamente usando o `localStorage` como cache instantâneo ou a configuração estática padrão (evita efeito de piscada/layout shift na tela).
-  2. Fazer um `fetch('/api/get-config')` assíncrono em segundo plano para buscar a versão em nuvem.
-  3. Se houver novas atualizações na nuvem, atualizar o DOM suavemente e salvar a nova versão no `localStorage` local para os próximos acessos rápidos.
+#### [MODIFY] [save-config.js](file:///c:/Users/felip/Desktop/N8N/Atigra/Pag%20barbearia/api/save-config.js)
+Refatorar a rota `/api/save-config` para realizar um **UPSERT** (gravação e atualização inteligente de registro) seguro na tabela `configuracoes` usando o header de resolução de duplicatas do Supabase. A validação do hash SHA-256 da senha mestra continuará ativa no servidor para segurança total.
 
 ---
 
-### 3. Sincronização no Painel Administrativo (`admin.html`)
-
-#### [MODIFY] [admin.html](file:///c:/Users/felip/Desktop/N8N/Atigra/Pag%20barbearia/admin.html)
-* **Carregamento da Nuvem:**
-  Ajustar a função `loadCurrentConfig()` para priorizar os dados vindos de `/api/get-config` em vez de carregar apenas do `localStorage` local.
-* **Salvamento Duplo (Local + Nuvem):**
-  Atualizar o evento de salvamento do formulário (`config-form` submit) para:
-  1. Enviar os novos dados via POST para `/api/save-config` enviando junto a senha inserida no login para validação.
-  2. Mostrar feedback visual de "Salvando na Nuvem..." e notificar sucesso total ao concluir.
-  3. Manter o `localStorage` atualizado localmente também.
+### 2. Sincronização e Resiliência (Landing Page & Painel)
+Os arquivos `index.html` e `admin.html` continuarão se comunicando normalmente com os endpoints locais `/api/get-config` e `/api/save-config`, garantindo que toda a inteligência híbrida de cache rápido (`localStorage`) e resiliência a falhas de conexão continue funcionando de forma idêntica e sem quebras visuais.
 
 ---
 
 ## 📋 Plano de Verificação
 
 ### Testes em Ambiente Local (com Vercel CLI)
-1. Rodar `vercel dev` localmente.
-2. Abrir o painel administrativo (`localhost:3000/admin`) em um navegador (ex: Chrome), fazer login com a senha mestre e alterar o título da Hero. Salvar.
-3. Abrir a página principal em outro navegador totalmente zerado ou no modo anônimo (ex: Firefox) e verificar se o novo título foi renderizado dinamicamente direto da API.
+1. Rodar `vercel dev` para herdar as variáveis de ambiente do Supabase injetadas pelo link do projeto.
+2. Efetuar edições e salvar no painel administrativo (`localhost:3000/admin`), testando a persistência remota no Postgres.
 
 ### Testes em Produção
-1. Realizar deploy na Vercel e garantir que o recurso Storage (KV) esteja ativado e associado ao projeto.
-2. Acessar o site de qualquer smartphone e comprovar que as edições efetuadas no desktop aparecem instantaneamente.
+1. Acessar o site de diferentes navegadores/celulares para validar que as alterações de cores, textos e mídias salvos na nuvem do Supabase aparecem instantaneamente para qualquer visitante.

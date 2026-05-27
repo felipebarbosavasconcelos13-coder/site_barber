@@ -38,40 +38,43 @@ module.exports = async (req, res) => {
         return res.status(403).json({ success: false, error: "Senha de segurança administrativa incorreta." });
     }
 
-    const kvUrl = process.env.KV_REST_API_URL;
-    const kvToken = process.env.KV_REST_API_TOKEN;
+    const supabaseUrl = process.env.STORAGE_URL;
+    // Damos preferência à service_role para contornar RLS de gravação, senão usamos a anon
+    const supabaseKey = process.env.STORAGE_SERVICE_ROLE_KEY || process.env.STORAGE_ANON_KEY;
 
-    if (!kvUrl || !kvToken) {
+    if (!supabaseUrl || !supabaseKey) {
         return res.status(500).json({ 
             success: false, 
-            error: "Vercel KV Storage não está conectado ao projeto. Não é possível salvar alterações em nuvem." 
+            error: "A integração do Supabase não está conectada ao projeto. Não é possível salvar alterações em nuvem." 
         });
     }
 
     try {
-        // Envia os dados para a API REST do Vercel KV (SET key value)
-        const response = await fetch(`${kvUrl}/set/elegance_barber_config`, {
+        // Envia os dados para a API REST do Supabase para realizar um UPSERT nativo no banco
+        // Para fazer UPSERT no Supabase/PostgREST enviamos um POST com a chave primária 'id'
+        // e incluímos o header 'Prefer: resolution=merge-duplicates'
+        const response = await fetch(`${supabaseUrl}/rest/v1/configuracoes`, {
             method: 'POST',
             headers: {
-                Authorization: `Bearer ${kvToken}`
+                apikey: supabaseKey,
+                Authorization: `Bearer ${supabaseKey}`,
+                'Content-Type': 'application/json',
+                'Prefer': 'resolution=merge-duplicates'
             },
-            body: JSON.stringify(config)
+            body: JSON.stringify({
+                id: 'barber_config',
+                dados: config
+            })
         });
 
         if (!response.ok) {
-            throw new Error(`Erro na resposta do servidor KV: ${response.statusText}`);
+            const errText = await response.text();
+            throw new Error(`Erro na gravação do Supabase (${response.status}): ${errText}`);
         }
 
-        const data = await response.json();
-        
-        // A API REST do Redis retorna {"result": "OK"} em caso de gravação bem-sucedida
-        if (data && data.result === 'OK') {
-            return res.status(200).json({ success: true, message: "Configuração atualizada com sucesso na nuvem Vercel KV!" });
-        } else {
-            return res.status(500).json({ success: false, error: "O servidor KV não retornou a confirmação 'OK'.", details: data });
-        }
+        return res.status(200).json({ success: true, message: "Configuração atualizada com sucesso na nuvem do Supabase!" });
     } catch (error) {
-        console.error("Erro ao salvar dados no Vercel KV:", error);
+        console.error("Erro ao salvar dados no Supabase:", error);
         return res.status(500).json({ success: false, error: `Falha ao gravar na nuvem: ${error.message}` });
     }
 };
