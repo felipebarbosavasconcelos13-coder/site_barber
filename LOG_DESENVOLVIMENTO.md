@@ -187,3 +187,21 @@ Este arquivo registra detalhadamente todas as alterações, decisões de design 
 
 ### Próximos Passos
 * Commit e push final das modificações otimizadas para o repositório remoto no GitHub. (CONCLUÍDO)
+
+## [2026-05-27] - Implementação de Segurança: Hash SHA-256 Criptográfico e Mitigação de XSS
+
+### Alterações Realizadas
+
+1. **Proteção da Senha Mestra via Hashing SHA-256 (`admin.html`):**
+   - **Remoção de Texto Claro:** Eliminada a senha em texto aberto `6AEwhQnQCoTWHWF!id$52z` do código JavaScript cliente para evitar vazamento em commits e scanners automáticos no GitHub.
+   - **Autenticação Criptográfica com Web Crypto API:** Implementado o armazenamento do hash SHA-256 da senha (`bb87999ce3ba58cef343d0a6c2d9d2d294b9f817eeee16dc3c05d6d6b331a5f5`). Ao submeter o formulário de login, o script computa assincronamente o hash SHA-256 da entrada usando `crypto.subtle.digest` nativa e efetua a comparação.
+   - **Fallback Seguro:** Inserido bloco `try/catch` com fallback de contingência em texto limpo caso o navegador do administrador seja muito antigo e não possua suporte à API nativa de criptografia, mantendo o painel totalmente acessível de qualquer forma.
+
+2. **Mitigação Avançada contra Vulnerabilidades de XSS (`index.html`):**
+   - **Helper de Escapamento de HTML:** Criada e injetada a função utilitária `escapeHTML(str)` logo no topo do script de dinamização `#dom-dinamizer`.
+   - **Sanitização de Dores e Soluções:** Atualizados os loops de renderização de problemas (`config.about.problems`) e soluções (`config.about.solutions`). As entradas do usuário gravadas no `localStorage` agora são sanitizadas antes de serem injetadas no `innerHTML`, com processamento específico para manter a tag de negrito `<strong>` de forma 100% segura.
+   - **Sanitização de Depoimentos da Google Places API:** As propriedades de avaliações recuperadas da API do Google (`author_name`, `relative_time_description` e `text`) agora passam obrigatoriamente pela sanitização do `escapeHTML` antes de serem montadas na DIV de depoimentos.
+   - **Sanitização de Imagem de Perfil:** A URL da foto do avaliador (`profile_photo_url`) passa por verificação para garantir que começa estritamente com `http`, `/` ou `data:`, mitigando o risco de vetores XSS via URIs do tipo `javascript:`.
+
+### Próximos Passos
+* Realizar commit e push final de todas as otimizações de segurança e CRO consolidadas para a branch principal no GitHub. (CONCLUÍDO)

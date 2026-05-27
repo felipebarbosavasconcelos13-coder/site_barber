@@ -737,6 +737,17 @@
             try {
                 const config = JSON.parse(configStr);
                 
+                // Função auxiliar para escapar caracteres HTML (Proteção contra XSS)
+                const escapeHTML = (str) => {
+                    if (!str) return '';
+                    return str.toString()
+                        .replace(/&/g, '&amp;')
+                        .replace(/</g, '&lt;')
+                        .replace(/>/g, '&gt;')
+                        .replace(/"/g, '&quot;')
+                        .replace(/'/g, '&#039;');
+                };
+                
                 // Variável responsiva de tela móvel
                 const isMobile = window.innerWidth < 768;
                 const getImgUrl = (desktopUrl, mobileUrl) => {
@@ -819,7 +830,7 @@
                             probList.innerHTML += `
                                 <li class="flex items-start gap-3 text-on-surface-variant font-light">
                                     <span class="material-symbols-outlined text-error mt-0.5" style="font-variation-settings: 'FILL' 0;">close</span>
-                                    <span>${prob}</span>
+                                    <span>${escapeHTML(prob)}</span>
                                 </li>
                             `;
                         });
@@ -835,9 +846,9 @@
                             const parts = sol.split(':');
                             let solHTML = '';
                             if (parts.length > 1) {
-                                solHTML = `<strong>${parts[0]}:</strong>${parts.slice(1).join(':')}`;
+                                solHTML = `<strong>${escapeHTML(parts[0])}:</strong>${escapeHTML(parts.slice(1).join(':'))}`;
                             } else {
-                                solHTML = sol;
+                                solHTML = escapeHTML(sol);
                             }
                             solList.innerHTML += `
                                 <li class="flex items-start gap-3 text-on-surface font-light">
@@ -1103,10 +1114,15 @@
                                                     starsHTML += `<span class="material-symbols-outlined text-base" style="font-variation-settings: 'FILL' ${isFilled};">star</span>`;
                                                 }
                                                 
-                                                const authorName = review.author_name;
-                                                const authorPhoto = review.profile_photo_url || 'assets/images/cliente1.webp';
-                                                const reviewTime = review.relative_time_description || 'Cliente Google';
-                                                const reviewText = review.text || 'A experiência premium de barbearia que você merece. Acabamento impecável e profissionais excelentes.';
+                                                const authorName = escapeHTML(review.author_name);
+                                                let authorPhoto = review.profile_photo_url || 'assets/images/cliente1.webp';
+                                                // Sanitização de URL da foto para evitar JavaScript URIs
+                                                if (authorPhoto && !authorPhoto.startsWith('http') && !authorPhoto.startsWith('/') && !authorPhoto.startsWith('data:')) {
+                                                    authorPhoto = 'assets/images/cliente1.webp';
+                                                }
+                                                const reviewTime = escapeHTML(review.relative_time_description || 'Cliente Google');
+                                                const rawText = review.text || 'A experiência premium de barbearia que você merece. Acabamento impecável e profissionais excelentes.';
+                                                const reviewText = escapeHTML(rawText.length > 180 ? rawText.substring(0, 180) + '...' : rawText);
                                                 
                                                 testimonialsContainer.innerHTML += `
                                                     <div class="bg-[#131313] rounded-xl p-8 border border-outline-variant/10 flex flex-col justify-between gap-4 group hover:border-primary-container/20 transition-all duration-300">
@@ -1114,7 +1130,7 @@
                                                             <div class="flex items-center gap-1 text-primary-container">
                                                                 ${starsHTML}
                                                             </div>
-                                                            <p class="text-sm text-on-surface-variant leading-relaxed font-light italic">"${reviewText.length > 180 ? reviewText.substring(0, 180) + '...' : reviewText}"</p>
+                                                            <p class="text-sm text-on-surface-variant leading-relaxed font-light italic">"${reviewText}"</p>
                                                         </div>
                                                         <div class="flex items-center gap-3 mt-4 pt-4 border-t border-outline-variant/5">
                                                             <img class="w-10 h-10 rounded-full object-cover border border-outline-variant/20 shrink-0" src="${authorPhoto}" alt="${authorName}" onerror="this.src='assets/images/cliente1.webp'">

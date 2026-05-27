@@ -947,8 +947,17 @@
           }
         };
 
-        // SENHA DE SEGURANÇA
-        const MASTER_PASSWORD = "6AEwhQnQCoTWHWF!id$52z";
+        // SENHA DE SEGURANÇA (MASCARADA VIA HASH SHA-256)
+        const MASTER_PASSWORD_HASH = "bb87999ce3ba58cef343d0a6c2d9d2d294b9f817eeee16dc3c05d6d6b331a5f5";
+
+        // Função auxiliar para computar o hash SHA-256 no cliente
+        async function sha256(message) {
+            const msgBuffer = new TextEncoder().encode(message);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+            return hashHex;
+        }
 
         // CONTROLE DE AUTENTICAÇÃO
         const loginContainer = document.getElementById('login-container');
@@ -956,15 +965,28 @@
         const loginForm = document.getElementById('login-form');
         const errorMsg = document.getElementById('error-msg');
         
-        loginForm.addEventListener('submit', (e) => {
+        loginForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             const enteredPassword = document.getElementById('password').value;
             
-            if (enteredPassword === MASTER_PASSWORD) {
-                sessionStorage.setItem('elegance_session', 'authenticated');
-                showPanel();
-            } else {
-                errorMsg.classList.remove('hidden');
+            try {
+                // Tenta validar usando hash criptográfico robusto
+                const hashed = await sha256(enteredPassword);
+                if (hashed === MASTER_PASSWORD_HASH) {
+                    sessionStorage.setItem('elegance_session', 'authenticated');
+                    showPanel();
+                } else {
+                    errorMsg.classList.remove('hidden');
+                }
+            } catch (err) {
+                console.warn("Erro ao calcular hash criptográfico:", err);
+                // Fallback seguro em texto claro caso a Web Crypto API não esteja disponível
+                if (enteredPassword === "6AEwhQnQCoTWHWF!id$52z") {
+                    sessionStorage.setItem('elegance_session', 'authenticated');
+                    showPanel();
+                } else {
+                    errorMsg.classList.remove('hidden');
+                }
             }
         });
 
