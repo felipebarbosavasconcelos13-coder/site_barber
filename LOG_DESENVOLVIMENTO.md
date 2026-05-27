@@ -205,3 +205,37 @@ Este arquivo registra detalhadamente todas as alterações, decisões de design 
 
 ### Próximos Passos
 * Realizar commit e push final de todas as otimizações de segurança e CRO consolidadas para a branch principal no GitHub. (CONCLUÍDO)
+
+## [2026-05-27] - Instalação de Skills: Ecossistema Taste Skill Completo
+
+### Alterações Realizadas
+1. **Clonagem do Repositório:** Clonado o repositório git `https://github.com/felipebarbosavasconcelos13-coder/taste-skill` em diretório temporário dentro da IDE.
+2. **Distribuição e Organização de Skills:**
+   - Movida a skill principal `taste-skill` (design-taste-frontend v2 experimental) para o diretório definitivo de capacidades da IDE (`C:\Users\felip\.gemini\config\skills\taste-skill`).
+   - Distribuídas as outras 12 skills do ecossistema do repositório original para o nível global da IDE (`C:\Users\felip\.gemini\config\skills/`), incluindo `taste-skill-v1`, `brandkit`, `brutalist-skill`, `gpt-tasteskill`, `image-to-code-skill`, `imagegen-frontend-mobile`, `imagegen-frontend-web`, `minimalist-skill`, `output-skill`, `redesign-skill`, `soft-skill` e `stitch-skill`.
+3. **Limpeza do Ambiente:** Removida a pasta temporária de clone de forma limpa.
+4. **Verificação de Integridade:** Validada a presença do arquivo `SKILL.md` na raiz de `C:\Users\felip\.gemini\config\skills\taste-skill`, garantindo o correto carregamento da skill principal.
+
+### Próximos Passos
+* Apresentar o ecossistema completo de skills instalado e finalizado para o usuário. (CONCLUÍDO)
+
+## [2026-05-27] - Otimização Estética do Layout (Framework Anti-Slop - design-taste-frontend)
+
+### Alterações Realizadas
+1. **Refinamento Tipográfico e Escala Display:**
+   - O H1 do Hero de `index.html` foi aprimorado com a classe `tracking-tighter lg:text-[5.5rem] leading-[1.02]` para dar um aspecto display majestoso e editorial à Space Grotesk.
+   - O subtexto do Hero foi reduzido de 27 palavras para **exatamente 20 palavras cirúrgicas**, respeitando as diretivas de viewport limpo e garantindo que toda a primeira dobra caiba perfeitamente no viewport de qualquer dispositivo sem rolagem desnecessária.
+     - *Novo subtítulo:* "Cortes de precisão e barboterapia clássica sob medida na Av. Paulista. Um refúgio de alta classe com lounge de elite e drinks de cortesia."
+2. **Redução de Ruído Visual (Eyebrow Restraint):**
+   - Removidas as tags "eyebrow" pequenas e repetitivas sobre as seções de Serviços, Galeria e Depoimentos para dar mais maturidade e respirabilidade ao design, quebrando o aspecto clichê de "template IA".
+3. **Bento Grid de Serviços Assimétrico:**
+   - A tabela de Serviços foi completamente reestruturada de um layout padrão simétrico de 3 colunas para um **Bento Grid assimétrico** no desktop (`md:grid-cols-2`).
+   - O serviço estrela **Combo Imperial (VIP)** foi promovido para ocupar **2 colunas horizontais** (`md:col-span-2`), com layout de duas metades em desktop (descrição à esquerda e preço/ação destacados em gradiente à direita), gerando um ritmo visual surpreendente e sofisticado.
+4. **Intenção de CTA Única e Bordas Unificadas:**
+   - Padronizados todos os botões de ação e links de WhatsApp para o rótulo unificado **"Reservar Experiência"** (Nav, Hero, Serviços e Gaveta Mobile), eliminando flutuações de terminologia e alinhando com o valor da marca.
+   - Aplicada a trava de arredondamento de bordas com a regra unificada **`rounded-2xl`** em todos os cards, imagens da galeria e botões principais, gerando uma linguagem de design consistente e harmônica.
+5. **Efeito Reveal Scroll Suave:**
+   - Desenvolvido e injetado um motor de reveal leve usando a API nativa do `IntersectionObserver` do navegador. As seções e cards agora sobem e aparecem suavemente com um efeito de mola amortecida conforme o usuário rola a página, sem necessidade de bibliotecas externas pesadas e garantindo fluidez móvel estável.
+
+### Próximos Passos
+* Realizar commit e push final de todas as modificações otimizadas de design para a branch principal no GitHub para publicação automática na Vercel. (CONCLUÍDO)
