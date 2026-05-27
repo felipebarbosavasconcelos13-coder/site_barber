@@ -1517,7 +1517,21 @@
                     const ctx = canvas.getContext('2d');
                     ctx.drawImage(img, 0, 0, width, height);
                     
-                    const base64Data = canvas.toDataURL('image/jpeg', 0.7);
+                    // Decisão dinâmica de formato para preservar transparência e otimização nativas
+                    let mimeType = 'image/jpeg';
+                    let quality = 0.7;
+                    
+                    if (file.type === 'image/webp') {
+                        mimeType = 'image/webp';
+                        quality = 0.8;
+                    } else if (file.type === 'image/png') {
+                        mimeType = 'image/png';
+                        quality = undefined; // PNG não possui parâmetro de qualidade na especificação
+                    }
+                    
+                    const base64Data = mimeType === 'image/png'
+                        ? canvas.toDataURL(mimeType)
+                        : canvas.toDataURL(mimeType, quality);
                     
                     targetInput.value = base64Data;
                     targetInput.dispatchEvent(new Event('input'));

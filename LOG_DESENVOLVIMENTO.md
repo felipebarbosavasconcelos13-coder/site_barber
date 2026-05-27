@@ -269,3 +269,19 @@ Este arquivo registra detalhadamente todas as alterações, decisões de design 
 * Realizar testes estáticos e manuais locais. (CONCLUÍDO)
 * Executar commit e push das melhorias para o repositório principal no GitHub. (CONCLUÍDO)
 
+## [2026-05-27] - Otimização de Upload de Imagens: Preservação de Formato WebP/PNG e Canal de Transparência (admin.html)
+
+### Alterações Realizadas
+1. **Detecção e Exportação Dinâmica de Formato Mime (`admin.html`):**
+   - Substituída a exportação estática de imagens via Canvas de `canvas.toDataURL('image/jpeg', 0.7)` por um sistema inteligente de detecção com base no arquivo de entrada (`file.type`).
+   - Se o usuário fizer upload de uma imagem em **WebP (`image/webp`)**, o Canvas a exporta como `image/webp` com qualidade de compressão de `0.8`, mantendo a transparência nativa e o formato ultra-eficiente WebP.
+   - Se o usuário fizer upload de uma imagem em **PNG (`image/png`)**, o Canvas a exporta como `image/png` para garantir que a transparência (canal alfa) e a qualidade sem perda pixel-perfect do arquivo original sejam inteiramente preservadas.
+   - Para outros formatos tradicionais (como **JPEG/JPG**), o Canvas mantém a exportação original como `image/jpeg` com qualidade `0.7` para otimização de largura de banda e espaço.
+2. **Resolução de Logo com Fundo Transparente:**
+   - Evitou que imagens de logotipos e outras mídias com fundo transparente ganhassem um fundo preto ou opaco indesejado, resolvendo de forma definitiva a perda de transparência.
+
+### Próximos Passos
+* Realizar testes manuais de upload de imagens transparentes no painel. (CONCLUÍDO)
+* Executar commit e push das alterações para o repositório remoto no GitHub. (CONCLUÍDO)
+
+
