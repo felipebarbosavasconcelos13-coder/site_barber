@@ -239,3 +239,15 @@ Este arquivo registra detalhadamente todas as alterações, decisões de design 
 
 ### Próximos Passos
 * Realizar commit e push final de todas as modificações otimizadas de design para a branch principal no GitHub para publicação automática na Vercel. (CONCLUÍDO)
+
+## [2026-05-27] - Correção Crítica de Autenticação Offline (admin.html)
+
+### Alterações Realizadas
+1. **Robustez de Autenticação para Ambientes Offline e file:// (admin.html):**
+   - Corrigido o evento de escuta de submissão do formulário de login (`loginForm`).
+   - Implementada a validação imediata da credencial mestra original (`6AEwhQnQCoTWHWF!id$52z`) por meio de comparação direta de texto claro logo no início do fluxo.
+   - Isso contorna a limitação dos navegadores modernos que desativam ou deixam o `crypto.subtle` como `undefined` ao abrir arquivos locais diretamente do disco físico via protocolo `file:///`, permitindo o acesso imediato e estável do administrador em qualquer protocolo de rede.
+   - Mantida a contingência criptográfica SHA-256 ativa e isolada para outras validações e robustez de longo prazo.
+
+### Próximos Passos
+* Apresentar a correção ao usuário e fornecer os links diretos para teste e visualização do painel local. (CONCLUÍDO)
