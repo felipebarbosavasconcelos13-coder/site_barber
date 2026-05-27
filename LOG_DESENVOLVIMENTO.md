@@ -284,4 +284,20 @@ Este arquivo registra detalhadamente todas as alterações, decisões de design 
 * Realizar testes manuais de upload de imagens transparentes no painel. (CONCLUÍDO)
 * Executar commit e push das alterações para o repositório remoto no GitHub. (CONCLUÍDO)
 
+## [2026-05-27] - Google Places API: Nota em Tempo Real na Hero com Caching e Exibição de 5 Depoimentos (index.html)
+
+### Alterações Realizadas
+1. **Cache Local de Nota e Avaliações da Hero em Tempo Real (`index.html`):**
+   - Aprimorado o callback de sucesso `initGooglePlaces` que é chamado assincronamente pelo SDK do Google Maps.
+   - Sempre que o PlacesService retorna os dados de `rating` e `user_ratings_total` atualizados em tempo real, o script atualiza dinamicamente o DOM da Hero e, simultaneamente, armazena em cache estes novos valores no `localStorage` sob a chave `elegance_barber_config.general`.
+   - Isso garante que, em todos os próximos carregamentos do site, a nota e o volume de avaliações reais do estabelecimento no Google sejam exibidos de forma instantânea (zero delay visual) desde o primeiro pixel renderizado, atualizando-se de forma transparente em segundo plano após o download da API.
+2. **Expansão de 3 para 5 Depoimentos Dinâmicos (`index.html`):**
+   - Expandido o limitador rígido de exibição de depoimentos do Google de 3 para **5 avaliações qualificadas** (com notas de 4 e 5 estrelas).
+   - O loop `.slice(0, 5)` renderiza de forma harmônica todas as 5 avaliações padrão disponibilizadas gratuitamente pela busca do Google Places no contêiner responsivo de depoimentos.
+
+### Próximos Passos
+* Realizar testes manuais locais no index.html e simulações do Google Places. (CONCLUÍDO)
+* Executar commit e push seguro das alterações para o GitHub. (CONCLUÍDO)
+
+
 

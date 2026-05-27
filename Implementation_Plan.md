@@ -1,30 +1,28 @@
-# Plano de Implementação - Preservação de Formato WebP/PNG e Transparência em Imagens
+# Plano de Implementação - Google Places API: Nota em Tempo Real na Hero & 5 Depoimentos
 
-Este plano detalha o aprimoramento técnico na rotina de processamento e compressão de imagens via Canvas no painel administrativo (`admin.html`), assegurando que arquivos em formato WebP e PNG (como logotipos com fundo transparente) não sejam forçados a se converter em JPEG, preservando sua transparência e formato nativos.
+Este plano detalha o aprimoramento técnico na integração do Google Places API no site principal (`index.html`), assegurando que a nota média e o número total de avaliações sejam atualizados e armazenados em cache local a partir da API em tempo real na seção Hero, e expandindo a exibição de depoimentos de 3 para 5 avaliações (padrão retornado pela API).
 
 ## Objetivo
-Tornar o motor de upload de imagens dinâmico, identificando o tipo MIME original do arquivo e aplicando a exportação apropriada (com qualidade otimizada para WebP/JPEG e suporte total a canal alfa/transparência para PNG e WebP).
+1. **Atualização e Cache do Google Places na Hero:** Atualizar a nota e quantidade de avaliações em tempo real a partir da API do Google, salvando as credenciais obtidas de volta no cache do `localStorage` para carregamento imediato (zero delay) nas próximas visitas.
+2. **Exibição de 5 Depoimentos de Usuários:** Expandir a exibição da seção de depoimentos na UI do site para renderizar até 5 avaliações qualificadas de 4 e 5 estrelas vindas diretamente do Google Places API (o limite gratuito oficial do PlacesService).
 
 ---
 
 ## Proposta de Mudanças
 
-### [Painel de Administração](file:///c:/Users/felip/Desktop/N8N/Atigra/Pag%20barbearia)
+### [Site Principal](file:///c:/Users/felip/Desktop/N8N/Atigra/Pag%20barbearia)
 
-#### [MODIFY] [admin.html](file:///c:/Users/felip/Desktop/N8N/Atigra/Pag%20barbearia/admin.html)
-- Modificar a rotina do motor de compressão na função `handleImageUploadEvent` (linha ~1520).
-- Substituir o tipo de exportação estático `canvas.toDataURL('image/jpeg', 0.7)` por uma seleção de formato dinâmica baseada no tipo original do arquivo:
-  - Se for **WebP (`image/webp`)**: Exportar como `image/webp` com qualidade `0.8`, mantendo transparência e ultra compressão.
-  - Se for **PNG (`image/png`)**: Exportar como `image/png` para manter a transparência perfeita sem artefatos de perda.
-  - Para outros formatos (ex: **JPEG/JPG**): Exportar como `image/jpeg` com qualidade `0.7`.
+#### [MODIFY] [index.html](file:///c:/Users/felip/Desktop/N8N/Atigra/Pag%20barbearia/index.html)
+- Modificar o callback de sucesso `initGooglePlaces` da API Google Places (linhas ~1090 a 1145):
+  - Inserir rotina de salvamento automático no cache `localStorage` (`elegance_barber_config.general.google_rating` e `elegance_barber_config.general.google_reviews_count`) sempre que a API responder com nota e volume de avaliações atualizados em tempo real.
+  - Substituir a fatia estrita de 3 avaliações (`.slice(0, 3)`) para renderizar até **5 avaliações qualificadas** (`.slice(0, 5)`), aproveitando ao máximo a cota de depoimentos importados por padrão do Google Places.
 
 ---
 
 ## Plano de Verificação
 
 ### Verificação Manual
-1. Abrir o painel administrativo local [admin.html](file:///c:/Users/felip/Desktop/N8N/Atigra/Pag%20barbearia/admin.html) no navegador.
-2. Ir na aba "Geral", no campo de upload do logotipo ("Logo").
-3. Fazer o upload de uma imagem em formato `.webp` ou `.png` com fundo transparente.
-4. Clicar em "Salvar Configurações".
-5. Validar na página pública [index.html](file:///c:/Users/felip/Desktop/N8N/Atigra/Pag%20barbearia/index.html) se o logotipo mantém a transparência perfeita e se a string base64 começa corretamente com `data:image/webp` ou `data:image/png` no banco de dados local.
+1. Abrir o site local [index.html](file:///c:/Users/felip/Desktop/N8N/Atigra/Pag%20barbearia/index.html) no navegador com chaves válidas configuradas no painel.
+2. Observar se a nota e o volume de avaliações na Hero são atualizados para os valores reais do estabelecimento cadastrado no Google Places.
+3. Verificar a aba de depoimentos e validar se até 5 avaliações qualificadas de 4 e 5 estrelas são importadas e renderizadas em um grid responsivo harmonioso.
+4. Recarregar a página e confirmar se os novos valores de nota da Hero são aplicados instantaneamente desde o primeiro milissegundo de carregamento (graças ao cache do `localStorage`).

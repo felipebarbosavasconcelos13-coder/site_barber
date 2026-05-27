@@ -1096,6 +1096,17 @@
                                         document.getElementById('google-reviews-text').innerText = `(+${place.user_ratings_total} avaliações reais)`;
                                     }
                                     
+                                    // Salva de volta no LocalStorage para cache em tempo real
+                                    try {
+                                        const currentConfig = JSON.parse(localStorage.getItem('elegance_barber_config') || '{}');
+                                        if (!currentConfig.general) currentConfig.general = {};
+                                        currentConfig.general.google_rating = place.rating.toFixed(1);
+                                        currentConfig.general.google_reviews_count = place.user_ratings_total.toString();
+                                        localStorage.setItem('elegance_barber_config', JSON.stringify(currentConfig));
+                                    } catch (err) {
+                                        console.warn("Erro ao salvar cache do Google Places:", err);
+                                    }
+                                    
                                     // 2. Atualizar depoimentos reais no container
                                     if (place.reviews && place.reviews.length > 0) {
                                         const testimonialsContainer = document.getElementById('testimonials-container');
@@ -1104,9 +1115,9 @@
                                             
                                             // Filtra para dar preferência a reviews de 4 ou 5 estrelas
                                             const bestReviews = place.reviews.filter(r => r.rating >= 4);
-                                            const reviewsToUse = bestReviews.length >= 3 ? bestReviews : place.reviews;
+                                            const reviewsToUse = bestReviews.length >= 5 ? bestReviews : place.reviews;
                                             
-                                            reviewsToUse.slice(0, 3).forEach(review => {
+                                            reviewsToUse.slice(0, 5).forEach(review => {
                                                 let starsHTML = '';
                                                 for (let i = 0; i < 5; i++) {
                                                     const isFilled = i < review.rating ? 1 : 0;
