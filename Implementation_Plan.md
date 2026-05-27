@@ -1,19 +1,21 @@
-# Plano de Implementação - Correção e Robustez de Login Administrativo
+# Plano de Implementação - Resiliência e Correção de Loop de Teste da Google Places API
 
-Este plano detalha a correção imediata do motor de login do painel administrativo (`admin.html`) para assegurar que a credencial mestra legítima (`6AEwhQnQCoTWHWF!id$52z`) funcione de forma imediata em qualquer navegador e ambiente (local via `file://`, HTTP ou HTTPS).
+Este plano detalha o aprimoramento técnico no mecanismo de teste de conexão com o Google Places API no painel administrativo (`admin.html`), impedindo travamentos e loops infinitos de processamento ("Testando...") quando são fornecidas chaves inválidas ou ocorrem falhas de rede.
 
 ## Objetivo
-Resolver a incompatibilidade de autenticação que impede o login do usuário, criando uma verificação de texto claro direta e robusta para a credencial mestra original, contornando quaisquer restrições de segurança ou suporte ausente à Web Crypto API (`crypto.subtle`) em ambientes locais e offline.
+Criar um motor de teste resiliente com controle de tempo limite (Timeout) de 10 segundos e limpeza dinâmica de scripts anteriores do Google Maps, assegurando o destravamento imediato do painel em qualquer cenário de falha e permitindo múltiplos testes consecutivos com chaves diferentes.
 
 ---
 
 ## Proposta de Mudanças
 
-### [Painel de Controle](file:///c:/Users/felip/Desktop/N8N/Atigra/Pag%20barbearia)
+### [Painel de Administração](file:///c:/Users/felip/Desktop/N8N/Atigra/Pag%20barbearia)
 
 #### [MODIFY] [admin.html](file:///c:/Users/felip/Desktop/N8N/Atigra/Pag%20barbearia/admin.html)
-- Modificar o evento de escuta `submit` do formulário de login (`loginForm`) para executar uma comparação direta em texto claro com a credencial mestra antes de recorrer ao cálculo de hash criptográfico assíncrono.
-- Preservar o fluxo criptográfico SHA-256 secundário como contingência, assegurando integridade e compatibilidade.
+- Substituir o listener de clique do botão de teste do Google Places (`test-places-btn`).
+- Injetar um **Timeout de Segurança de 10 segundos** para abortar o loop visual caso a API do Google não responda (comportamento típico de chaves inválidas bloqueadas silenciosamente pelo Google).
+- Adicionar rotina de limpeza de scripts do Maps antigos (`maps.googleapis.com`) e redefinição da variável global `window.google = undefined` para viabilizar múltiplos testes seguidos com chaves diferentes sem conflitos.
+- Fornecer feedback de erro com diagnósticos claros e informativos de acordo com o motivo da expiração do teste.
 
 ---
 
@@ -21,5 +23,6 @@ Resolver a incompatibilidade de autenticação que impede o login do usuário, c
 
 ### Verificação Manual
 1. Abrir o painel administrativo local [admin.html](file:///c:/Users/felip/Desktop/N8N/Atigra/Pag%20barbearia/admin.html) no navegador.
-2. Inserir a senha mestra original `6AEwhQnQCoTWHWF!id$52z` e pressionar "Desbloquear Painel".
-3. Validar se o painel de personalização é aberto instantaneamente com sucesso.
+2. Ir na aba "Integrações", inserir uma chave e Place ID fictícios/inválidos e clicar em "Verificar Conexão".
+3. Validar se o botão destrava exatamente após 10 segundos, exibindo o diagnóstico de erro amigável ao invés de entrar em loop infinito.
+4. Tentar testar uma chave e verificar se o comportamento é consistente ao repetir o teste com chaves alteradas.

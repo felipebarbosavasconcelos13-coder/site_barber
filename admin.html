@@ -1361,8 +1361,52 @@
             testBtn.disabled = true;
             testBtn.innerHTML = '<span class="material-symbols-outlined text-base animate-spin">sync</span> Testando...';
             
+            // Definição do Timeout de Segurança (10 segundos)
+            let isResolved = false;
+            const timeoutId = setTimeout(() => {
+                if (isResolved) return;
+                isResolved = true;
+                
+                // Restaura o botão
+                testBtn.disabled = false;
+                testBtn.innerHTML = originalHTML;
+                
+                // Limpeza de resíduos
+                cleanupTempScripts();
+                
+                alert("O teste de conexão expirou (Timeout de 10s).\n\n" +
+                      "Possíveis causas:\n" +
+                      "1. A Google Places API Key fornecida é inválida ou inativa.\n" +
+                      "2. A chave não tem permissão para a API de Places (New) ou Places API (Legacy).\n" +
+                      "3. Restrições de IP/Referência (HTTP) estão bloqueando a requisição no Google Cloud Console.\n" +
+                      "4. Falha de conectividade com os servidores do Google.");
+            }, 10000);
+            
+            // Função para limpar scripts antigos de teste e redefinir o objeto google global
+            function cleanupTempScripts() {
+                // Remove scripts injetados do Google Maps com chave anterior
+                const oldScripts = document.querySelectorAll('script[src*="maps.googleapis.com"]');
+                oldScripts.forEach(script => script.remove());
+                
+                // Remove elementos temporários de iframe criados pelo Maps API
+                const mapIFrames = document.querySelectorAll('iframe[src*="google.com/maps"]');
+                mapIFrames.forEach(iframe => iframe.remove());
+                
+                // Reseta a variável global do google
+                try {
+                    window.google = undefined;
+                } catch(e) {
+                    // Ignore se for somente leitura
+                }
+            }
+            
+            // Limpa antes de iniciar o novo carregamento
+            cleanupTempScripts();
+            
             // Callback global temporário de teste
             window.testPlacesCallback = function() {
+                if (isResolved) return;
+                
                 try {
                     const tempDiv = document.createElement('div');
                     document.body.appendChild(tempDiv);
@@ -1372,8 +1416,17 @@
                         placeId: placeId,
                         fields: ['name', 'rating', 'user_ratings_total', 'reviews']
                     }, function(place, status) {
+                        // Se o timeout já disparou, ignore
+                        if (isResolved) {
+                            try { document.body.removeChild(tempDiv); } catch(e) {}
+                            return;
+                        }
+                        
+                        isResolved = true;
+                        clearTimeout(timeoutId);
+                        
                         // Limpeza do DOM
-                        document.body.removeChild(tempDiv);
+                        try { document.body.removeChild(tempDiv); } catch(e) {}
                         testBtn.disabled = false;
                         testBtn.innerHTML = originalHTML;
                         
@@ -1387,27 +1440,31 @@
                         }
                     });
                 } catch (err) {
+                    if (isResolved) return;
+                    isResolved = true;
+                    clearTimeout(timeoutId);
+                    
                     testBtn.disabled = false;
                     testBtn.innerHTML = originalHTML;
                     alert("Erro interno durante o teste: " + err.message);
                 }
             };
             
-            // Injeta Maps API se necessário ou executa direto
-            if (typeof google === 'undefined' || typeof google.maps === 'undefined') {
-                const script = document.createElement('script');
-                script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=places&callback=testPlacesCallback`;
-                script.async = true;
-                script.defer = true;
-                script.onerror = function() {
-                    testBtn.disabled = false;
-                    testBtn.innerHTML = originalHTML;
-                    alert("Erro crítico: Não foi possível carregar a API do Google Maps. Verifique sua chave ou conexão de rede.");
-                };
-                document.head.appendChild(script);
-            } else {
-                setTimeout(window.testPlacesCallback, 100);
-            }
+            // Força a injeção do novo script com a chave fornecida
+            const script = document.createElement('script');
+            script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=places&callback=testPlacesCallback`;
+            script.async = true;
+            script.defer = true;
+            script.onerror = function() {
+                if (isResolved) return;
+                isResolved = true;
+                clearTimeout(timeoutId);
+                
+                testBtn.disabled = false;
+                testBtn.innerHTML = originalHTML;
+                alert("Erro crítico: Não foi possível carregar a API do Google Maps. Verifique sua chave ou conexão de rede.");
+            };
+            document.head.appendChild(script);
         });
 
         // MOTOR DE UPLOAD E COMPRESSÃO DE IMAGENS EM BASE64 VIA CANVAS (DELEGAÇÃO DE EVENTOS)

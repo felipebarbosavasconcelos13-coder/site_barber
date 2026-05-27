@@ -251,3 +251,21 @@ Este arquivo registra detalhadamente todas as alterações, decisões de design 
 
 ### Próximos Passos
 * Apresentar a correção ao usuário e fornecer os links diretos para teste e visualização do painel local. (CONCLUÍDO)
+
+## [2026-05-27] - Correção Crítica e Resiliência no Teste de Conexão com Google Places API (admin.html)
+
+### Alterações Realizadas
+1. **Injeção de Timeout de Segurança de 10s (`admin.html`):**
+   - Implementado um controle de tempo limite estrito (`safetyTimeout`) de 10 segundos no clique de teste da Google Places API. 
+   - Se os servidores do Google Maps não executarem o callback esperado (o que ocorre de forma silenciosa e oculta em navegadores quando a chave fornecida é inválida, inativa ou sem faturamento ativo), o motor destrava automaticamente o botão, reabilita o painel administrativo e fornece feedback rico e explicativo ao usuário.
+2. **Motor de Reinicialização e Limpeza de Cache de Conexão (`admin.html`):**
+   - Criada a função utilitária `cleanupTempScripts()` para varrer e remover dinamicamente qualquer tag `<script>` carregada anteriormente que aponte para `maps.googleapis.com`.
+   - Limpa todos os elementos temporários de iframe criados pelo Maps API no DOM e redefine de forma segura a variável global do navegador `window.google = undefined`.
+   - Isso impede colisões de chaves e resolve o bug onde testes consecutivos de chaves diferentes acabavam usando e revalidando a primeira chave carregada no contexto global da página.
+3. **Diagnóstico Informativo Detalhado de Infraestrutura (`admin.html`):**
+   - O aviso de timeout de conexão agora exibe um painel de diagnóstico detalhado, indicando as 4 principais causas prováveis do problema (chave inativa/inválida, restrição HTTP de referer/IP no console do GCP, falta de ativação da Places API no projeto ou ausência de faturamento ativo na conta).
+
+### Próximos Passos
+* Realizar testes estáticos e manuais locais. (CONCLUÍDO)
+* Executar commit e push das melhorias para o repositório principal no GitHub. (CONCLUÍDO)
+
