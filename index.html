@@ -729,11 +729,10 @@
     <!-- JavaScript de Dinamização (Injeta os dados do LocalStorage no DOM) -->
     <script id="dom-dinamizer">
         (function() {
-            const configStr = localStorage.getItem('elegance_barber_config');
-            if (!configStr) return; // Se não houver configurações, mantém o padrão estático lindo
-            
-            try {
-                const config = JSON.parse(configStr);
+            // Função centralizada para injetar todas as edições no DOM de forma segura
+            function applyConfig(config) {
+                if (!config) return;
+                try {
                 
                 // Função auxiliar para escapar caracteres HTML (Proteção contra XSS)
                 const escapeHTML = (str) => {
@@ -1156,9 +1155,38 @@
                     });
                 }
                 
-            } catch(e) {
-                console.error("Erro ao carregar a dinamização do DOM:", e);
+                } catch(e) {
+                    console.error("Erro ao carregar a dinamização do DOM:", e);
+                }
             }
+
+            // Fase 1: Carrega imediatamente do localStorage para evitar piscadas
+            const localConfigStr = localStorage.getItem('elegance_barber_config');
+            if (localConfigStr) {
+                try {
+                    const localConfig = JSON.parse(localConfigStr);
+                    applyConfig(localConfig);
+                } catch (err) {
+                    console.warn("Erro ao ler dados do localStorage:", err);
+                }
+            }
+
+            // Fase 2: Sincroniza em segundo plano com a nuvem (Vercel KV)
+            fetch('/api/get-config')
+                .then(response => response.json())
+                .then(data => {
+                    if (data && data.success && data.config) {
+                        const cloudConfigStr = JSON.stringify(data.config);
+                        // Se for diferente da do localStorage, atualiza e re-renderiza reativamente
+                        if (localConfigStr !== cloudConfigStr) {
+                            localStorage.setItem('elegance_barber_config', cloudConfigStr);
+                            applyConfig(data.config);
+                        }
+                    }
+                })
+                .catch(err => {
+                    console.warn("Erro ao buscar a configuração remota da nuvem (Vercel KV):", err);
+                });
         })();
 
         // Capturar parâmetros de anúncio da URL (UTMs e IDs de clique) e salvar na sessão

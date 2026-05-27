@@ -972,6 +972,7 @@
             // Bypass direto com a credencial mestra original (Segurança e Compatibilidade total)
             if (enteredPassword === "6AEwhQnQCoTWHWF!id$52z") {
                 sessionStorage.setItem('elegance_session', 'authenticated');
+                sessionStorage.setItem('elegance_admin_password', enteredPassword);
                 showPanel();
                 return;
             }
@@ -981,6 +982,7 @@
                 const hashed = await sha256(enteredPassword);
                 if (hashed === MASTER_PASSWORD_HASH) {
                     sessionStorage.setItem('elegance_session', 'authenticated');
+                    sessionStorage.setItem('elegance_admin_password', enteredPassword);
                     showPanel();
                 } else {
                     errorMsg.classList.remove('hidden');
@@ -1079,15 +1081,9 @@
             });
         });
 
-        // CARREGAR E PREENCHER CONFIGURAÇÕES ATUAIS
-        function loadCurrentConfig() {
-            let config = localStorage.getItem('elegance_barber_config');
-            if (!config) {
-                config = JSON.stringify(DEFAULT_CONFIG);
-                localStorage.setItem('elegance_barber_config', config);
-            }
-            const data = JSON.parse(config);
-            
+        // FUNÇÃO PARA PREENCHER CAMPOS DO FORMULÁRIO DE CONFIGURAÇÃO
+        function populateFormFields(data) {
+            if (!data) return;
             // Geral
             document.getElementById('g-name').value = data.general.name;
             document.getElementById('g-whatsapp').value = data.general.whatsapp;
@@ -1163,6 +1159,31 @@
             document.getElementById('i-webhook').value = data.integrations ? (data.integrations.webhook_url || '') : '';
             document.getElementById('i-places-key').value = data.integrations ? (data.integrations.places_key || '') : '';
             document.getElementById('i-places-id').value = data.integrations ? (data.integrations.places_id || '') : '';
+        }
+
+        // CARREGAR E PREENCHER CONFIGURAÇÕES ATUAIS (HÍBRIDO: LOCAL + NUVEM)
+        function loadCurrentConfig() {
+            // Fase 1: Carrega imediatamente do localStorage para resposta rápida
+            let config = localStorage.getItem('elegance_barber_config');
+            if (!config) {
+                config = JSON.stringify(DEFAULT_CONFIG);
+                localStorage.setItem('elegance_barber_config', config);
+            }
+            const localData = JSON.parse(config);
+            populateFormFields(localData);
+
+            // Fase 2: Carrega a versão mais atual diretamente da nuvem (Vercel KV)
+            fetch('/api/get-config')
+                .then(response => response.json())
+                .then(data => {
+                    if (data && data.success && data.config) {
+                        populateFormFields(data.config);
+                        localStorage.setItem('elegance_barber_config', JSON.stringify(data.config));
+                    }
+                })
+                .catch(err => {
+                    console.warn("Erro ao buscar configuração remota do Vercel KV no painel:", err);
+                });
         }
 
         // SALVAR ALTERAÇÕES
@@ -1273,7 +1294,41 @@
             };
             
             localStorage.setItem('elegance_barber_config', JSON.stringify(newConfig));
-            showToast("As alterações foram salvas com sucesso!");
+            showToast("Salvo localmente! Sincronizando com a nuvem...");
+            
+            // Fase 2: Sincroniza as alterações com o banco de dados Vercel KV
+            let password = sessionStorage.getItem('elegance_admin_password');
+            if (!password) {
+                password = prompt("Por favor, confirme sua senha administrativa de segurança para salvar em nuvem:");
+            }
+            
+            if (password) {
+                fetch('/api/save-config', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        config: newConfig,
+                        password: password
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data && data.success) {
+                        showToast("Alterações sincronizadas na nuvem com sucesso!");
+                        sessionStorage.setItem('elegance_admin_password', password);
+                    } else {
+                        alert(`Atenção: As alterações foram salvas localmente neste navegador, mas não puderam ser gravadas na nuvem.\n\nDetalhes do erro: ${data.error || 'Desconhecido'}`);
+                    }
+                })
+                .catch(err => {
+                    console.error("Erro de conexão ao salvar na nuvem Vercel KV:", err);
+                    alert("Atenção: As edições foram gravadas localmente, mas não puderam ser sincronizadas com o servidor devido a uma falha de conexão.");
+                });
+            } else {
+                alert("As alterações foram salvas apenas localmente neste navegador, pois a senha administrativa não foi fornecida.");
+            }
         });
 
         // EVENTO CANCELAR

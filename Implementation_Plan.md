@@ -1,70 +1,68 @@
-# Plano de Implementação - Otimizações de Estrutura, Acessibilidade e Resiliência (index.html & admin.html)
+# Plano de Implementação - Sincronização em Nuvem via Vercel KV (Banco de Dados Nativo)
 
-Este documento descreve o plano detalhado para corrigir erros estruturais de HTML, implementar melhores práticas de acessibilidade (teclado e tags ARIA) e aumentar a resiliência dos scripts em ambientes reais.
+Este documento descreve o plano detalhado para migrar o sistema de persistência das edições do site (que atualmente estão restritas ao `localStorage` do navegador local) para a nuvem da **Vercel** usando o recurso gratuito **Vercel KV (banco de dados Redis nativo)**. Com isso, qualquer alteração feita no painel administrativo será propagada instantaneamente para todos os visitantes do site, em qualquer navegador ou dispositivo do mundo.
 
-## Objetivos
-1. **Correção de Sintaxe HTML:** Remover a tag `</section>` órfã na linha 578 de `index.html` para garantir conformidade de marcação e SEO.
-2. **Acessibilidade por Teclado (Lightbox):** Adicionar suporte para fechar a visualização ampliada do Lightbox (tanto no site quanto em modais do painel) pressionando a tecla `Escape`.
-3. **Semântica e Acessibilidade (Leitores de Tela):** Adicionar atributos `aria-label` descritivos nos botões de controle (menu móvel, fechar lightbox e redes sociais no rodapé) para melhorar a pontuação do Lighthouse e usabilidade inclusiva.
-4. **Resiliência a Erros em Rastreamento de UTMs:** Blindar o carregamento do `sessionStorage` na captura de parâmetros de anúncio para prevenir travamentos se o cache do navegador contiver dados corrompidos.
-5. **Ajuste de Precisão do Scroll do Carrossel Mobile:** Sincronizar perfeitamente os indicadores ativos em formato de pílula na transição final do carrossel de fotos.
+---
+
+## ⚠️ Ação Requerida do Usuário (Antes ou Depois de Aplicar o Código)
+
+Para que essa sincronização funcione, você precisará ativar o banco de dados KV na sua conta da Vercel. É gratuito e leva menos de 1 minuto:
+
+1. Acesse o painel da **Vercel** e clique no seu projeto da barbearia.
+2. Vá até a aba **Storage** (Armazenamento).
+3. Selecione a opção **KV (Redis)** e clique em **Create** (Criar).
+4. Siga as instruções rápidas de confirmação para associar o KV ao seu projeto.
+5. Pronto! A Vercel adicionará automaticamente as variáveis de ambiente `KV_REST_API_URL` e `KV_REST_API_TOKEN` de forma invisível nas suas Serverless Functions.
 
 ---
 
 ## 🛠️ Alterações Propostas
 
-### 1. Landing Page (`index.html`)
+Para implementar essa arquitetura sem adicionar dependências complexas (npm), usaremos requisições REST internas direto nas Serverless Functions nativas da Vercel.
+
+---
+
+### 1. Novas Rotas de API (Serverless Functions)
+
+#### [NEW] [get-config.js](file:///c:/Users/felip/Desktop/N8N/Atigra/Pag%20barbearia/api/get-config.js)
+Criar o endpoint `/api/get-config` que lê a configuração salva no Vercel KV via chamada REST interna de forma ultra performática.
+
+#### [NEW] [save-config.js](file:///c:/Users/felip/Desktop/N8N/Atigra/Pag%20barbearia/api/save-config.js)
+Criar o endpoint `/api/save-config` que recebe a nova configuração e a valida contra a senha mestra criptográfica do painel administrativo (usando hash SHA-256 no servidor) antes de salvar no Vercel KV, garantindo total segurança contra invasões e alterações não autorizadas.
+
+---
+
+### 2. Sincronização na Landing Page (`index.html`)
 
 #### [MODIFY] [index.html](file:///c:/Users/felip/Desktop/N8N/Atigra/Pag%20barbearia/index.html)
-
-*   **Correção de Sintaxe (Linha 578):**
-    Excluir a tag `</section>` órfã após o bloco da `div` do Lightbox.
-
-*   **Acessibilidade por Teclado e Eventos do Lightbox (JavaScript):**
-    Adicionar escuta global para o evento `keydown` no navegador para fechar o lightbox com `Escape`:
-    ```javascript
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && !lightbox.classList.contains('hidden')) {
-            closeLightbox();
-        }
-    });
-    ```
-
-*   **Acessibilidade de Tags (HTML):**
-    Adicionar `aria-label` adequados nas redes sociais, botão de menu móvel e botão de fechar lightbox:
-    - Botão do menu mobile: `aria-label="Abrir Menu de Navegação"`
-    - Links de redes sociais no rodapé: `aria-label="Acesse nosso perfil no Instagram"`, `aria-label="Acesse nossa página no Facebook"`
-    - Botão do Lightbox close: `aria-label="Fechar ampliação da imagem"`
-
-*   **Resiliência no Script de UTMs (JavaScript):**
-    Refatorar a decodificação de `sessionStorage` para garantir que o parse do JSON seja feito com fallback absoluto, prevenindo qualquer travamento:
-    ```javascript
-    let sessionTracking = {};
-    try {
-        const stored = sessionStorage.getItem('elegance_barber_tracking');
-        if (stored) {
-            sessionTracking = JSON.parse(stored);
-        }
-    } catch (e) {
-        console.warn("Rastreamento de sessão resetado:", e);
-    }
-    ```
+* **Carregamento Híbrido Reativo (Nuvem + Fallback Local):**
+  Ajustar o script de dinamização (`#dom-dinamizer`) para:
+  1. Primeiro, renderizar imediatamente usando o `localStorage` como cache instantâneo ou a configuração estática padrão (evita efeito de piscada/layout shift na tela).
+  2. Fazer um `fetch('/api/get-config')` assíncrono em segundo plano para buscar a versão em nuvem.
+  3. Se houver novas atualizações na nuvem, atualizar o DOM suavemente e salvar a nova versão no `localStorage` local para os próximos acessos rápidos.
 
 ---
 
-### 2. Painel de Controle (`admin.html`)
+### 3. Sincronização no Painel Administrativo (`admin.html`)
 
 #### [MODIFY] [admin.html](file:///c:/Users/felip/Desktop/N8N/Atigra/Pag%20barbearia/admin.html)
-
-*   **Acessibilidade de Teclado no Logout e Formulários:**
-    Adicionar o fechamento de avisos/alertas de sucesso (Toast) ou modais com `Escape` caso estejam visíveis.
+* **Carregamento da Nuvem:**
+  Ajustar a função `loadCurrentConfig()` para priorizar os dados vindos de `/api/get-config` em vez de carregar apenas do `localStorage` local.
+* **Salvamento Duplo (Local + Nuvem):**
+  Atualizar o evento de salvamento do formulário (`config-form` submit) para:
+  1. Enviar os novos dados via POST para `/api/save-config` enviando junto a senha inserida no login para validação.
+  2. Mostrar feedback visual de "Salvando na Nuvem..." e notificar sucesso total ao concluir.
+  3. Manter o `localStorage` atualizado localmente também.
 
 ---
 
-## Plano de Verificação
+## 📋 Plano de Verificação
 
-### Testes Manuais
-1. **Validação do DOM:** Verificar se o console do desenvolvedor não acusa erros de sintaxe ou tags órfãs ao carregar o site.
-2. **Teste do Lightbox por Teclado:** Abrir uma imagem na galeria (tanto no desktop quanto no carrossel mobile) e pressionar a tecla `Escape`. A imagem deve fechar suavemente.
-3. **Teste de Acessibilidade:** Executar leitor de tela ou validar no DevTools se os elementos descritos possuem os atributos `aria-label` correspondentes.
-4. **Teste de Robusteza de UTMs:** Inserir um valor inválido no `sessionStorage` manualmente e atualizar a página. O script deve prosseguir de forma invisível e sem erros no console.
+### Testes em Ambiente Local (com Vercel CLI)
+1. Rodar `vercel dev` localmente.
+2. Abrir o painel administrativo (`localhost:3000/admin`) em um navegador (ex: Chrome), fazer login com a senha mestre e alterar o título da Hero. Salvar.
+3. Abrir a página principal em outro navegador totalmente zerado ou no modo anônimo (ex: Firefox) e verificar se o novo título foi renderizado dinamicamente direto da API.
+
+### Testes em Produção
+1. Realizar deploy na Vercel e garantir que o recurso Storage (KV) esteja ativado e associado ao projeto.
+2. Acessar o site de qualquer smartphone e comprovar que as edições efetuadas no desktop aparecem instantaneamente.

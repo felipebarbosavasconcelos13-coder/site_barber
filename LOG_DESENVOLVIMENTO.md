@@ -2,6 +2,25 @@
 
 Este arquivo registra detalhadamente todas as alterações, decisões de design e etapas de implementação efetuadas no projeto da página de Barbearia.
 
+## [2026-05-27] - Sincronização em Nuvem: Banco de Dados Nativo Vercel KV (Redis)
+
+### Alterações Realizadas
+1. **Criação de APIs do Servidor (Serverless Functions):**
+   - Criado o arquivo [get-config.js](file:///C:/Users/felip/Desktop/N8N/Atigra/Pag%20barbearia/api/get-config.js) para ler as configurações de forma segura e ultra performática a partir do Vercel KV usando chamadas HTTP REST nativas da Vercel, eliminando pacotes pesados.
+   - Criado o arquivo [save-config.js](file:///C:/Users/felip/Desktop/N8N/Atigra/Pag%20barbearia/api/save-config.js) para gravação das edições na nuvem de forma autenticada. A API valida a senha enviada comparando seu hash SHA-256 no servidor com a senha mestra para proteger o site contra alterações não autorizadas.
+2. **Carregamento Híbrido Dinâmico na Landing Page (`index.html`):**
+   - Refatorado o injetor `#dom-dinamizer` para encapsular a lógica de renderização na função `applyConfig(config)`.
+   - Implementado carregamento em duas fases: Fase 1 exibe as configurações do `localStorage` instantaneamente (evitando Layout Shift); Fase 2 faz um `fetch` em segundo plano para `/api/get-config` e atualiza a tela e o cache local de forma transparente se houver novas atualizações na nuvem.
+3. **Persistência Híbrida e Praticidade no Painel (`admin.html`):**
+   - A função `loadCurrentConfig()` agora é híbrida, exibindo dados imediatos do `localStorage` e consultando `/api/get-config` em segundo plano para preencher a tela com as edições em nuvem mais recentes.
+   - O formulário de edições agora salva os dados localmente no `localStorage` e sincroniza-os com a nuvem Vercel KV através de `/api/save-config` de forma assíncrona.
+   - A senha administrativa é gravada temporariamente no `sessionStorage` (`elegance_admin_password`) após o login de sucesso, permitindo sincronizações em nuvem silenciosas e sem atritos ao clicar em "Salvar Alterações".
+4. **Resiliência de Rede:**
+   - Adicionados fallbacks nativos e tratamento de erros de rede de modo que o site nunca fique inativo se a API estiver fora do ar ou o banco não estiver configurado.
+
+### Próximos Passos
+* Orientar o usuário sobre a ativação rápida do Storage (KV) no painel da Vercel para conclusão total do fluxo.
+
 ## [2026-05-27] - Otimizações de Código: Correções de Acessibilidade, Sintaxe HTML e Blindagem JavaScript
 
 ### Alterações Realizadas
