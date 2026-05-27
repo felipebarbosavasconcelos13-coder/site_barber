@@ -254,7 +254,7 @@
                         </div>
                     </div>
                     
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                         <div class="flex flex-col gap-2">
                             <label class="text-xs font-semibold uppercase tracking-wider text-on-surface-variant">Nota do Google Reviews</label>
                             <input type="text" id="g-rating" class="w-full px-4 py-3 rounded-lg text-sm">
@@ -263,8 +263,31 @@
                             <label class="text-xs font-semibold uppercase tracking-wider text-on-surface-variant">Contagem de Avaliações</label>
                             <input type="text" id="g-reviews" class="w-full px-4 py-3 rounded-lg text-sm">
                         </div>
+                    </div>
+
+                    <hr class="border-outline-variant/15 my-2">
+
+                    <!-- Links de Redes Sociais -->
+                    <h3 class="font-display font-semibold text-sm text-primary uppercase tracking-wider">Links das Redes Sociais (Rodapé)</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                         <div class="flex flex-col gap-2">
-                            <label class="text-xs font-semibold uppercase tracking-wider text-on-surface-variant">Logo da Barbearia</label>
+                            <label class="text-xs font-semibold uppercase tracking-wider text-on-surface-variant">Instagram (URL Completa)</label>
+                            <input type="text" id="g-instagram" class="w-full px-4 py-3 rounded-lg text-sm" placeholder="https://instagram.com/suabarbearia">
+                            <span class="text-[10px] text-on-surface-variant font-light">Link que será aberto ao clicar no ícone do Instagram no rodapé.</span>
+                        </div>
+                        <div class="flex flex-col gap-2">
+                            <label class="text-xs font-semibold uppercase tracking-wider text-on-surface-variant">Facebook (URL Completa)</label>
+                            <input type="text" id="g-facebook" class="w-full px-4 py-3 rounded-lg text-sm" placeholder="https://facebook.com/suabarbearia">
+                            <span class="text-[10px] text-on-surface-variant font-light">Link que será aberto ao clicar no ícone do Facebook no rodapé.</span>
+                        </div>
+                    </div>
+
+                    <hr class="border-outline-variant/15 my-2">
+
+                    <h3 class="font-display font-semibold text-sm text-primary uppercase tracking-wider">Logotipo da Barbearia</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                        <div class="flex flex-col gap-2">
+                            <label class="text-xs font-semibold uppercase tracking-wider text-on-surface-variant">Logo - Versão Desktop <span class="text-primary-container font-bold text-[10px] lowercase">(recomendado: 180x180 px - 1:1)</span></label>
                             <div class="flex gap-2">
                                 <input type="text" id="g-logo" class="flex-grow px-4 py-3 rounded-lg text-sm" placeholder="Caminho local ou Base64">
                                 <label class="bg-surface-container-high hover:bg-surface-container-highest border border-outline-variant/30 text-primary-container px-4 py-3 rounded-lg text-xs font-bold uppercase transition-colors shrink-0 flex items-center gap-1 cursor-pointer">
@@ -272,7 +295,16 @@
                                     <input type="file" class="hidden img-upload-trigger" data-target="g-logo" accept="image/*">
                                 </label>
                             </div>
-                            <span class="text-[10px] text-on-surface-variant font-light">Faça o upload do seu logotipo em formato .png ou .webp (comprimido Base64 automaticamente)</span>
+                        </div>
+                        <div class="flex flex-col gap-2">
+                            <label class="text-xs font-semibold uppercase tracking-wider text-on-surface-variant">Logo - Versão Mobile <span class="text-primary-container font-bold text-[10px] lowercase">(opcional - recomendado: 180x180 px - 1:1)</span></label>
+                            <div class="flex gap-2">
+                                <input type="text" id="g-logo-mobile" class="flex-grow px-4 py-3 rounded-lg text-sm" placeholder="Caminho local ou Base64 (Herda desktop se vazio)">
+                                <label class="bg-surface-container-high hover:bg-surface-container-highest border border-outline-variant/30 text-primary-container px-4 py-3 rounded-lg text-xs font-bold uppercase transition-colors shrink-0 flex items-center gap-1 cursor-pointer">
+                                    <span class="material-symbols-outlined text-base">upload</span> Enviar
+                                    <input type="file" class="hidden img-upload-trigger" data-target="g-logo-mobile" accept="image/*">
+                                </label>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -314,16 +346,31 @@
                         <label class="text-xs font-semibold uppercase tracking-wider text-on-surface-variant">Subtítulo (Proposta de Valor)</label>
                         <textarea id="h-subtitle" rows="3" class="w-full px-4 py-3 rounded-lg text-sm"></textarea>
                     </div>
-                    <div class="flex flex-col gap-2">
-                        <label class="text-xs font-semibold uppercase tracking-wider text-on-surface-variant">Imagem de Fundo do Hero (Background)</label>
-                        <div class="flex gap-2">
-                            <input type="text" id="h-bg" class="flex-grow px-4 py-3 rounded-lg text-sm" placeholder="Caminho local ou Base64">
-                            <label class="bg-surface-container-high hover:bg-surface-container-highest border border-outline-variant/30 text-primary-container px-4 py-3 rounded-lg text-xs font-bold uppercase transition-colors shrink-0 flex items-center gap-1 cursor-pointer">
-                                <span class="material-symbols-outlined text-base">upload</span> Enviar
-                                <input type="file" class="hidden img-upload-trigger" data-target="h-bg" accept="image/*">
-                            </label>
+                    
+                    <hr class="border-outline-variant/15 my-2">
+
+                    <h3 class="font-display font-semibold text-sm text-primary uppercase tracking-wider">Imagem de Fundo do Hero (Background)</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                        <div class="flex flex-col gap-2">
+                            <label class="text-xs font-semibold uppercase tracking-wider text-on-surface-variant">Fundo - Versão Desktop <span class="text-primary-container font-bold text-[10px] lowercase">(recomendado: 1920x1080 px - 16:9)</span></label>
+                            <div class="flex gap-2">
+                                <input type="text" id="h-bg" class="flex-grow px-4 py-3 rounded-lg text-sm" placeholder="Caminho local ou Base64">
+                                <label class="bg-surface-container-high hover:bg-surface-container-highest border border-outline-variant/30 text-primary-container px-4 py-3 rounded-lg text-xs font-bold uppercase transition-colors shrink-0 flex items-center gap-1 cursor-pointer">
+                                    <span class="material-symbols-outlined text-base">upload</span> Enviar
+                                    <input type="file" class="hidden img-upload-trigger" data-target="h-bg" accept="image/*">
+                                </label>
+                            </div>
                         </div>
-                        <span class="text-[10px] text-on-surface-variant font-light">Faça upload de uma imagem do seu salão para a tela principal (comprimido Base64 automaticamente)</span>
+                        <div class="flex flex-col gap-2">
+                            <label class="text-xs font-semibold uppercase tracking-wider text-on-surface-variant">Fundo - Versão Mobile <span class="text-primary-container font-bold text-[10px] lowercase">(opcional - recomendado: 800x1200 px - vertical)</span></label>
+                            <div class="flex gap-2">
+                                <input type="text" id="h-bg-mobile" class="flex-grow px-4 py-3 rounded-lg text-sm" placeholder="Caminho local ou Base64 (Herda desktop se vazio)">
+                                <label class="bg-surface-container-high hover:bg-surface-container-highest border border-outline-variant/30 text-primary-container px-4 py-3 rounded-lg text-xs font-bold uppercase transition-colors shrink-0 flex items-center gap-1 cursor-pointer">
+                                    <span class="material-symbols-outlined text-base">upload</span> Enviar
+                                    <input type="file" class="hidden img-upload-trigger" data-target="h-bg-mobile" accept="image/*">
+                                </label>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 
@@ -426,50 +473,117 @@
                 
                 <!-- ABA: GALERIA -->
                 <div id="tab-content-galeria" class="tab-content hidden flex flex-col gap-6">
-                    <p class="text-xs text-on-surface-variant font-light">Gerencie os caminhos das imagens. Você pode digitar caminhos locais ou **fazer o upload** direto do seu computador em formato .png ou .webp (comprimido Base64 automaticamente).</p>
+                    <p class="text-xs text-on-surface-variant font-light">Gerencie os caminhos das imagens para as versões Desktop e Mobile. **Dimensão ideal recomendada para todas as fotos: 800x600 px (Proporção 4:3)** para ficarem perfeitamente enquadradas no site. Caso não faça o upload da versão Mobile, o site herdará a versão Desktop automaticamente.</p>
                     
                     <!-- Categoria: Cortes e Serviços -->
                     <div class="bg-[#1a1919] p-5 rounded-xl border border-outline-variant/15 flex flex-col gap-4">
                         <span class="text-xs font-bold uppercase tracking-wider text-primary">Cortes & Serviços</span>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div class="flex flex-col gap-2">
-                                <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Foto 1 (Corte Signature)</label>
-                                <div class="flex gap-2">
-                                    <input type="text" id="g-img-0" class="flex-grow px-3 py-2 text-xs rounded-lg">
-                                    <label class="bg-surface-container-high hover:bg-surface-container-highest border border-outline-variant/30 text-primary-container px-3 py-2 rounded-lg text-[10px] font-bold uppercase transition-colors shrink-0 flex items-center gap-1 cursor-pointer">
-                                        <span class="material-symbols-outlined text-sm">upload</span> Enviar
-                                        <input type="file" class="hidden img-upload-trigger" data-target="g-img-0" accept="image/*">
-                                    </label>
+                        <div class="flex flex-col gap-6">
+                            <!-- Foto 1 -->
+                            <div class="border-b border-outline-variant/10 pb-4">
+                                <span class="text-xs font-semibold text-on-surface block mb-3">Foto 1 (Corte Signature)</span>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div class="flex flex-col gap-1.5">
+                                        <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Desktop</label>
+                                        <div class="flex gap-2">
+                                            <input type="text" id="g-img-0" class="flex-grow px-3 py-2 text-xs rounded-lg">
+                                            <label class="bg-surface-container-high hover:bg-surface-container-highest border border-outline-variant/30 text-primary-container px-3 py-2 rounded-lg text-[10px] font-bold uppercase transition-colors shrink-0 flex items-center gap-1 cursor-pointer">
+                                                <span class="material-symbols-outlined text-sm">upload</span> Enviar
+                                                <input type="file" class="hidden img-upload-trigger" data-target="g-img-0" accept="image/*">
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="flex flex-col gap-1.5">
+                                        <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Mobile (Opcional)</label>
+                                        <div class="flex gap-2">
+                                            <input type="text" id="g-img-0-mobile" class="flex-grow px-3 py-2 text-xs rounded-lg" placeholder="Herda desktop se vazio">
+                                            <label class="bg-surface-container-high hover:bg-surface-container-highest border border-outline-variant/30 text-primary-container px-3 py-2 rounded-lg text-[10px] font-bold uppercase transition-colors shrink-0 flex items-center gap-1 cursor-pointer">
+                                                <span class="material-symbols-outlined text-sm">upload</span> Enviar
+                                                <input type="file" class="hidden img-upload-trigger" data-target="g-img-0-mobile" accept="image/*">
+                                            </label>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="flex flex-col gap-2">
-                                <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Foto 2 (Barba Elegance)</label>
-                                <div class="flex gap-2">
-                                    <input type="text" id="g-img-1" class="flex-grow px-3 py-2 text-xs rounded-lg">
-                                    <label class="bg-surface-container-high hover:bg-surface-container-highest border border-outline-variant/30 text-primary-container px-3 py-2 rounded-lg text-[10px] font-bold uppercase transition-colors shrink-0 flex items-center gap-1 cursor-pointer">
-                                        <span class="material-symbols-outlined text-sm">upload</span> Enviar
-                                        <input type="file" class="hidden img-upload-trigger" data-target="g-img-1" accept="image/*">
-                                    </label>
+                            
+                            <!-- Foto 2 -->
+                            <div class="border-b border-outline-variant/10 pb-4">
+                                <span class="text-xs font-semibold text-on-surface block mb-3">Foto 2 (Barba Elegance)</span>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div class="flex flex-col gap-1.5">
+                                        <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Desktop</label>
+                                        <div class="flex gap-2">
+                                            <input type="text" id="g-img-1" class="flex-grow px-3 py-2 text-xs rounded-lg">
+                                            <label class="bg-surface-container-high hover:bg-surface-container-highest border border-outline-variant/30 text-primary-container px-3 py-2 rounded-lg text-[10px] font-bold uppercase transition-colors shrink-0 flex items-center gap-1 cursor-pointer">
+                                                <span class="material-symbols-outlined text-sm">upload</span> Enviar
+                                                <input type="file" class="hidden img-upload-trigger" data-target="g-img-1" accept="image/*">
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="flex flex-col gap-1.5">
+                                        <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Mobile (Opcional)</label>
+                                        <div class="flex gap-2">
+                                            <input type="text" id="g-img-1-mobile" class="flex-grow px-3 py-2 text-xs rounded-lg" placeholder="Herda desktop se vazio">
+                                            <label class="bg-surface-container-high hover:bg-surface-container-highest border border-outline-variant/30 text-primary-container px-3 py-2 rounded-lg text-[10px] font-bold uppercase transition-colors shrink-0 flex items-center gap-1 cursor-pointer">
+                                                <span class="material-symbols-outlined text-sm">upload</span> Enviar
+                                                <input type="file" class="hidden img-upload-trigger" data-target="g-img-1-mobile" accept="image/*">
+                                            </label>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="flex flex-col gap-2">
-                                <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Foto 3 (Combo Lounge)</label>
-                                <div class="flex gap-2">
-                                    <input type="text" id="g-img-2" class="flex-grow px-3 py-2 text-xs rounded-lg">
-                                    <label class="bg-surface-container-high hover:bg-surface-container-highest border border-outline-variant/30 text-primary-container px-3 py-2 rounded-lg text-[10px] font-bold uppercase transition-colors shrink-0 flex items-center gap-1 cursor-pointer">
-                                        <span class="material-symbols-outlined text-sm">upload</span> Enviar
-                                        <input type="file" class="hidden img-upload-trigger" data-target="g-img-2" accept="image/*">
-                                    </label>
+
+                            <!-- Foto 3 -->
+                            <div class="border-b border-outline-variant/10 pb-4">
+                                <span class="text-xs font-semibold text-on-surface block mb-3">Foto 3 (Combo Lounge)</span>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div class="flex flex-col gap-1.5">
+                                        <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Desktop</label>
+                                        <div class="flex gap-2">
+                                            <input type="text" id="g-img-2" class="flex-grow px-3 py-2 text-xs rounded-lg">
+                                            <label class="bg-surface-container-high hover:bg-surface-container-highest border border-outline-variant/30 text-primary-container px-3 py-2 rounded-lg text-[10px] font-bold uppercase transition-colors shrink-0 flex items-center gap-1 cursor-pointer">
+                                                <span class="material-symbols-outlined text-sm">upload</span> Enviar
+                                                <input type="file" class="hidden img-upload-trigger" data-target="g-img-2" accept="image/*">
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="flex flex-col gap-1.5">
+                                        <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Mobile (Opcional)</label>
+                                        <div class="flex gap-2">
+                                            <input type="text" id="g-img-2-mobile" class="flex-grow px-3 py-2 text-xs rounded-lg" placeholder="Herda desktop se vazio">
+                                            <label class="bg-surface-container-high hover:bg-surface-container-highest border border-outline-variant/30 text-primary-container px-3 py-2 rounded-lg text-[10px] font-bold uppercase transition-colors shrink-0 flex items-center gap-1 cursor-pointer">
+                                                <span class="material-symbols-outlined text-sm">upload</span> Enviar
+                                                <input type="file" class="hidden img-upload-trigger" data-target="g-img-2-mobile" accept="image/*">
+                                            </label>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="flex flex-col gap-2">
-                                <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Foto 4 (Pomadas de Luxo)</label>
-                                <div class="flex gap-2">
-                                    <input type="text" id="g-img-3" class="flex-grow px-3 py-2 text-xs rounded-lg">
-                                    <label class="bg-surface-container-high hover:bg-surface-container-highest border border-outline-variant/30 text-primary-container px-3 py-2 rounded-lg text-[10px] font-bold uppercase transition-colors shrink-0 flex items-center gap-1 cursor-pointer">
-                                        <span class="material-symbols-outlined text-sm">upload</span> Enviar
-                                        <input type="file" class="hidden img-upload-trigger" data-target="g-img-3" accept="image/*">
-                                    </label>
+
+                            <!-- Foto 4 -->
+                            <div>
+                                <span class="text-xs font-semibold text-on-surface block mb-3">Foto 4 (Pomadas de Luxo)</span>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div class="flex flex-col gap-1.5">
+                                        <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Desktop</label>
+                                        <div class="flex gap-2">
+                                            <input type="text" id="g-img-3" class="flex-grow px-3 py-2 text-xs rounded-lg">
+                                            <label class="bg-surface-container-high hover:bg-surface-container-highest border border-outline-variant/30 text-primary-container px-3 py-2 rounded-lg text-[10px] font-bold uppercase transition-colors shrink-0 flex items-center gap-1 cursor-pointer">
+                                                <span class="material-symbols-outlined text-sm">upload</span> Enviar
+                                                <input type="file" class="hidden img-upload-trigger" data-target="g-img-3" accept="image/*">
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="flex flex-col gap-1.5">
+                                        <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Mobile (Opcional)</label>
+                                        <div class="flex gap-2">
+                                            <input type="text" id="g-img-3-mobile" class="flex-grow px-3 py-2 text-xs rounded-lg" placeholder="Herda desktop se vazio">
+                                            <label class="bg-surface-container-high hover:bg-surface-container-highest border border-outline-variant/30 text-primary-container px-3 py-2 rounded-lg text-[10px] font-bold uppercase transition-colors shrink-0 flex items-center gap-1 cursor-pointer">
+                                                <span class="material-symbols-outlined text-sm">upload</span> Enviar
+                                                <input type="file" class="hidden img-upload-trigger" data-target="g-img-3-mobile" accept="image/*">
+                                            </label>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -478,35 +592,85 @@
                     <!-- Categoria: Ambiente Interno e Externo -->
                     <div class="bg-[#1a1919] p-5 rounded-xl border border-outline-variant/15 flex flex-col gap-4">
                         <span class="text-xs font-bold uppercase tracking-wider text-primary">Estrutura Física (Ambiente)</span>
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                            <div class="flex flex-col gap-2">
-                                <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Interno 1 (Lounge VIP)</label>
-                                <div class="flex gap-2">
-                                    <input type="text" id="g-img-interno-0" class="flex-grow px-3 py-2 text-xs rounded-lg">
-                                    <label class="bg-surface-container-high hover:bg-surface-container-highest border border-outline-variant/30 text-primary-container px-3 py-2 rounded-lg text-[10px] font-bold uppercase transition-colors shrink-0 flex items-center gap-1 cursor-pointer">
-                                        <span class="material-symbols-outlined text-sm">upload</span> Enviar
-                                        <input type="file" class="hidden img-upload-trigger" data-target="g-img-interno-0" accept="image/*">
-                                    </label>
+                        <div class="flex flex-col gap-6">
+                            <!-- Interno 1 -->
+                            <div class="border-b border-outline-variant/10 pb-4">
+                                <span class="text-xs font-semibold text-on-surface block mb-3">Interno 1 (Lounge VIP)</span>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div class="flex flex-col gap-1.5">
+                                        <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Desktop</label>
+                                        <div class="flex gap-2">
+                                            <input type="text" id="g-img-interno-0" class="flex-grow px-3 py-2 text-xs rounded-lg">
+                                            <label class="bg-surface-container-high hover:bg-surface-container-highest border border-outline-variant/30 text-primary-container px-3 py-2 rounded-lg text-[10px] font-bold uppercase transition-colors shrink-0 flex items-center gap-1 cursor-pointer">
+                                                <span class="material-symbols-outlined text-sm">upload</span> Enviar
+                                                <input type="file" class="hidden img-upload-trigger" data-target="g-img-interno-0" accept="image/*">
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="flex flex-col gap-1.5">
+                                        <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Mobile (Opcional)</label>
+                                        <div class="flex gap-2">
+                                            <input type="text" id="g-img-interno-0-mobile" class="flex-grow px-3 py-2 text-xs rounded-lg" placeholder="Herda desktop se vazio">
+                                            <label class="bg-surface-container-high hover:bg-surface-container-highest border border-outline-variant/30 text-primary-container px-3 py-2 rounded-lg text-[10px] font-bold uppercase transition-colors shrink-0 flex items-center gap-1 cursor-pointer">
+                                                <span class="material-symbols-outlined text-sm">upload</span> Enviar
+                                                <input type="file" class="hidden img-upload-trigger" data-target="g-img-interno-0-mobile" accept="image/*">
+                                            </label>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="flex flex-col gap-2">
-                                <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Interno 2 (Bar Gourmet)</label>
-                                <div class="flex gap-2">
-                                    <input type="text" id="g-img-interno-1" class="flex-grow px-3 py-2 text-xs rounded-lg">
-                                    <label class="bg-surface-container-high hover:bg-surface-container-highest border border-outline-variant/30 text-primary-container px-3 py-2 rounded-lg text-[10px] font-bold uppercase transition-colors shrink-0 flex items-center gap-1 cursor-pointer">
-                                        <span class="material-symbols-outlined text-sm">upload</span> Enviar
-                                        <input type="file" class="hidden img-upload-trigger" data-target="g-img-interno-1" accept="image/*">
-                                    </label>
+                            
+                            <!-- Interno 2 -->
+                            <div class="border-b border-outline-variant/10 pb-4">
+                                <span class="text-xs font-semibold text-on-surface block mb-3">Interno 2 (Bar Gourmet)</span>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div class="flex flex-col gap-1.5">
+                                        <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Desktop</label>
+                                        <div class="flex gap-2">
+                                            <input type="text" id="g-img-interno-1" class="flex-grow px-3 py-2 text-xs rounded-lg">
+                                            <label class="bg-surface-container-high hover:bg-surface-container-highest border border-outline-variant/30 text-primary-container px-3 py-2 rounded-lg text-[10px] font-bold uppercase transition-colors shrink-0 flex items-center gap-1 cursor-pointer">
+                                                <span class="material-symbols-outlined text-sm">upload</span> Enviar
+                                                <input type="file" class="hidden img-upload-trigger" data-target="g-img-interno-1" accept="image/*">
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="flex flex-col gap-1.5">
+                                        <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Mobile (Opcional)</label>
+                                        <div class="flex gap-2">
+                                            <input type="text" id="g-img-interno-1-mobile" class="flex-grow px-3 py-2 text-xs rounded-lg" placeholder="Herda desktop se vazio">
+                                            <label class="bg-surface-container-high hover:bg-surface-container-highest border border-outline-variant/30 text-primary-container px-3 py-2 rounded-lg text-[10px] font-bold uppercase transition-colors shrink-0 flex items-center gap-1 cursor-pointer">
+                                                <span class="material-symbols-outlined text-sm">upload</span> Enviar
+                                                <input type="file" class="hidden img-upload-trigger" data-target="g-img-interno-1-mobile" accept="image/*">
+                                            </label>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="flex flex-col gap-2">
-                                <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Externo (Fachada Luxuosa)</label>
-                                <div class="flex gap-2">
-                                    <input type="text" id="g-img-externo-0" class="flex-grow px-3 py-2 text-xs rounded-lg">
-                                    <label class="bg-surface-container-high hover:bg-surface-container-highest border border-outline-variant/30 text-primary-container px-3 py-2 rounded-lg text-[10px] font-bold uppercase transition-colors shrink-0 flex items-center gap-1 cursor-pointer">
-                                        <span class="material-symbols-outlined text-sm">upload</span> Enviar
-                                        <input type="file" class="hidden img-upload-trigger" data-target="g-img-externo-0" accept="image/*">
-                                    </label>
+
+                            <!-- Externo -->
+                            <div>
+                                <span class="text-xs font-semibold text-on-surface block mb-3">Externo (Fachada Luxuosa)</span>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div class="flex flex-col gap-1.5">
+                                        <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Desktop</label>
+                                        <div class="flex gap-2">
+                                            <input type="text" id="g-img-externo-0" class="flex-grow px-3 py-2 text-xs rounded-lg">
+                                            <label class="bg-surface-container-high hover:bg-surface-container-highest border border-outline-variant/30 text-primary-container px-3 py-2 rounded-lg text-[10px] font-bold uppercase transition-colors shrink-0 flex items-center gap-1 cursor-pointer">
+                                                <span class="material-symbols-outlined text-sm">upload</span> Enviar
+                                                <input type="file" class="hidden img-upload-trigger" data-target="g-img-externo-0" accept="image/*">
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="flex flex-col gap-1.5">
+                                        <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Mobile (Opcional)</label>
+                                        <div class="flex gap-2">
+                                            <input type="text" id="g-img-externo-0-mobile" class="flex-grow px-3 py-2 text-xs rounded-lg" placeholder="Herda desktop se vazio">
+                                            <label class="bg-surface-container-high hover:bg-surface-container-highest border border-outline-variant/30 text-primary-container px-3 py-2 rounded-lg text-[10px] font-bold uppercase transition-colors shrink-0 flex items-center gap-1 cursor-pointer">
+                                                <span class="material-symbols-outlined text-sm">upload</span> Enviar
+                                                <input type="file" class="hidden img-upload-trigger" data-target="g-img-externo-0-mobile" accept="image/*">
+                                            </label>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -515,25 +679,58 @@
                     <!-- Categoria: Nossos Clientes -->
                     <div class="bg-[#1a1919] p-5 rounded-xl border border-outline-variant/15 flex flex-col gap-4">
                         <span class="text-xs font-bold uppercase tracking-wider text-primary">Nossos Clientes (Lifestyle)</span>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div class="flex flex-col gap-2">
-                                <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Cliente 1 (Estilo e Corte)</label>
-                                <div class="flex gap-2">
-                                    <input type="text" id="g-img-cliente-0" class="flex-grow px-3 py-2 text-xs rounded-lg">
-                                    <label class="bg-surface-container-high hover:bg-surface-container-highest border border-outline-variant/30 text-primary-container px-3 py-2 rounded-lg text-[10px] font-bold uppercase transition-colors shrink-0 flex items-center gap-1 cursor-pointer">
-                                        <span class="material-symbols-outlined text-sm">upload</span> Enviar
-                                        <input type="file" class="hidden img-upload-trigger" data-target="g-img-cliente-0" accept="image/*">
-                                    </label>
+                        <div class="flex flex-col gap-6">
+                            <!-- Cliente 1 -->
+                            <div class="border-b border-outline-variant/10 pb-4">
+                                <span class="text-xs font-semibold text-on-surface block mb-3">Cliente 1 (Estilo e Corte)</span>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div class="flex flex-col gap-1.5">
+                                        <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Desktop</label>
+                                        <div class="flex gap-2">
+                                            <input type="text" id="g-img-cliente-0" class="flex-grow px-3 py-2 text-xs rounded-lg">
+                                            <label class="bg-surface-container-high hover:bg-surface-container-highest border border-outline-variant/30 text-primary-container px-3 py-2 rounded-lg text-[10px] font-bold uppercase transition-colors shrink-0 flex items-center gap-1 cursor-pointer">
+                                                <span class="material-symbols-outlined text-sm">upload</span> Enviar
+                                                <input type="file" class="hidden img-upload-trigger" data-target="g-img-cliente-0" accept="image/*">
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="flex flex-col gap-1.5">
+                                        <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Mobile (Opcional)</label>
+                                        <div class="flex gap-2">
+                                            <input type="text" id="g-img-cliente-0-mobile" class="flex-grow px-3 py-2 text-xs rounded-lg" placeholder="Herda desktop se vazio">
+                                            <label class="bg-surface-container-high hover:bg-surface-container-highest border border-outline-variant/30 text-primary-container px-3 py-2 rounded-lg text-[10px] font-bold uppercase transition-colors shrink-0 flex items-center gap-1 cursor-pointer">
+                                                <span class="material-symbols-outlined text-sm">upload</span> Enviar
+                                                <input type="file" class="hidden img-upload-trigger" data-target="g-img-cliente-0-mobile" accept="image/*">
+                                            </label>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="flex flex-col gap-2">
-                                <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Cliente 2 (Clube Lounge)</label>
-                                <div class="flex gap-2">
-                                    <input type="text" id="g-img-cliente-1" class="flex-grow px-3 py-2 text-xs rounded-lg">
-                                    <label class="bg-surface-container-high hover:bg-surface-container-highest border border-outline-variant/30 text-primary-container px-3 py-2 rounded-lg text-[10px] font-bold uppercase transition-colors shrink-0 flex items-center gap-1 cursor-pointer">
-                                        <span class="material-symbols-outlined text-sm">upload</span> Enviar
-                                        <input type="file" class="hidden img-upload-trigger" data-target="g-img-cliente-1" accept="image/*">
-                                    </label>
+                            
+                            <!-- Cliente 2 -->
+                            <div>
+                                <span class="text-xs font-semibold text-on-surface block mb-3">Cliente 2 (Clube Lounge)</span>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div class="flex flex-col gap-1.5">
+                                        <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Desktop</label>
+                                        <div class="flex gap-2">
+                                            <input type="text" id="g-img-cliente-1" class="flex-grow px-3 py-2 text-xs rounded-lg">
+                                            <label class="bg-surface-container-high hover:bg-surface-container-highest border border-outline-variant/30 text-primary-container px-3 py-2 rounded-lg text-[10px] font-bold uppercase transition-colors shrink-0 flex items-center gap-1 cursor-pointer">
+                                                <span class="material-symbols-outlined text-sm">upload</span> Enviar
+                                                <input type="file" class="hidden img-upload-trigger" data-target="g-img-cliente-1" accept="image/*">
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="flex flex-col gap-1.5">
+                                        <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Mobile (Opcional)</label>
+                                        <div class="flex gap-2">
+                                            <input type="text" id="g-img-cliente-1-mobile" class="flex-grow px-3 py-2 text-xs rounded-lg" placeholder="Herda desktop se vazio">
+                                            <label class="bg-surface-container-high hover:bg-surface-container-highest border border-outline-variant/30 text-primary-container px-3 py-2 rounded-lg text-[10px] font-bold uppercase transition-colors shrink-0 flex items-center gap-1 cursor-pointer">
+                                                <span class="material-symbols-outlined text-sm">upload</span> Enviar
+                                                <input type="file" class="hidden img-upload-trigger" data-target="g-img-cliente-1-mobile" accept="image/*">
+                                            </label>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -603,7 +800,7 @@
                     <h3 class="font-display font-semibold text-sm text-primary uppercase tracking-wider">Integração Google Places API (Avaliações Dinâmicas)</h3>
                     <p class="text-[11px] text-on-surface-variant font-light">Insira as credenciais do Google Cloud para sincronizar notas e depoimentos reais automaticamente.</p>
                     
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                     <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                         <div class="flex flex-col gap-2">
                             <label class="text-xs font-semibold uppercase tracking-wider text-on-surface-variant">Google Places API Key</label>
                             <input type="password" id="i-places-key" class="w-full px-4 py-3 rounded-lg text-sm" placeholder="AIzaSy... (Chave de API do Google Cloud)">
@@ -611,8 +808,13 @@
                         </div>
                         <div class="flex flex-col gap-2">
                             <label class="text-xs font-semibold uppercase tracking-wider text-on-surface-variant">Google Place ID do Estabelecimento</label>
-                            <input type="text" id="i-places-id" class="w-full px-4 py-3 rounded-lg text-sm" placeholder="ChIJ... (Identificador único do seu local)">
-                            <span class="text-[10px] text-on-surface-variant font-light">Encontre seu Place ID usando a ferramenta de busca do Google Maps Platform ou no Place ID Finder.</span>
+                            <div class="flex gap-2">
+                                <input type="text" id="i-places-id" class="flex-grow px-4 py-3 rounded-lg text-sm" placeholder="ChIJ... (Identificador único do seu local)">
+                                <button type="button" id="test-places-btn" class="bg-surface-container-high hover:bg-surface-container-highest border border-outline-variant/30 text-primary-container px-4 py-2 rounded-lg text-xs font-bold uppercase transition-colors shrink-0 flex items-center gap-1">
+                                    <span class="material-symbols-outlined text-base">sync</span> Verificar Conexão
+                                </button>
+                            </div>
+                            <span class="text-[10px] text-on-surface-variant font-light">Valide e sincronize a conexão em tempo real para verificar nota e avaliações reais.</span>
                         </div>
                     </div>
                 </div>
@@ -648,7 +850,10 @@
             whatsapp: "+55 11 99999-9999",
             google_rating: "4.9",
             google_reviews_count: "500",
-            logo_url: ""
+            logo_url: "",
+            logo_url_mobile: "",
+            instagram_url: "https://instagram.com/elegance_barbershop",
+            facebook_url: "https://facebook.com/elegance_barbershop"
           },
           colors: {
             background: "#0e0e0e",
@@ -659,7 +864,8 @@
           hero: {
             title: "Estilo Incomparável para o Homem Moderno",
             subtitle: "A experiência premium de barbearia que você merece. Acabamento impecável, ambiente de alto padrão e profissionais de elite.",
-            bg_image: "assets/images/hero-bg.webp"
+            bg_image: "assets/images/hero-bg.webp",
+            bg_image_mobile: ""
           },
           about: {
             problem_title: "Cansado de cortes genéricos?",
@@ -700,14 +906,29 @@
             "assets/images/corte3.webp",
             "assets/images/corte4.webp"
           ],
+          gallery_mobile: [
+            "",
+            "",
+            "",
+            ""
+          ],
           gallery_interno: [
             "assets/images/interno1.webp",
             "assets/images/interno2.webp"
           ],
+          gallery_interno_mobile: [
+            "",
+            ""
+          ],
           gallery_externo: "assets/images/externo.webp",
+          gallery_externo_mobile: "",
           gallery_clientes: [
             "assets/images/cliente1.webp",
             "assets/images/cliente2.webp"
+          ],
+          gallery_clientes_mobile: [
+            "",
+            ""
           ],
           location: {
             title: "Sofisticação no Coração de São Paulo",
@@ -815,6 +1036,9 @@
             document.getElementById('g-rating').value = data.general.google_rating;
             document.getElementById('g-reviews').value = data.general.google_reviews_count;
             document.getElementById('g-logo').value = data.general.logo_url || '';
+            document.getElementById('g-logo-mobile').value = data.general.logo_url_mobile || '';
+            document.getElementById('g-instagram').value = data.general.instagram_url || '';
+            document.getElementById('g-facebook').value = data.general.facebook_url || '';
             
             // Cores
             document.getElementById('c-bg').value = data.colors.background;
@@ -830,6 +1054,7 @@
             document.getElementById('h-title').value = data.hero.title;
             document.getElementById('h-subtitle').value = data.hero.subtitle;
             document.getElementById('h-bg').value = data.hero.bg_image;
+            document.getElementById('h-bg-mobile').value = data.hero.bg_image_mobile || '';
             
             // Sobre
             document.getElementById('s-p-title').value = data.about.problem_title;
@@ -854,13 +1079,17 @@
             // Galeria
             for (let i = 0; i < 4; i++) {
                 document.getElementById(`g-img-${i}`).value = data.gallery[i] || '';
+                document.getElementById(`g-img-${i}-mobile`).value = data.gallery_mobile ? (data.gallery_mobile[i] || '') : '';
             }
             // Galeria Ambiente
             for (let i = 0; i < 2; i++) {
                 document.getElementById(`g-img-interno-${i}`).value = data.gallery_interno ? (data.gallery_interno[i] || '') : '';
+                document.getElementById(`g-img-interno-${i}-mobile`).value = data.gallery_interno_mobile ? (data.gallery_interno_mobile[i] || '') : '';
                 document.getElementById(`g-img-cliente-${i}`).value = data.gallery_clientes ? (data.gallery_clientes[i] || '') : '';
+                document.getElementById(`g-img-cliente-${i}-mobile`).value = data.gallery_clientes_mobile ? (data.gallery_clientes_mobile[i] || '') : '';
             }
             document.getElementById('g-img-externo-0').value = data.gallery_externo || '';
+            document.getElementById('g-img-externo-0-mobile').value = data.gallery_externo_mobile || '';
             
             // Localização
             document.getElementById('l-title').value = data.location.title || '';
@@ -888,7 +1117,10 @@
                     whatsapp: document.getElementById('g-whatsapp').value,
                     google_rating: document.getElementById('g-rating').value,
                     google_reviews_count: document.getElementById('g-reviews').value,
-                    logo_url: document.getElementById('g-logo').value
+                    logo_url: document.getElementById('g-logo').value,
+                    logo_url_mobile: document.getElementById('g-logo-mobile').value,
+                    instagram_url: document.getElementById('g-instagram').value,
+                    facebook_url: document.getElementById('g-facebook').value
                 },
                 colors: {
                     background: document.getElementById('c-bg').value,
@@ -899,7 +1131,8 @@
                 hero: {
                     title: document.getElementById('h-title').value,
                     subtitle: document.getElementById('h-subtitle').value,
-                    bg_image: document.getElementById('h-bg').value
+                    bg_image: document.getElementById('h-bg').value,
+                    bg_image_mobile: document.getElementById('h-bg-mobile').value
                 },
                 about: {
                     problem_title: document.getElementById('s-p-title').value,
@@ -940,14 +1173,29 @@
                     document.getElementById('g-img-2').value,
                     document.getElementById('g-img-3').value
                 ],
+                gallery_mobile: [
+                    document.getElementById('g-img-0-mobile').value,
+                    document.getElementById('g-img-1-mobile').value,
+                    document.getElementById('g-img-2-mobile').value,
+                    document.getElementById('g-img-3-mobile').value
+                ],
                 gallery_interno: [
                     document.getElementById('g-img-interno-0').value,
                     document.getElementById('g-img-interno-1').value
                 ],
+                gallery_interno_mobile: [
+                    document.getElementById('g-img-interno-0-mobile').value,
+                    document.getElementById('g-img-interno-1-mobile').value
+                ],
                 gallery_externo: document.getElementById('g-img-externo-0').value,
+                gallery_externo_mobile: document.getElementById('g-img-externo-0-mobile').value,
                 gallery_clientes: [
                     document.getElementById('g-img-cliente-0').value,
                     document.getElementById('g-img-cliente-1').value
+                ],
+                gallery_clientes_mobile: [
+                    document.getElementById('g-img-cliente-0-mobile').value,
+                    document.getElementById('g-img-cliente-1-mobile').value
                 ],
                 location: {
                     title: document.getElementById('l-title').value,
@@ -1071,6 +1319,74 @@
             }
         });
 
+        // TESTAR CONEXÃO COM GOOGLE PLACES API
+        document.getElementById('test-places-btn').addEventListener('click', () => {
+            const apiKey = document.getElementById('i-places-key').value.trim();
+            const placeId = document.getElementById('i-places-id').value.trim();
+            
+            if (!apiKey || apiKey === '') {
+                alert("Por favor, insira a sua Google Places API Key.");
+                return;
+            }
+            if (!placeId || placeId === '') {
+                alert("Por favor, insira o Google Place ID do seu estabelecimento.");
+                return;
+            }
+            
+            const testBtn = document.getElementById('test-places-btn');
+            const originalHTML = testBtn.innerHTML;
+            testBtn.disabled = true;
+            testBtn.innerHTML = '<span class="material-symbols-outlined text-base animate-spin">sync</span> Testando...';
+            
+            // Callback global temporário de teste
+            window.testPlacesCallback = function() {
+                try {
+                    const tempDiv = document.createElement('div');
+                    document.body.appendChild(tempDiv);
+                    const service = new google.maps.places.PlacesService(tempDiv);
+                    
+                    service.getDetails({
+                        placeId: placeId,
+                        fields: ['name', 'rating', 'user_ratings_total', 'reviews']
+                    }, function(place, status) {
+                        // Limpeza do DOM
+                        document.body.removeChild(tempDiv);
+                        testBtn.disabled = false;
+                        testBtn.innerHTML = originalHTML;
+                        
+                        if (status === google.maps.places.PlacesServiceStatus.OK && place) {
+                            const ratingInfo = place.rating ? `Nota: ★ ${place.rating.toFixed(1)}` : 'Sem nota';
+                            const reviewsInfo = place.user_ratings_total ? `(${place.user_ratings_total} avaliações)` : '(Sem avaliações)';
+                            alert(`Conexão estabelecida com sucesso!\n\nEstabelecimento: ${place.name}\n${ratingInfo} ${reviewsInfo}\nDepoimentos reais encontrados: ${place.reviews ? place.reviews.length : 0}`);
+                            showToast("Conexão com Google Places validada!");
+                        } else {
+                            alert(`Erro na validação da Places API!\n\nStatus retornado: ${status}\n\nPossíveis causas:\n1. O Place ID está incorreto.\n2. A API Key informada não tem permissão para usar o Places API.\n3. O faturamento não está ativado no Google Cloud Console ou a cota expirou.`);
+                        }
+                    });
+                } catch (err) {
+                    testBtn.disabled = false;
+                    testBtn.innerHTML = originalHTML;
+                    alert("Erro interno durante o teste: " + err.message);
+                }
+            };
+            
+            // Injeta Maps API se necessário ou executa direto
+            if (typeof google === 'undefined' || typeof google.maps === 'undefined') {
+                const script = document.createElement('script');
+                script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=places&callback=testPlacesCallback`;
+                script.async = true;
+                script.defer = true;
+                script.onerror = function() {
+                    testBtn.disabled = false;
+                    testBtn.innerHTML = originalHTML;
+                    alert("Erro crítico: Não foi possível carregar a API do Google Maps. Verifique sua chave ou conexão de rede.");
+                };
+                document.head.appendChild(script);
+            } else {
+                setTimeout(window.testPlacesCallback, 100);
+            }
+        });
+
         // MOTOR DE UPLOAD E COMPRESSÃO DE IMAGENS EM BASE64 VIA CANVAS (DELEGAÇÃO DE EVENTOS)
         function handleImageUploadEvent(event) {
             const trigger = event.target;
@@ -1104,7 +1420,7 @@
                     let width = img.width;
                     let height = img.height;
                     
-                    const maxDim = targetInputId === 'h-bg' ? 1200 : 800;
+                    const maxDim = targetInputId.startsWith('h-bg') ? 1200 : 800;
                     
                     if (width > maxDim || height > maxDim) {
                         if (width > height) {

@@ -151,3 +151,39 @@ Este arquivo registra detalhadamente todas as alterações, decisões de design 
 
 ### Próximos Passos
 * Realizar commit e push de todas as novas modificações e código otimizado para o repositório do GitHub. (CONCLUÍDO)
+
+## [2026-05-27] - Otimizações Premium: Carrossel Mobile, Rastreamento UTM, Diagnóstico Places API e Imagens Responsivas
+
+### Alterações Realizadas
+
+1. **Remoção do Botão Flutuante do WhatsApp (`index.html`):**
+   - Removido o botão flutuante e pulsante de WhatsApp do canto inferior direito para focar a usabilidade e conversões de agendamento nas seções de serviços e rodapé (CRO otimizado).
+
+2. **Diagnóstico e Teste da Google Places API (`admin.html` & `index.html`):**
+   - **Botão "Verificar Conexão" no Painel:** Implementado um botão de teste dinâmico ao lado dos inputs de API Key e Place ID na aba de Integrações. Ao ser clicado, carrega assincronamente a biblioteca de Mapas do Google e executa uma consulta do Place ID. Em caso de sucesso, exibe uma mensagem rica com a nota média e nome do estabelecimento. Em caso de falha, realiza um diagnóstico técnico detalhado do erro (faturamento desativado, chave inválida, restrição de domínios, etc.) para que o administrador saiba exatamente como corrigir.
+   - **Correção da Seção de Depoimentos:** Resolvida a falha onde a seção de depoimentos não atualizava em certos navegadores móveis (como Safari no iOS). O `PlacesService` agora inicializa anexando temporariamente uma DIV oculta no `document.body` e removendo-a de forma limpa imediatamente após a conclusão da consulta.
+
+3. **Upload Responsivo Individual de Imagens & Dimensões Recomendadas (`admin.html` & `index.html`):**
+   - **Upload Desktop vs. Mobile:** Adicionada a opção para o usuário carregar versões diferentes de imagens para telas desktop e mobile em todas as mídias configuráveis (Logo, Background Hero, Galeria de Imagens, Ambiente e Clientes). Se apenas uma imagem for fornecida, ela é aplicada automaticamente para ambos os layouts.
+   - **Dimensões Recomendadas Explicativas:** Todos os campos de upload no painel agora contam com avisos explícitos informando a dimensão ideal recomendada para evitar distorções no design.
+     - *Logo:* 180x180 px (Quadrado)
+     - *Hero Banner Desktop:* 1920x1080 px (16:9 widescreen)
+     - *Hero Banner Mobile:* 800x1200 px (2:3 vertical)
+     - *Galeria, Ambiente e Clientes:* 800x600 px (4:3)
+   - **Injeção de Layout Responsivo:** Implementada lógica dinâmica no script do `index.html` que detecta a resolução da tela e carrega dinamicamente a string Base64 apropriada (mobile ou desktop) do banco de dados local com debounce acoplado ao evento `resize`.
+
+4. **Atribuição Avançada de Anúncios e Rastreamento de UTMs no Webhook (`index.html`):**
+   - **Coleta de Query Params:** Implementado um script imediato de captura que analisa a URL de entrada e armazena de forma persistente no `sessionStorage` os parâmetros `utm_source`, `utm_medium`, `utm_campaign`, `utm_term`, `utm_content` e IDs de clique publicitários (`fbclid`, `gclid`, `ttclid`, `msclkid`).
+   - **Payload do Webhook Enriquecido:** O interceptor de agendamento via WhatsApp extrai os dados capturados de campanhas do `sessionStorage` e os anexa no objeto `tracking` dentro do payload JSON transmitido ao webhook cadastrado. Isso permite a integração perfeita com as APIs de Conversão do Google Ads e Facebook Ads no n8n ou outro CRM.
+
+5. **Links Customizados de Redes Sociais no Rodapé (`admin.html` & `index.html`):**
+   - Adicionados inputs dedicados para link de **Instagram** e link de **Facebook** na aba Geral do painel administrativo.
+   - O rodapé do site carrega essas URLs dinamicamente através do injetor do DOM.
+
+6. **Carrossel Mobile Premium na Galeria de Fotos (`index.html`):**
+   - A exibição das imagens na seção de Galeria em dispositivos móveis (largura menor que 768px) foi totalmente reestruturada para um carrossel horizontal de rolagem contínua por toque (com snap scroll e estilização elegante).
+   - Injetados indicadores de paginação estilo pílula do iOS que se movimentam de forma sincronizada ao scroll da galeria.
+   - O sistema de Lightbox nativo para visualização ampliada funciona de forma transparente ao clicar sobre os slides do carrossel.
+
+### Próximos Passos
+* Commit e push final das modificações otimizadas para o repositório remoto no GitHub. (CONCLUÍDO)

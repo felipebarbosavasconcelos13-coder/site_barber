@@ -441,8 +441,8 @@
             </button>
         </div>
         
-        <!-- Grid de Imagens Dinâmicas -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6" id="gallery-grid">
+        <!-- Grid de Imagens Dinâmicas (Visível apenas em Desktop/Tablet) -->
+        <div class="hidden md:grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6" id="gallery-grid">
             <!-- Cortes 1 -->
             <div class="gallery-item show-item" data-category="cortes">
                 <div class="relative rounded-xl overflow-hidden group aspect-[4/3] border border-outline-variant/10 shadow-lg cursor-pointer lightbox-trigger">
@@ -549,6 +549,18 @@
                         <p class="text-[10px] text-on-surface-variant font-light mt-0.5">O ponto de encontro de grandes homens de negócios.</p>
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <!-- Carrossel Mobile Otimizado (Visível apenas em Mobile - CRO & UX Premium) -->
+        <div class="block md:hidden relative w-full overflow-hidden mb-6 px-1">
+            <div id="gallery-carousel" class="flex gap-4 overflow-x-auto snap-x snap-mandatory scrollbar-none pb-6 px-4 cursor-grab select-none scroll-smooth">
+                <!-- Slides gerados dinamicamente via Javascript -->
+            </div>
+            
+            <!-- Controles: Indicadores Ativos em Formato de Pílula iOS -->
+            <div id="gallery-carousel-dots" class="flex justify-center items-center gap-1.5 mt-2 h-4">
+                <!-- Bolinhas geradas dinamicamente -->
             </div>
         </div>
     </section>
@@ -705,8 +717,8 @@
             </div>
             
             <div class="flex flex-wrap justify-center gap-6">
-                <a class="text-on-surface-variant hover:text-primary transition-colors uppercase font-semibold" href="#">Instagram</a>
-                <a class="text-on-surface-variant hover:text-primary transition-colors uppercase font-semibold" href="#">Facebook</a>
+                <a id="footer-instagram-link" class="text-on-surface-variant hover:text-primary transition-colors uppercase font-semibold" href="#" target="_blank">Instagram</a>
+                <a id="footer-facebook-link" class="text-on-surface-variant hover:text-primary transition-colors uppercase font-semibold" href="#" target="_blank">Facebook</a>
                 <a class="text-on-surface-variant hover:text-primary transition-colors uppercase font-semibold wa-link" href="https://wa.me/5511999999999">WhatsApp</a>
                 <a class="text-on-surface-variant hover:text-primary transition-colors uppercase font-semibold" href="#">Termos de Uso</a>
                 <a class="text-on-surface-variant hover:text-primary transition-colors uppercase font-semibold" href="#">Privacidade</a>
@@ -714,14 +726,7 @@
         </div>
     </footer>
 
-    <!-- Botão Flutuante Pulsante do WhatsApp (CRO de Conversão Direta) -->
-    <a class="fixed bottom-6 right-6 z-50 w-14 h-14 bg-[#25d366] rounded-full flex items-center justify-center text-white shadow-2xl transform hover:scale-110 active:scale-95 transition-all duration-300 animate-bounce hover:animate-none wa-link" 
-       href="https://wa.me/5511999999999?text=Olá!%20Gostaria%20de%20agendar%20um%20horário%20na%20barbearia." 
-       title="Falar no WhatsApp" target="_blank">
-        <svg class="w-8 h-8 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.513 2.262 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.455L0 24zm6.59-4.846c1.6.95 3.588 1.455 5.416 1.456 5.4 0 9.794-4.34 9.798-9.673.002-2.585-1.01-5.016-2.85-6.859-1.84-1.84-4.271-2.853-6.859-2.854-5.397 0-9.793 4.34-9.797 9.674-.001 1.956.513 3.865 1.492 5.568l-.982 3.58 3.676-.952zm11.233-6.425c-.29-.145-1.72-.848-1.986-.944-.267-.097-.461-.145-.655.145-.194.29-.752.944-.922 1.137-.17.194-.34.218-.63.072-2.316-1.16-3.818-2.062-5.318-4.63-.396-.68.396-.632 1.134-2.115.12-.24.06-.453-.03-.598-.09-.145-.752-1.812-1.03-2.48-.27-.655-.547-.566-.752-.576-.194-.01-.418-.01-.643-.01-.224 0-.59.084-.9.423-.309.337-1.18 1.157-1.18 2.82 0 1.662 1.21 3.268 1.38 3.5.17.23 2.383 3.638 5.772 5.099 2.81 1.212 3.38 1.0 4.6.883 1.22-.116 2.686-.598 3.06-1.176.375-.58.375-1.077.262-1.176-.112-.097-.41-.242-.7-.387z"/>
-        </svg>
-    </a>
+
 
     <!-- JavaScript de Dinamização (Injeta os dados do LocalStorage no DOM) -->
     <script id="dom-dinamizer">
@@ -732,6 +737,12 @@
             try {
                 const config = JSON.parse(configStr);
                 
+                // Variável responsiva de tela móvel
+                const isMobile = window.innerWidth < 768;
+                const getImgUrl = (desktopUrl, mobileUrl) => {
+                    return (window.innerWidth < 768 && mobileUrl && mobileUrl.trim() !== '') ? mobileUrl : desktopUrl;
+                };
+
                 // 1. Geral & Contato
                 if (config.general) {
                     const name = config.general.name || "ELEGANCE";
@@ -743,12 +754,12 @@
                     document.getElementById('og-title-tag').setAttribute('content', `${name} | Barbearia de Luxo`);
                     document.getElementById('footer-copyright').innerText = `© 2026 ${name} Barbershop. Todos os direitos reservados.`;
                     
-                    // Logo Customizada
+                    // Logo Customizada e Responsiva
                     const navLogoSvg = document.getElementById('nav-logo-svg');
                     const navLogoImg = document.getElementById('nav-logo-img');
                     if (config.general.logo_url && config.general.logo_url.trim() !== '') {
                         navLogoSvg.classList.add('hidden');
-                        navLogoImg.src = config.general.logo_url;
+                        navLogoImg.src = getImgUrl(config.general.logo_url, config.general.logo_url_mobile);
                         navLogoImg.classList.remove('hidden');
                     } else {
                         navLogoSvg.classList.remove('hidden');
@@ -773,14 +784,24 @@
                             link.setAttribute('href', `https://wa.me/${whatsappNum}?text=${encodeURIComponent(text)}`);
                         }
                     });
+
+                    // Redes Sociais do Rodapé
+                    if (config.general.instagram_url && config.general.instagram_url.trim() !== '') {
+                        const instLink = document.getElementById('footer-instagram-link');
+                        if (instLink) instLink.setAttribute('href', config.general.instagram_url);
+                    }
+                    if (config.general.facebook_url && config.general.facebook_url.trim() !== '') {
+                        const fbLink = document.getElementById('footer-facebook-link');
+                        if (fbLink) fbLink.setAttribute('href', config.general.facebook_url);
+                    }
                 }
                 
-                // 2. Hero Section
+                // 2. Hero Section (Responsiva)
                 if (config.hero) {
                     if (config.hero.title) document.getElementById('hero-title').innerText = config.hero.title;
                     if (config.hero.subtitle) document.getElementById('hero-subtitle').innerText = config.hero.subtitle;
                     if (config.hero.bg_image && config.hero.bg_image.trim() !== '') {
-                        document.getElementById('hero-bg-img').src = config.hero.bg_image;
+                        document.getElementById('hero-bg-img').src = getImgUrl(config.hero.bg_image, config.hero.bg_image_mobile);
                     }
                 }
                 
@@ -843,34 +864,177 @@
                     }
                 }
                 
-                // 5. Galeria (Cortes, Interno, Externo, Clientes)
-                if (config.gallery && config.gallery.length >= 4) {
-                    for (let i = 0; i < 4; i++) {
-                        const imgUrl = config.gallery[i];
-                        if (imgUrl && imgUrl.trim() !== '') {
-                            document.getElementById(`gallery-img-${i}`).src = imgUrl;
+                // 5. Galeria (Cortes, Interno, Externo, Clientes) - Desktop Responsivo
+                function updateDesktopGallery() {
+                    if (config.gallery && config.gallery.length >= 4) {
+                        for (let i = 0; i < 4; i++) {
+                            const imgUrl = config.gallery[i];
+                            const imgUrlMobile = config.gallery_mobile ? config.gallery_mobile[i] : null;
+                            if (imgUrl && imgUrl.trim() !== '') {
+                                document.getElementById(`gallery-img-${i}`).src = getImgUrl(imgUrl, imgUrlMobile);
+                            }
+                        }
+                    }
+                    if (config.gallery_interno && config.gallery_interno.length >= 2) {
+                        for (let i = 0; i < 2; i++) {
+                            const imgUrl = config.gallery_interno[i];
+                            const imgUrlMobile = config.gallery_interno_mobile ? config.gallery_interno_mobile[i] : null;
+                            if (imgUrl && imgUrl.trim() !== '') {
+                                document.getElementById(`gallery-img-interno-${i}`).src = getImgUrl(imgUrl, imgUrlMobile);
+                            }
+                        }
+                    }
+                    if (config.gallery_externo && config.gallery_externo.trim() !== '') {
+                        document.getElementById('gallery-img-externo-0').src = getImgUrl(config.gallery_externo, config.gallery_externo_mobile);
+                    }
+                    if (config.gallery_clientes && config.gallery_clientes.length >= 2) {
+                        for (let i = 0; i < 2; i++) {
+                            const imgUrl = config.gallery_clientes[i];
+                            const imgUrlMobile = config.gallery_clientes_mobile ? config.gallery_clientes_mobile[i] : null;
+                            if (imgUrl && imgUrl.trim() !== '') {
+                                document.getElementById(`gallery-img-cliente-${i}`).src = getImgUrl(imgUrl, imgUrlMobile);
+                            }
                         }
                     }
                 }
-                if (config.gallery_interno && config.gallery_interno.length >= 2) {
-                    for (let i = 0; i < 2; i++) {
-                        const imgUrl = config.gallery_interno[i];
-                        if (imgUrl && imgUrl.trim() !== '') {
-                            document.getElementById(`gallery-img-interno-${i}`).src = imgUrl;
-                        }
+                updateDesktopGallery();
+
+                // 5.1. Renderizar e Gerenciar o Carrossel Mobile
+                function renderMobileCarousel(filterCategory = 'all') {
+                    const carouselContainer = document.getElementById('gallery-carousel');
+                    const dotsContainer = document.getElementById('gallery-carousel-dots');
+                    if (!carouselContainer) return;
+                    
+                    carouselContainer.innerHTML = '';
+                    
+                    // Coleção de fotos com legendas e categorias
+                    const items = [
+                        { category: 'cortes', title: 'Corte Signature', desc: 'Degradê preciso e finalização impecável.', img: config.gallery ? config.gallery[0] : null, imgMobile: config.gallery_mobile ? config.gallery_mobile[0] : null },
+                        { category: 'cortes', title: 'Ritual da Navalha', desc: 'Toalha quente clássica e barbear ultra alinhado.', img: config.gallery ? config.gallery[1] : null, imgMobile: config.gallery_mobile ? config.gallery_mobile[1] : null },
+                        { category: 'cortes', title: 'Lounge Clássico', desc: 'Drinks refinados e atendimento com single malt.', img: config.gallery ? config.gallery[2] : null, imgMobile: config.gallery_mobile ? config.gallery_mobile[2] : null },
+                        { category: 'cortes', title: 'Pomadas de Luxo', desc: 'Produtos de elite para fixação e saúde dos cabelos.', img: config.gallery ? config.gallery[3] : null, imgMobile: config.gallery_mobile ? config.gallery_mobile[3] : null },
+                        { category: 'interno', title: 'Lounge VIP', desc: 'Poltronas premium para relaxamento completo.', img: config.gallery_interno ? config.gallery_interno[0] : null, imgMobile: config.gallery_interno_mobile ? config.gallery_interno_mobile[0] : null },
+                        { category: 'interno', title: 'Bar Gourmet', desc: 'Cafés e destilados selecionados para nossos convidados.', img: config.gallery_interno ? config.gallery_interno[1] : null, imgMobile: config.gallery_interno_mobile ? config.gallery_interno_mobile[1] : null },
+                        { category: 'externo', title: 'Nossa Fachada', desc: 'Presença majestosa com arquitetura moderna e luxuosa.', img: config.gallery_externo, imgMobile: config.gallery_externo_mobile },
+                        { category: 'clientes', title: 'Estilo Lifestyle', desc: 'Visual esculpido de acordo com a personalidade do cliente.', img: config.gallery_clientes ? config.gallery_clientes[0] : null, imgMobile: config.gallery_clientes_mobile ? config.gallery_clientes_mobile[0] : null },
+                        { category: 'clientes', title: 'Clube Elegance', desc: 'O ponto de encontro de grandes homens de negócios.', img: config.gallery_clientes ? config.gallery_clientes[1] : null, imgMobile: config.gallery_clientes_mobile ? config.gallery_clientes_mobile[1] : null }
+                    ];
+                    
+                    const filteredItems = items.filter(item => {
+                        const imgUrl = getImgUrl(item.img, item.imgMobile);
+                        const hasImage = imgUrl && imgUrl.trim() !== '';
+                        const matchesCategory = filterCategory === 'all' || item.category === filterCategory;
+                        return hasImage && matchesCategory;
+                    });
+                    
+                    if (filteredItems.length === 0) {
+                        carouselContainer.innerHTML = '<div class="text-on-surface-variant text-xs py-10 w-full text-center">Nenhuma imagem nesta categoria</div>';
+                        if (dotsContainer) dotsContainer.innerHTML = '';
+                        return;
+                    }
+                    
+                    filteredItems.forEach((item, index) => {
+                        const imgSrc = getImgUrl(item.img, item.imgMobile);
+                        const slideHTML = `
+                            <div class="gallery-slide shrink-0 snap-center w-[85vw] max-w-[320px] aspect-[4/3] relative rounded-xl overflow-hidden border border-outline-variant/10 shadow-lg cursor-pointer lightbox-trigger" data-category="${item.category}">
+                                <img alt="${item.title}" class="w-full h-full object-cover" src="${imgSrc}"/>
+                                <div class="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent opacity-85"></div>
+                                <div class="absolute bottom-4 left-4 right-4 text-left">
+                                    <span class="text-primary-container font-display font-semibold text-base tracking-wide block">${item.title}</span>
+                                    <p class="text-[10px] text-on-surface-variant font-light mt-0.5">${item.desc}</p>
+                                </div>
+                            </div>
+                        `;
+                        carouselContainer.innerHTML += slideHTML;
+                    });
+                    
+                    // Sincronizar ativação do Lightbox nativo para cliques no carrossel mobile
+                    const newTriggers = carouselContainer.querySelectorAll('.lightbox-trigger');
+                    const lightbox = document.getElementById('lightbox');
+                    const lightboxImg = document.getElementById('lightbox-img');
+                    const lightboxCaption = document.getElementById('lightbox-caption');
+                    newTriggers.forEach(trigger => {
+                        trigger.addEventListener('click', () => {
+                            const img = trigger.querySelector('img');
+                            const captionEl = trigger.querySelector('span');
+                            const caption = captionEl ? captionEl.innerText : "Elegance Premium";
+                            
+                            if (img && lightbox) {
+                                lightboxImg.src = img.src;
+                                lightboxCaption.innerText = caption;
+                                lightbox.classList.remove('hidden');
+                                document.body.style.overflow = 'hidden';
+                            }
+                        });
+                    });
+                    
+                    // Popular pílulas indicadores (Dots)
+                    if (dotsContainer) {
+                        dotsContainer.innerHTML = '';
+                        filteredItems.forEach((_, index) => {
+                            const activeClass = index === 0 ? 'bg-primary-container w-4' : 'bg-outline-variant/50 w-2';
+                            dotsContainer.innerHTML += `<div class="carousel-dot h-2 rounded-full transition-all duration-300 ${activeClass}"></div>`;
+                        });
                     }
                 }
-                if (config.gallery_externo && config.gallery_externo.trim() !== '') {
-                    document.getElementById('gallery-img-externo-0').src = config.gallery_externo;
+                
+                // Carregamento inicial do carrossel mobile
+                renderMobileCarousel('all');
+
+                // Listener de scroll do carrossel para sincronizar as pílulas (bolinhas) de indicação ativa
+                const carousel = document.getElementById('gallery-carousel');
+                if (carousel) {
+                    carousel.addEventListener('scroll', () => {
+                        const scrollLeft = carousel.scrollLeft;
+                        const firstSlide = carousel.querySelector('.gallery-slide');
+                        if (!firstSlide) return;
+                        
+                        const slideWidth = firstSlide.clientWidth;
+                        const activeIndex = Math.round(scrollLeft / (slideWidth + 16)); // 16px é o gap-4 do flex gap
+                        
+                        const dots = document.querySelectorAll('.carousel-dot');
+                        dots.forEach((dot, idx) => {
+                            if (idx === activeIndex) {
+                                dot.classList.add('bg-primary-container', 'w-4');
+                                dot.classList.remove('bg-outline-variant/50', 'w-2');
+                            } else {
+                                dot.classList.add('bg-outline-variant/50', 'w-2');
+                                dot.classList.remove('bg-primary-container', 'w-4');
+                            }
+                        });
+                    });
                 }
-                if (config.gallery_clientes && config.gallery_clientes.length >= 2) {
-                    for (let i = 0; i < 2; i++) {
-                        const imgUrl = config.gallery_clientes[i];
-                        if (imgUrl && imgUrl.trim() !== '') {
-                            document.getElementById(`gallery-img-cliente-${i}`).src = imgUrl;
+                
+                // Interceptador dos botões de filtros da galeria para filtrar carrossel também
+                const filterBtns = document.querySelectorAll('.filter-btn');
+                filterBtns.forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        const filterValue = btn.getAttribute('data-filter');
+                        renderMobileCarousel(filterValue);
+                    });
+                });
+
+                // Debounce Resize para recalculo dinâmico responsivo das imagens
+                let resizeDebounce;
+                window.addEventListener('resize', () => {
+                    clearTimeout(resizeDebounce);
+                    resizeDebounce = setTimeout(() => {
+                        // Atualiza as imagens de fundo e logo
+                        const logoUrl = getImgUrl(config.general.logo_url, config.general.logo_url_mobile);
+                        if (logoUrl) document.getElementById('nav-logo-img').src = logoUrl;
+                        
+                        if (config.hero && config.hero.bg_image) {
+                            document.getElementById('hero-bg-img').src = getImgUrl(config.hero.bg_image, config.hero.bg_image_mobile);
                         }
-                    }
-                }
+                        
+                        updateDesktopGallery();
+                        
+                        // Atualiza o carrossel mobile na categoria selecionada
+                        const activeBtn = document.querySelector('.filter-btn.active');
+                        const activeFilter = activeBtn ? activeBtn.getAttribute('data-filter') : 'all';
+                        renderMobileCarousel(activeFilter);
+                    }, 200);
+                });
                 
                 // 6. Localização
                 if (config.location) {
@@ -902,11 +1066,17 @@
                     // Callback assíncrono chamado pelo SDK do Google Maps
                     window.initGooglePlaces = function() {
                         try {
-                            const service = new google.maps.places.PlacesService(document.createElement('div'));
+                            const tempDiv = document.createElement('div');
+                            document.body.appendChild(tempDiv);
+                            const service = new google.maps.places.PlacesService(tempDiv);
+                            
                             service.getDetails({
                                 placeId: placeId,
                                 fields: ['rating', 'user_ratings_total', 'reviews']
                             }, function(place, status) {
+                                // Limpeza segura do elemento do DOM
+                                try { document.body.removeChild(tempDiv); } catch(e) {}
+                                
                                 if (status === google.maps.places.PlacesServiceStatus.OK && place) {
                                     // 1. Atualizar nota e contagem na Hero
                                     if (place.rating) {
@@ -987,7 +1157,38 @@
             }
         })();
 
-        // Interceptação e Rastreamento de Conversões via Webhook (n8n / CRM)
+        // Capturar parâmetros de anúncio da URL (UTMs e IDs de clique) e salvar na sessão
+        (function() {
+            try {
+                const urlParams = new URLSearchParams(window.location.search);
+                const trackingKeys = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'fbclid', 'gclid', 'ttclid', 'msclkid'];
+                let sessionTracking = JSON.parse(sessionStorage.getItem('elegance_barber_tracking') || '{}');
+                let hasNewParams = false;
+                
+                trackingKeys.forEach(key => {
+                    if (urlParams.has(key)) {
+                        sessionTracking[key] = urlParams.get(key);
+                        hasNewParams = true;
+                    }
+                });
+                
+                // Capturar quaisquer outros parâmetros que venham com o link dinamicamente
+                for (const [key, value] of urlParams.entries()) {
+                    if (!sessionTracking[key]) {
+                        sessionTracking[key] = value;
+                        hasNewParams = true;
+                    }
+                }
+                
+                if (hasNewParams) {
+                    sessionStorage.setItem('elegance_barber_tracking', JSON.stringify(sessionTracking));
+                }
+            } catch (e) {
+                console.error("Erro ao capturar parâmetros de rastreamento:", e);
+            }
+        })();
+
+        // Interceptação e Rastreamento de Conversões via Webhook (n8n / CRM) com Atribuição de Anúncios
         (function() {
             const configStr = localStorage.getItem('elegance_barber_config');
             if (!configStr) return;
@@ -1023,12 +1224,16 @@
                                     }
                                 }
                                 
+                                // Recuperar UTMs e IDs de anúncio salvos no sessionStorage
+                                const trackingData = JSON.parse(sessionStorage.getItem('elegance_barber_tracking') || '{}');
+                                
                                 const payload = {
                                     event: "click_whatsapp",
                                     timestamp: new Date().toISOString(),
                                     barber_name: (config.general && config.general.name) ? config.general.name : "Elegance Premium",
                                     service_name: serviceName,
-                                    price: price
+                                    price: price,
+                                    tracking: trackingData
                                 };
                                 
                                 // Envia a requisição assíncrona POST sem bloquear a navegação (no-cors)
