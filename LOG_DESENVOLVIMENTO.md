@@ -87,3 +87,43 @@ Este arquivo registra detalhadamente todas as alterações, decisões de design 
 
 ### Próximos Passos
 * Validar no navegador e apresentar o projeto consolidado para o usuário com os links locais de acesso. (CONCLUÍDO)
+
+## [2026-05-27] - Preparação para Deploy na Vercel & Publicação no GitHub
+
+### Alterações Realizadas
+1. **Configuração do Ambiente de Roteamento Vercel (`vercel.json`):**
+   - Criado o arquivo de configuração `vercel.json` na raiz do projeto.
+   - Ativado o recurso de URLs amigáveis com `"cleanUrls": true` para ocultar extensões `.html` na barra de endereços da Vercel.
+   - Definida a regra de redirecionamento inteligente (*rewrites*) da rota amigável `/admin` apontando diretamente para `/admin.html`.
+2. **Configuração de Exclusões (`.gitignore`):**
+   - Criado o arquivo `.gitignore` na raiz do projeto para ignorar os arquivos de sistema local da IDE e logs de depuração temporários.
+3. **Publicação no GitHub:**
+   - Inicializado o repositório Git local na pasta de trabalho.
+   - Configurada a branch padrão como `main`.
+   - Conectado com sucesso ao repositório do usuário: `https://github.com/felipebarbosavasconcelos13-coder/site_barber.git`.
+   - Executado o primeiro commit formal contendo toda a base tecnológica estruturada do projeto.
+   - Efetuado o *push* dos arquivos para a branch `main`, permitindo deploy automático e instantâneo a partir da Vercel.
+
+### Próximos Passos
+* Orientar o usuário sobre como fazer o deploy final na plataforma da Vercel em apenas um clique através do repositório conectado. (CONCLUÍDO)
+
+## [2026-05-27] - Independência Total Offline-First & Galeria do Ambiente com Filtros
+
+### Alterações Realizadas
+1. **Migração para Dependências 100% Locais (Independência de Rede):**
+   - **Compilador Tailwind CSS Local:** Baixado o compilador em tempo de execução da CDN e salvo fisicamente em `assets/js/tailwind.js`, removendo requisições externas para carregar o Tailwind.
+   - **Tipografia Offline-First:** Baixados os binários `.ttf` das fontes **Inter** e **Space Grotesk** do repositório oficial de fontes do Google e salvos em `assets/fonts/`.
+   - **Ícones offline nativos:** Baixada a fonte de ícones **Material Symbols Outlined** (`.ttf`) e configurada localmente.
+   - **Folha de Estilos de Fontes locais (`assets/css/styles.css`):** Criada a folha de estilos contendo as regras `@font-face` locais apontando para arquivos relativos e a classe utilitária do Material Symbols, garantindo renderização idêntica em qualquer ambiente offline ou de nuvem.
+   - Atualizados os cabeçalhos de `index.html` e `admin.html` para ler única e exclusivamente de `assets/`.
+2. **Imagens Cinematográficas Locais WebP de Alta Resolução:**
+   - Geradas imagens cinematográficas luxuosas em formato **WebP** usando inteligência artificial premium, salvando-as localmente em `assets/images/` para background, serviços e ambientação do salão, eliminando totalmente dependências do Unsplash.
+3. **Nova Galeria do Ambiente com Filtros e Abas (`index.html`):**
+   - Implementado o componente de galeria com suporte a abas e filtros interativos (*Todos*, *Cortes & Serviços*, *Ambiente Interno*, *Ambiente Externo* e *Nossos Clientes*).
+   - Injetado efeito **Lightbox nativo** com overlay escuro, caption dinâmica e fechamento inteligente para ampliação de fotos com apenas um clique.
+4. **Painel de Controle Atualizado (`admin.html`):**
+   - Aba "Galeria" completamente reconstruída com seções avançadas para cortes, estrutura física (ambiente interno/externo) e clientes.
+   - Atualizada a lógica de inicialização padrão, carregamento de campos e submit do formulário para sincronizar reativamente as novas imagens WebP locais no LocalStorage.
+
+### Próximos Passos
+* Realizar commit e push das novas imagens locais e dependências para o GitHub e orientar o usuário sobre o deploy final. (CONCLUÍDO)

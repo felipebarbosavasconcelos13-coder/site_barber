@@ -5,10 +5,9 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
     <title>Elegance Premium | Painel de Controle</title>
     
-    <!-- Google Fonts & Tailwind -->
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap" rel="stylesheet"/>
+    <!-- Recursos Estáticos Locais (Offline-First) -->
+    <script src="assets/js/tailwind.js"></script>
+    <link href="assets/css/styles.css" rel="stylesheet"/>
     
     <script id="tailwind-config">
         tailwind.config = {
@@ -414,24 +413,63 @@
                 </div>
                 
                 <!-- ABA: GALERIA -->
-                <div id="tab-content-galeria" class="tab-content hidden flex flex-col gap-5">
-                    <p class="text-xs text-on-surface-variant font-light">Forneça os links das imagens reais para o grid da galeria. Você pode usar imagens do Unsplash ou gerá-las.</p>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                        <div class="flex flex-col gap-2">
-                            <label class="text-xs font-semibold uppercase tracking-wider text-on-surface-variant">Imagem 1 (Corte)</label>
-                            <input type="text" id="g-img-0" class="w-full px-4 py-3 rounded-lg text-sm">
+                <div id="tab-content-galeria" class="tab-content hidden flex flex-col gap-6">
+                    <p class="text-xs text-on-surface-variant font-light">Gerencie os caminhos das imagens locais. O site é offline-first e suporta perfeitamente o formato <strong>.webp</strong>.</p>
+                    
+                    <!-- Categoria: Cortes e Serviços -->
+                    <div class="bg-[#1a1919] p-5 rounded-xl border border-outline-variant/15 flex flex-col gap-4">
+                        <span class="text-xs font-bold uppercase tracking-wider text-primary">Cortes & Serviços</span>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="flex flex-col gap-2">
+                                <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Foto 1 (Corte Signature)</label>
+                                <input type="text" id="g-img-0" class="w-full px-3 py-2 text-xs rounded-lg">
+                            </div>
+                            <div class="flex flex-col gap-2">
+                                <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Foto 2 (Barba Elegance)</label>
+                                <input type="text" id="g-img-1" class="w-full px-3 py-2 text-xs rounded-lg">
+                            </div>
+                            <div class="flex flex-col gap-2">
+                                <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Foto 3 (Combo Lounge)</label>
+                                <input type="text" id="g-img-2" class="w-full px-3 py-2 text-xs rounded-lg">
+                            </div>
+                            <div class="flex flex-col gap-2">
+                                <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Foto 4 (Pomadas de Luxo)</label>
+                                <input type="text" id="g-img-3" class="w-full px-3 py-2 text-xs rounded-lg">
+                            </div>
                         </div>
-                        <div class="flex flex-col gap-2">
-                            <label class="text-xs font-semibold uppercase tracking-wider text-on-surface-variant">Imagem 2 (Barba)</label>
-                            <input type="text" id="g-img-1" class="w-full px-4 py-3 rounded-lg text-sm">
+                    </div>
+
+                    <!-- Categoria: Ambiente Interno e Externo -->
+                    <div class="bg-[#1a1919] p-5 rounded-xl border border-outline-variant/15 flex flex-col gap-4">
+                        <span class="text-xs font-bold uppercase tracking-wider text-primary">Estrutura Física (Ambiente)</span>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div class="flex flex-col gap-2">
+                                <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Interno 1 (Lounge VIP)</label>
+                                <input type="text" id="g-img-interno-0" class="w-full px-3 py-2 text-xs rounded-lg">
+                            </div>
+                            <div class="flex flex-col gap-2">
+                                <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Interno 2 (Bar Gourmet)</label>
+                                <input type="text" id="g-img-interno-1" class="w-full px-3 py-2 text-xs rounded-lg">
+                            </div>
+                            <div class="flex flex-col gap-2">
+                                <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Externo (Fachada Luxuosa)</label>
+                                <input type="text" id="g-img-externo-0" class="w-full px-3 py-2 text-xs rounded-lg">
+                            </div>
                         </div>
-                        <div class="flex flex-col gap-2">
-                            <label class="text-xs font-semibold uppercase tracking-wider text-on-surface-variant">Imagem 3 (Lounge)</label>
-                            <input type="text" id="g-img-2" class="w-full px-4 py-3 rounded-lg text-sm">
-                        </div>
-                        <div class="flex flex-col gap-2">
-                            <label class="text-xs font-semibold uppercase tracking-wider text-on-surface-variant">Imagem 4 (Produtos)</label>
-                            <input type="text" id="g-img-3" class="w-full px-4 py-3 rounded-lg text-sm">
+                    </div>
+
+                    <!-- Categoria: Nossos Clientes -->
+                    <div class="bg-[#1a1919] p-5 rounded-xl border border-outline-variant/15 flex flex-col gap-4">
+                        <span class="text-xs font-bold uppercase tracking-wider text-primary">Nossos Clientes (Lifestyle)</span>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="flex flex-col gap-2">
+                                <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Cliente 1 (Estilo e Corte)</label>
+                                <input type="text" id="g-img-cliente-0" class="w-full px-3 py-2 text-xs rounded-lg">
+                            </div>
+                            <div class="flex flex-col gap-2">
+                                <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Cliente 2 (Clube Lounge)</label>
+                                <input type="text" id="g-img-cliente-1" class="w-full px-3 py-2 text-xs rounded-lg">
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -519,7 +557,7 @@
           hero: {
             title: "Estilo Incomparável para o Homem Moderno",
             subtitle: "A experiência premium de barbearia que você merece. Acabamento impecável, ambiente de alto padrão e profissionais de elite.",
-            bg_image: "https://images.unsplash.com/photo-1585747860715-2ba37e788b70?auto=format&fit=crop&q=80&w=1920"
+            bg_image: "assets/images/hero-bg.webp"
           },
           about: {
             problem_title: "Cansado de cortes genéricos?",
@@ -555,10 +593,19 @@
             }
           ],
           gallery: [
-            "https://images.unsplash.com/photo-1621605815971-fbc98d665033?auto=format&fit=crop&q=80&w=600",
-            "https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&q=80&w=600",
-            "https://images.unsplash.com/photo-1599351431247-f50940f3fde3?auto=format&fit=crop&q=80&w=600",
-            "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&q=80&w=600"
+            "assets/images/corte1.webp",
+            "assets/images/corte2.webp",
+            "assets/images/corte3.webp",
+            "assets/images/corte4.webp"
+          ],
+          gallery_interno: [
+            "assets/images/interno1.webp",
+            "assets/images/interno2.webp"
+          ],
+          gallery_externo: "assets/images/externo.webp",
+          gallery_clientes: [
+            "assets/images/cliente1.webp",
+            "assets/images/cliente2.webp"
           ],
           location: {
             address: "Av. Paulista, 1000 - Bela Vista, São Paulo - SP",
@@ -700,6 +747,12 @@
             for (let i = 0; i < 4; i++) {
                 document.getElementById(`g-img-${i}`).value = data.gallery[i] || '';
             }
+            // Galeria Ambiente
+            for (let i = 0; i < 2; i++) {
+                document.getElementById(`g-img-interno-${i}`).value = data.gallery_interno ? (data.gallery_interno[i] || '') : '';
+                document.getElementById(`g-img-cliente-${i}`).value = data.gallery_clientes ? (data.gallery_clientes[i] || '') : '';
+            }
+            document.getElementById('g-img-externo-0').value = data.gallery_externo || '';
             
             // Localização
             document.getElementById('l-address').value = data.location.address;
@@ -772,6 +825,15 @@
                     document.getElementById('g-img-1').value,
                     document.getElementById('g-img-2').value,
                     document.getElementById('g-img-3').value
+                ],
+                gallery_interno: [
+                    document.getElementById('g-img-interno-0').value,
+                    document.getElementById('g-img-interno-1').value
+                ],
+                gallery_externo: document.getElementById('g-img-externo-0').value,
+                gallery_clientes: [
+                    document.getElementById('g-img-cliente-0').value,
+                    document.getElementById('g-img-cliente-1').value
                 ],
                 location: {
                     address: document.getElementById('l-address').value,

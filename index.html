@@ -46,10 +46,9 @@
     <meta property="og:description" content="Vivencie a precisão do visagismo e o conforto de um lounge de elite na Av. Paulista. Agendamento prático via WhatsApp." />
     <meta property="og:type" content="website" />
     
-    <!-- Google Fonts & Tailwind -->
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap" rel="stylesheet"/>
+    <!-- Recursos Estáticos Locais (Offline-First) -->
+    <script src="assets/js/tailwind.js"></script>
+    <link href="assets/css/styles.css" rel="stylesheet"/>
     
     <script id="tailwind-config">
         // Ler configurações locais para mesclar cores dinamicamente no Tailwind
@@ -259,7 +258,7 @@
     <section class="relative min-h-[95vh] flex items-center pt-[100px] pb-section-gap overflow-hidden">
         <!-- Background Imagem Real com Overlay de Tonalidade Escura -->
         <div class="absolute inset-0 z-0">
-            <img id="hero-bg-img" alt="Interior de Barbearia Luxuosa" class="w-full h-full object-cover opacity-25 mix-blend-luminosity" src="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?auto=format&fit=crop&q=80&w=1920"/>
+            <img id="hero-bg-img" alt="Interior de Barbearia Luxuosa" class="w-full h-full object-cover opacity-25 mix-blend-luminosity" src="assets/images/hero-bg.webp"/>
             <div class="absolute inset-0 bg-gradient-to-t from-background via-background/85 to-transparent"></div>
             <div class="absolute inset-0 bg-gradient-to-r from-background via-background/60 to-transparent"></div>
         </div>
@@ -414,57 +413,156 @@
         </div>
     </section>
 
-    <!-- Gallery Section -->
+    <!-- Gallery Section (Galeria do Ambiente, Externo, Interno e Clientes) -->
     <section class="py-section-gap px-container-padding w-full max-w-[1200px] mx-auto scroll-mt-24" id="gallery">
-        <div class="text-center mb-16">
-            <span class="text-primary-container font-semibold tracking-widest text-xs uppercase block mb-3">Galeria Visual</span>
-            <h2 class="font-display text-3xl md:text-5xl font-bold text-primary mb-4">Meticulosidade nos Detalhes</h2>
+        <div class="text-center mb-12">
+            <span class="text-primary-container font-semibold tracking-widest text-xs uppercase block mb-3">Galeria Premium</span>
+            <h2 class="font-display text-3xl md:text-5xl font-bold text-primary mb-4">Explore a Experiência Elegance</h2>
             <div class="w-16 h-1 gold-gradient mx-auto rounded-full mb-6"></div>
-            <p class="text-on-surface-variant max-w-2xl mx-auto font-light">Explore a excelência visual, nossa estrutura de luxo e a maestria em cada acabamento.</p>
+            <p class="text-on-surface-variant max-w-2xl mx-auto font-light">Explore a excelência visual em cada detalhe, desde o nosso design de lounge aos resultados refinados dos nossos clientes.</p>
+        </div>
+
+        <!-- Abas de Filtros -->
+        <div class="flex flex-wrap justify-center gap-2 mb-10">
+            <button data-filter="all" class="filter-btn active px-5 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider transition-all duration-300 border border-outline-variant/30 bg-primary-container/10 text-primary-container gold-glow">
+                Todos
+            </button>
+            <button data-filter="cortes" class="filter-btn px-5 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider transition-all duration-300 border border-outline-variant/20 hover:border-primary-container/50 text-on-surface-variant hover:text-primary">
+                Cortes & Serviços
+            </button>
+            <button data-filter="interno" class="filter-btn px-5 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider transition-all duration-300 border border-outline-variant/20 hover:border-primary-container/50 text-on-surface-variant hover:text-primary">
+                Ambiente Interno
+            </button>
+            <button data-filter="externo" class="filter-btn px-5 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider transition-all duration-300 border border-outline-variant/20 hover:border-primary-container/50 text-on-surface-variant hover:text-primary">
+                Ambiente Externo
+            </button>
+            <button data-filter="clientes" class="filter-btn px-5 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider transition-all duration-300 border border-outline-variant/20 hover:border-primary-container/50 text-on-surface-variant hover:text-primary">
+                Nossos Clientes
+            </button>
         </div>
         
-        <!-- Grid de Imagens -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-            <!-- Galeria 1 -->
-            <div class="relative rounded-xl overflow-hidden group aspect-[3/4] border border-outline-variant/10 shadow-lg">
-                <img id="gallery-img-0" alt="Corte Masculino Degradê Fade" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" src="https://images.unsplash.com/photo-1621605815971-fbc98d665033?auto=format&fit=crop&q=80&w=600"/>
-                <div class="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent opacity-80 group-hover:opacity-90 transition-opacity"></div>
-                <div class="absolute bottom-6 left-6 right-6">
-                    <span class="text-primary-container font-display font-semibold text-lg tracking-wide">Corte Impecável</span>
-                    <p class="text-xs text-on-surface-variant font-light mt-1">Acabamentos precisos com as melhores técnicas de degradê.</p>
+        <!-- Grid de Imagens Dinâmicas -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6" id="gallery-grid">
+            <!-- Cortes 1 -->
+            <div class="gallery-item show-item" data-category="cortes">
+                <div class="relative rounded-xl overflow-hidden group aspect-[4/3] border border-outline-variant/10 shadow-lg cursor-pointer lightbox-trigger">
+                    <img id="gallery-img-0" alt="Corte Masculino Degradê Fade" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" src="assets/images/corte1.webp"/>
+                    <div class="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent opacity-80 group-hover:opacity-90 transition-opacity"></div>
+                    <div class="absolute bottom-4 left-4 right-4">
+                        <span class="text-primary-container font-display font-semibold text-base tracking-wide">Corte Signature</span>
+                        <p class="text-[10px] text-on-surface-variant font-light mt-0.5">Degradê preciso e finalização impecável.</p>
+                    </div>
                 </div>
             </div>
-            
-            <!-- Galeria 2 -->
-            <div class="relative rounded-xl overflow-hidden group aspect-[3/4] border border-outline-variant/10 shadow-lg">
-                <img id="gallery-img-1" alt="Barboterapia Clássica" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&q=80&w=600"/>
-                <div class="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent opacity-80 group-hover:opacity-90 transition-opacity"></div>
-                <div class="absolute bottom-6 left-6 right-6">
-                    <span class="text-primary-container font-display font-semibold text-lg tracking-wide">Ritual da Navalha</span>
-                    <p class="text-xs text-on-surface-variant font-light mt-1">Toalha quente com aromaterapia e navalhar clássico.</p>
+
+            <!-- Cortes 2 -->
+            <div class="gallery-item show-item" data-category="cortes">
+                <div class="relative rounded-xl overflow-hidden group aspect-[4/3] border border-outline-variant/10 shadow-lg cursor-pointer lightbox-trigger">
+                    <img id="gallery-img-1" alt="Barboterapia Navalhete" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" src="assets/images/corte2.webp"/>
+                    <div class="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent opacity-80 group-hover:opacity-90 transition-opacity"></div>
+                    <div class="absolute bottom-4 left-4 right-4">
+                        <span class="text-primary-container font-display font-semibold text-base tracking-wide">Ritual da Navalha</span>
+                        <p class="text-[10px] text-on-surface-variant font-light mt-0.5">Toalha quente clássica e barbear ultra alinhado.</p>
+                    </div>
                 </div>
             </div>
-            
-            <!-- Galeria 3 -->
-            <div class="relative rounded-xl overflow-hidden group aspect-[3/4] border border-outline-variant/10 shadow-lg">
-                <img id="gallery-img-2" alt="Ambiente da Barbearia de Luxo" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" src="https://images.unsplash.com/photo-1599351431247-f50940f3fde3?auto=format&fit=crop&q=80&w=600"/>
-                <div class="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent opacity-80 group-hover:opacity-90 transition-opacity"></div>
-                <div class="absolute bottom-6 left-6 right-6">
-                    <span class="text-primary-container font-display font-semibold text-lg tracking-wide">Lounge Exclusivo</span>
-                    <p class="text-xs text-on-surface-variant font-light mt-1">Uma experiência de relaxamento em poltronas de alta classe.</p>
+
+            <!-- Cortes 3 -->
+            <div class="gallery-item show-item" data-category="cortes">
+                <div class="relative rounded-xl overflow-hidden group aspect-[4/3] border border-outline-variant/10 shadow-lg cursor-pointer lightbox-trigger">
+                    <img id="gallery-img-2" alt="Combo Imperial Lounge" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" src="assets/images/corte3.webp"/>
+                    <div class="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent opacity-80 group-hover:opacity-90 transition-opacity"></div>
+                    <div class="absolute bottom-4 left-4 right-4">
+                        <span class="text-primary-container font-display font-semibold text-base tracking-wide">Lounge Clássico</span>
+                        <p class="text-[10px] text-on-surface-variant font-light mt-0.5">Drinks refinados e atendimento com single malt.</p>
+                    </div>
                 </div>
             </div>
-            
-            <!-- Galeria 4 -->
-            <div class="relative rounded-xl overflow-hidden group aspect-[3/4] border border-outline-variant/10 shadow-lg">
-                <img id="gallery-img-3" alt="Cosméticos Premium Barbearia" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&q=80&w=600"/>
-                <div class="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent opacity-80 group-hover:opacity-90 transition-opacity"></div>
-                <div class="absolute bottom-6 left-6 right-6">
-                    <span class="text-primary-container font-display font-semibold text-lg tracking-wide">Produtos Importados</span>
-                    <p class="text-xs text-on-surface-variant font-light mt-1">Cosméticos exclusivos para barba e cabelos impecáveis.</p>
+
+            <!-- Cortes 4 -->
+            <div class="gallery-item show-item" data-category="cortes">
+                <div class="relative rounded-xl overflow-hidden group aspect-[4/3] border border-outline-variant/10 shadow-lg cursor-pointer lightbox-trigger">
+                    <img id="gallery-img-3" alt="Produtos Capilares Cosméticos" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" src="assets/images/corte4.webp"/>
+                    <div class="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent opacity-80 group-hover:opacity-90 transition-opacity"></div>
+                    <div class="absolute bottom-4 left-4 right-4">
+                        <span class="text-primary-container font-display font-semibold text-base tracking-wide">Pomadas de Luxo</span>
+                        <p class="text-[10px] text-on-surface-variant font-light mt-0.5">Produtos de elite para fixação e saúde dos cabelos.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Interno 1 -->
+            <div class="gallery-item show-item" data-category="interno">
+                <div class="relative rounded-xl overflow-hidden group aspect-[4/3] border border-outline-variant/10 shadow-lg cursor-pointer lightbox-trigger">
+                    <img id="gallery-img-interno-0" alt="Espaço Interno Poltronas Couro" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" src="assets/images/interno1.webp"/>
+                    <div class="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent opacity-80 group-hover:opacity-90 transition-opacity"></div>
+                    <div class="absolute bottom-4 left-4 right-4">
+                        <span class="text-primary-container font-display font-semibold text-base tracking-wide">Lounge VIP</span>
+                        <p class="text-[10px] text-on-surface-variant font-light mt-0.5">Poltronas premium para relaxamento completo.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Interno 2 -->
+            <div class="gallery-item show-item" data-category="interno">
+                <div class="relative rounded-xl overflow-hidden group aspect-[4/3] border border-outline-variant/10 shadow-lg cursor-pointer lightbox-trigger">
+                    <img id="gallery-img-interno-1" alt="Lounge e Bar Barbearia" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" src="assets/images/interno2.webp"/>
+                    <div class="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent opacity-80 group-hover:opacity-90 transition-opacity"></div>
+                    <div class="absolute bottom-4 left-4 right-4">
+                        <span class="text-primary-container font-display font-semibold text-base tracking-wide">Bar Gourmet</span>
+                        <p class="text-[10px] text-on-surface-variant font-light mt-0.5">Cafés e destilados selecionados para nossos convidados.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Externo 1 -->
+            <div class="gallery-item show-item" data-category="externo">
+                <div class="relative rounded-xl overflow-hidden group aspect-[4/3] border border-outline-variant/10 shadow-lg cursor-pointer lightbox-trigger">
+                    <img id="gallery-img-externo-0" alt="Fachada Externa Barbearia" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" src="assets/images/externo.webp"/>
+                    <div class="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent opacity-80 group-hover:opacity-90 transition-opacity"></div>
+                    <div class="absolute bottom-4 left-4 right-4">
+                        <span class="text-primary-container font-display font-semibold text-base tracking-wide">Nossa Fachada</span>
+                        <p class="text-[10px] text-on-surface-variant font-light mt-0.5">Presença majestosa com arquitetura moderna e luxuosa.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Clientes 1 -->
+            <div class="gallery-item show-item" data-category="clientes">
+                <div class="relative rounded-xl overflow-hidden group aspect-[4/3] border border-outline-variant/10 shadow-lg cursor-pointer lightbox-trigger">
+                    <img id="gallery-img-cliente-0" alt="Corte de Cliente Estiloso" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" src="assets/images/cliente1.webp"/>
+                    <div class="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent opacity-80 group-hover:opacity-90 transition-opacity"></div>
+                    <div class="absolute bottom-4 left-4 right-4">
+                        <span class="text-primary-container font-display font-semibold text-base tracking-wide">Estilo Lifestyle</span>
+                        <p class="text-[10px] text-on-surface-variant font-light mt-0.5">Visual esculpido de acordo com a personalidade do cliente.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Clientes 2 -->
+            <div class="gallery-item show-item" data-category="clientes">
+                <div class="relative rounded-xl overflow-hidden group aspect-[4/3] border border-outline-variant/10 shadow-lg cursor-pointer lightbox-trigger">
+                    <img id="gallery-img-cliente-1" alt="Clientes no Lounge Elegance" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" src="assets/images/cliente2.webp"/>
+                    <div class="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent opacity-80 group-hover:opacity-90 transition-opacity"></div>
+                    <div class="absolute bottom-4 left-4 right-4">
+                        <span class="text-primary-container font-display font-semibold text-base tracking-wide">Clube Elegance</span>
+                        <p class="text-[10px] text-on-surface-variant font-light mt-0.5">O ponto de encontro de grandes homens de negócios.</p>
+                    </div>
                 </div>
             </div>
         </div>
+    </section>
+
+    <!-- Componente Lightbox Nativo (Oculto por Padrão) -->
+    <div id="lightbox" class="fixed inset-0 z-50 bg-black/95 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <button id="lightbox-close" class="absolute top-6 right-6 text-white hover:text-primary transition-colors flex items-center justify-center p-2 rounded-full bg-white/5 hover:bg-white/10">
+            <span class="material-symbols-outlined text-2xl">close</span>
+        </button>
+        <div class="max-w-[90%] max-h-[85vh] flex flex-col items-center gap-4">
+            <img id="lightbox-img" class="max-w-full max-h-[80vh] rounded-xl object-contain shadow-2xl border border-outline-variant/20" src="" alt="Ampliação de Foto"/>
+            <span id="lightbox-caption" class="text-primary font-display font-semibold tracking-wide text-sm md:text-base text-glow text-center"></span>
+        </div>
+    </div>
     </section>
 
     <!-- Testimonials Section -->
@@ -743,12 +841,31 @@
                     }
                 }
                 
-                // 5. Galeria
+                // 5. Galeria (Cortes, Interno, Externo, Clientes)
                 if (config.gallery && config.gallery.length >= 4) {
                     for (let i = 0; i < 4; i++) {
                         const imgUrl = config.gallery[i];
                         if (imgUrl && imgUrl.trim() !== '') {
                             document.getElementById(`gallery-img-${i}`).src = imgUrl;
+                        }
+                    }
+                }
+                if (config.gallery_interno && config.gallery_interno.length >= 2) {
+                    for (let i = 0; i < 2; i++) {
+                        const imgUrl = config.gallery_interno[i];
+                        if (imgUrl && imgUrl.trim() !== '') {
+                            document.getElementById(`gallery-img-interno-${i}`).src = imgUrl;
+                        }
+                    }
+                }
+                if (config.gallery_externo && config.gallery_externo.trim() !== '') {
+                    document.getElementById('gallery-img-externo-0').src = config.gallery_externo;
+                }
+                if (config.gallery_clientes && config.gallery_clientes.length >= 2) {
+                    for (let i = 0; i < 2; i++) {
+                        const imgUrl = config.gallery_clientes[i];
+                        if (imgUrl && imgUrl.trim() !== '') {
+                            document.getElementById(`gallery-img-cliente-${i}`).src = imgUrl;
                         }
                     }
                 }
@@ -861,6 +978,69 @@
             } else {
                 navbar.classList.add('bg-background/25', 'py-4');
                 navbar.classList.remove('bg-background/90', 'py-3');
+            }
+        });
+
+        // Filtros Interativos da Galeria
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const galleryItems = document.querySelectorAll('.gallery-item');
+        
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Remover active de todos os botões de filtro
+                filterBtns.forEach(b => {
+                    b.classList.remove('active', 'bg-primary-container/10', 'text-primary-container', 'gold-glow');
+                    b.classList.add('text-on-surface-variant', 'border-outline-variant/20');
+                });
+                
+                // Adicionar active ao botão clicado
+                btn.classList.add('active', 'bg-primary-container/10', 'text-primary-container', 'gold-glow');
+                btn.classList.remove('text-on-surface-variant', 'border-outline-variant/20');
+                
+                const filterValue = btn.getAttribute('data-filter');
+                
+                galleryItems.forEach(item => {
+                    const category = item.getAttribute('data-category');
+                    if (filterValue === 'all' || category === filterValue) {
+                        item.classList.remove('hidden');
+                    } else {
+                        item.classList.add('hidden');
+                    }
+                });
+            });
+        });
+
+        // Componente Lightbox de Imagens Nativo
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        const lightboxCaption = document.getElementById('lightbox-caption');
+        const lightboxClose = document.getElementById('lightbox-close');
+        const triggers = document.querySelectorAll('.lightbox-trigger');
+        
+        triggers.forEach(trigger => {
+            trigger.addEventListener('click', () => {
+                const img = trigger.querySelector('img');
+                const captionEl = trigger.querySelector('span');
+                const caption = captionEl ? captionEl.innerText : "Elegance Premium";
+                
+                if (img) {
+                    lightboxImg.src = img.src;
+                    lightboxCaption.innerText = caption;
+                    lightbox.classList.remove('hidden');
+                    document.body.style.overflow = 'hidden'; // Impede o scroll
+                }
+            });
+        });
+        
+        const closeLightbox = () => {
+            lightbox.classList.add('hidden');
+            document.body.style.overflow = ''; // Restaura scroll
+        };
+        
+        lightboxClose.addEventListener('click', closeLightbox);
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) {
+                closeLightbox();
             }
         });
     </script>
