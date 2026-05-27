@@ -264,9 +264,15 @@
                             <input type="text" id="g-reviews" class="w-full px-4 py-3 rounded-lg text-sm">
                         </div>
                         <div class="flex flex-col gap-2">
-                            <label class="text-xs font-semibold uppercase tracking-wider text-on-surface-variant">URL da Logo (Monograma)</label>
-                            <input type="text" id="g-logo" class="w-full px-4 py-3 rounded-lg text-sm">
-                            <span class="text-[10px] text-on-surface-variant font-light">Deixe em branco para usar o monograma elegante padrão de fábrica</span>
+                            <label class="text-xs font-semibold uppercase tracking-wider text-on-surface-variant">Logo da Barbearia</label>
+                            <div class="flex gap-2">
+                                <input type="text" id="g-logo" class="flex-grow px-4 py-3 rounded-lg text-sm" placeholder="Caminho local ou Base64">
+                                <label class="bg-surface-container-high hover:bg-surface-container-highest border border-outline-variant/30 text-primary-container px-4 py-3 rounded-lg text-xs font-bold uppercase transition-colors shrink-0 flex items-center gap-1 cursor-pointer">
+                                    <span class="material-symbols-outlined text-base">upload</span> Enviar
+                                    <input type="file" class="hidden img-upload-trigger" data-target="g-logo" accept="image/*">
+                                </label>
+                            </div>
+                            <span class="text-[10px] text-on-surface-variant font-light">Faça o upload do seu logotipo em formato .png ou .webp (comprimido Base64 automaticamente)</span>
                         </div>
                     </div>
                 </div>
@@ -309,9 +315,15 @@
                         <textarea id="h-subtitle" rows="3" class="w-full px-4 py-3 rounded-lg text-sm"></textarea>
                     </div>
                     <div class="flex flex-col gap-2">
-                        <label class="text-xs font-semibold uppercase tracking-wider text-on-surface-variant">URL da Imagem de Fundo (Background)</label>
-                        <input type="text" id="h-bg" class="w-full px-4 py-3 rounded-lg text-sm">
-                        <span class="text-[10px] text-on-surface-variant font-light">Forneça o link de uma imagem de alta resolução (ex: do Unsplash).</span>
+                        <label class="text-xs font-semibold uppercase tracking-wider text-on-surface-variant">Imagem de Fundo do Hero (Background)</label>
+                        <div class="flex gap-2">
+                            <input type="text" id="h-bg" class="flex-grow px-4 py-3 rounded-lg text-sm" placeholder="Caminho local ou Base64">
+                            <label class="bg-surface-container-high hover:bg-surface-container-highest border border-outline-variant/30 text-primary-container px-4 py-3 rounded-lg text-xs font-bold uppercase transition-colors shrink-0 flex items-center gap-1 cursor-pointer">
+                                <span class="material-symbols-outlined text-base">upload</span> Enviar
+                                <input type="file" class="hidden img-upload-trigger" data-target="h-bg" accept="image/*">
+                            </label>
+                        </div>
+                        <span class="text-[10px] text-on-surface-variant font-light">Faça upload de uma imagem do seu salão para a tela principal (comprimido Base64 automaticamente)</span>
                     </div>
                 </div>
                 
@@ -414,7 +426,7 @@
                 
                 <!-- ABA: GALERIA -->
                 <div id="tab-content-galeria" class="tab-content hidden flex flex-col gap-6">
-                    <p class="text-xs text-on-surface-variant font-light">Gerencie os caminhos das imagens locais. O site é offline-first e suporta perfeitamente o formato <strong>.webp</strong>.</p>
+                    <p class="text-xs text-on-surface-variant font-light">Gerencie os caminhos das imagens. Você pode digitar caminhos locais ou **fazer o upload** direto do seu computador em formato .png ou .webp (comprimido Base64 automaticamente).</p>
                     
                     <!-- Categoria: Cortes e Serviços -->
                     <div class="bg-[#1a1919] p-5 rounded-xl border border-outline-variant/15 flex flex-col gap-4">
@@ -422,19 +434,43 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div class="flex flex-col gap-2">
                                 <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Foto 1 (Corte Signature)</label>
-                                <input type="text" id="g-img-0" class="w-full px-3 py-2 text-xs rounded-lg">
+                                <div class="flex gap-2">
+                                    <input type="text" id="g-img-0" class="flex-grow px-3 py-2 text-xs rounded-lg">
+                                    <label class="bg-surface-container-high hover:bg-surface-container-highest border border-outline-variant/30 text-primary-container px-3 py-2 rounded-lg text-[10px] font-bold uppercase transition-colors shrink-0 flex items-center gap-1 cursor-pointer">
+                                        <span class="material-symbols-outlined text-sm">upload</span> Enviar
+                                        <input type="file" class="hidden img-upload-trigger" data-target="g-img-0" accept="image/*">
+                                    </label>
+                                </div>
                             </div>
                             <div class="flex flex-col gap-2">
                                 <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Foto 2 (Barba Elegance)</label>
-                                <input type="text" id="g-img-1" class="w-full px-3 py-2 text-xs rounded-lg">
+                                <div class="flex gap-2">
+                                    <input type="text" id="g-img-1" class="flex-grow px-3 py-2 text-xs rounded-lg">
+                                    <label class="bg-surface-container-high hover:bg-surface-container-highest border border-outline-variant/30 text-primary-container px-3 py-2 rounded-lg text-[10px] font-bold uppercase transition-colors shrink-0 flex items-center gap-1 cursor-pointer">
+                                        <span class="material-symbols-outlined text-sm">upload</span> Enviar
+                                        <input type="file" class="hidden img-upload-trigger" data-target="g-img-1" accept="image/*">
+                                    </label>
+                                </div>
                             </div>
                             <div class="flex flex-col gap-2">
                                 <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Foto 3 (Combo Lounge)</label>
-                                <input type="text" id="g-img-2" class="w-full px-3 py-2 text-xs rounded-lg">
+                                <div class="flex gap-2">
+                                    <input type="text" id="g-img-2" class="flex-grow px-3 py-2 text-xs rounded-lg">
+                                    <label class="bg-surface-container-high hover:bg-surface-container-highest border border-outline-variant/30 text-primary-container px-3 py-2 rounded-lg text-[10px] font-bold uppercase transition-colors shrink-0 flex items-center gap-1 cursor-pointer">
+                                        <span class="material-symbols-outlined text-sm">upload</span> Enviar
+                                        <input type="file" class="hidden img-upload-trigger" data-target="g-img-2" accept="image/*">
+                                    </label>
+                                </div>
                             </div>
                             <div class="flex flex-col gap-2">
                                 <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Foto 4 (Pomadas de Luxo)</label>
-                                <input type="text" id="g-img-3" class="w-full px-3 py-2 text-xs rounded-lg">
+                                <div class="flex gap-2">
+                                    <input type="text" id="g-img-3" class="flex-grow px-3 py-2 text-xs rounded-lg">
+                                    <label class="bg-surface-container-high hover:bg-surface-container-highest border border-outline-variant/30 text-primary-container px-3 py-2 rounded-lg text-[10px] font-bold uppercase transition-colors shrink-0 flex items-center gap-1 cursor-pointer">
+                                        <span class="material-symbols-outlined text-sm">upload</span> Enviar
+                                        <input type="file" class="hidden img-upload-trigger" data-target="g-img-3" accept="image/*">
+                                    </label>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -445,15 +481,33 @@
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                             <div class="flex flex-col gap-2">
                                 <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Interno 1 (Lounge VIP)</label>
-                                <input type="text" id="g-img-interno-0" class="w-full px-3 py-2 text-xs rounded-lg">
+                                <div class="flex gap-2">
+                                    <input type="text" id="g-img-interno-0" class="flex-grow px-3 py-2 text-xs rounded-lg">
+                                    <label class="bg-surface-container-high hover:bg-surface-container-highest border border-outline-variant/30 text-primary-container px-3 py-2 rounded-lg text-[10px] font-bold uppercase transition-colors shrink-0 flex items-center gap-1 cursor-pointer">
+                                        <span class="material-symbols-outlined text-sm">upload</span> Enviar
+                                        <input type="file" class="hidden img-upload-trigger" data-target="g-img-interno-0" accept="image/*">
+                                    </label>
+                                </div>
                             </div>
                             <div class="flex flex-col gap-2">
                                 <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Interno 2 (Bar Gourmet)</label>
-                                <input type="text" id="g-img-interno-1" class="w-full px-3 py-2 text-xs rounded-lg">
+                                <div class="flex gap-2">
+                                    <input type="text" id="g-img-interno-1" class="flex-grow px-3 py-2 text-xs rounded-lg">
+                                    <label class="bg-surface-container-high hover:bg-surface-container-highest border border-outline-variant/30 text-primary-container px-3 py-2 rounded-lg text-[10px] font-bold uppercase transition-colors shrink-0 flex items-center gap-1 cursor-pointer">
+                                        <span class="material-symbols-outlined text-sm">upload</span> Enviar
+                                        <input type="file" class="hidden img-upload-trigger" data-target="g-img-interno-1" accept="image/*">
+                                    </label>
+                                </div>
                             </div>
                             <div class="flex flex-col gap-2">
                                 <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Externo (Fachada Luxuosa)</label>
-                                <input type="text" id="g-img-externo-0" class="w-full px-3 py-2 text-xs rounded-lg">
+                                <div class="flex gap-2">
+                                    <input type="text" id="g-img-externo-0" class="flex-grow px-3 py-2 text-xs rounded-lg">
+                                    <label class="bg-surface-container-high hover:bg-surface-container-highest border border-outline-variant/30 text-primary-container px-3 py-2 rounded-lg text-[10px] font-bold uppercase transition-colors shrink-0 flex items-center gap-1 cursor-pointer">
+                                        <span class="material-symbols-outlined text-sm">upload</span> Enviar
+                                        <input type="file" class="hidden img-upload-trigger" data-target="g-img-externo-0" accept="image/*">
+                                    </label>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -464,11 +518,23 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div class="flex flex-col gap-2">
                                 <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Cliente 1 (Estilo e Corte)</label>
-                                <input type="text" id="g-img-cliente-0" class="w-full px-3 py-2 text-xs rounded-lg">
+                                <div class="flex gap-2">
+                                    <input type="text" id="g-img-cliente-0" class="flex-grow px-3 py-2 text-xs rounded-lg">
+                                    <label class="bg-surface-container-high hover:bg-surface-container-highest border border-outline-variant/30 text-primary-container px-3 py-2 rounded-lg text-[10px] font-bold uppercase transition-colors shrink-0 flex items-center gap-1 cursor-pointer">
+                                        <span class="material-symbols-outlined text-sm">upload</span> Enviar
+                                        <input type="file" class="hidden img-upload-trigger" data-target="g-img-cliente-0" accept="image/*">
+                                    </label>
+                                </div>
                             </div>
                             <div class="flex flex-col gap-2">
                                 <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Cliente 2 (Clube Lounge)</label>
-                                <input type="text" id="g-img-cliente-1" class="w-full px-3 py-2 text-xs rounded-lg">
+                                <div class="flex gap-2">
+                                    <input type="text" id="g-img-cliente-1" class="flex-grow px-3 py-2 text-xs rounded-lg">
+                                    <label class="bg-surface-container-high hover:bg-surface-container-highest border border-outline-variant/30 text-primary-container px-3 py-2 rounded-lg text-[10px] font-bold uppercase transition-colors shrink-0 flex items-center gap-1 cursor-pointer">
+                                        <span class="material-symbols-outlined text-sm">upload</span> Enviar
+                                        <input type="file" class="hidden img-upload-trigger" data-target="g-img-cliente-1" accept="image/*">
+                                    </label>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -476,6 +542,20 @@
                 
                 <!-- ABA: LOCALIZACAO -->
                 <div id="tab-content-localizacao" class="tab-content hidden flex flex-col gap-5">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                        <div class="flex flex-col gap-2">
+                            <label class="text-xs font-semibold uppercase tracking-wider text-on-surface-variant">Título da Seção</label>
+                            <input type="text" id="l-title" class="w-full px-4 py-3 rounded-lg text-sm" placeholder="Sofisticação no Coração de São Paulo">
+                        </div>
+                        <div class="flex flex-col gap-2">
+                            <label class="text-xs font-semibold uppercase tracking-wider text-on-surface-variant">Cidade & Estado (SEO)</label>
+                            <input type="text" id="l-city" class="w-full px-4 py-3 rounded-lg text-sm" placeholder="São Paulo - SP">
+                        </div>
+                    </div>
+                    <div class="flex flex-col gap-2">
+                        <label class="text-xs font-semibold uppercase tracking-wider text-on-surface-variant">Descrição da Seção</label>
+                        <textarea id="l-desc" rows="2" class="w-full px-4 py-3 rounded-lg text-sm" placeholder="Nossa unidade principal está estrategicamente posicionada para sua maior conveniência..."></textarea>
+                    </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                         <div class="flex flex-col gap-2">
                             <label class="text-xs font-semibold uppercase tracking-wider text-on-surface-variant">Endereço Completo</label>
@@ -487,15 +567,19 @@
                         </div>
                     </div>
                     <div class="flex flex-col gap-2">
+                        <label class="text-xs font-semibold uppercase tracking-wider text-on-surface-variant">Link Personalizado do Google Maps (Rotas / Como Chegar)</label>
+                        <input type="text" id="l-directions-url" class="w-full px-4 py-3 rounded-lg text-sm" placeholder="https://www.google.com/maps/dir/... (Opcional - se vazio, cria rota baseado no endereço)">
+                    </div>
+                    <div class="flex flex-col gap-2">
                         <label class="text-xs font-semibold uppercase tracking-wider text-on-surface-variant">Link de Incorporação do Google Maps (iframe src)</label>
-                        <textarea id="l-iframe" rows="4" class="w-full px-4 py-3 rounded-lg text-sm"></textarea>
+                        <textarea id="l-iframe" rows="3" class="w-full px-4 py-3 rounded-lg text-sm"></textarea>
                         <span class="text-[10px] text-on-surface-variant font-light">Copie o conteúdo dentro do atributo `src` da tag iframe de incorporação do Google Maps (Compartilhar -> Incorporar um mapa).</span>
                     </div>
                 </div>
                 
                 <!-- ABA: INTEGRAÇÕES -->
                 <div id="tab-content-integracoes" class="tab-content hidden flex flex-col gap-5">
-                    <p class="text-xs text-on-surface-variant font-light">Configure ferramentas de marketing e rastreamento para automação do seu negócio.</p>
+                    <p class="text-xs text-on-surface-variant font-light">Configure ferramentas de marketing, rastreamento e integrações com o Google Maps em tempo real.</p>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                         <div class="flex flex-col gap-2">
                             <label class="text-xs font-semibold uppercase tracking-wider text-on-surface-variant">Google Tag Manager (ID)</label>
@@ -511,6 +595,24 @@
                                 </button>
                             </div>
                             <span class="text-[10px] text-on-surface-variant font-light">Dispara um evento de teste via requisição assíncrona POST para validar seu fluxo de automação no n8n.</span>
+                        </div>
+                    </div>
+                    
+                    <hr class="border-outline-variant/15 my-2">
+                    
+                    <h3 class="font-display font-semibold text-sm text-primary uppercase tracking-wider">Integração Google Places API (Avaliações Dinâmicas)</h3>
+                    <p class="text-[11px] text-on-surface-variant font-light">Insira as credenciais do Google Cloud para sincronizar notas e depoimentos reais automaticamente.</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                        <div class="flex flex-col gap-2">
+                            <label class="text-xs font-semibold uppercase tracking-wider text-on-surface-variant">Google Places API Key</label>
+                            <input type="password" id="i-places-key" class="w-full px-4 py-3 rounded-lg text-sm" placeholder="AIzaSy... (Chave de API do Google Cloud)">
+                            <span class="text-[10px] text-on-surface-variant font-light">Chave de API com acesso liberado a "Places API" no Google Cloud Console.</span>
+                        </div>
+                        <div class="flex flex-col gap-2">
+                            <label class="text-xs font-semibold uppercase tracking-wider text-on-surface-variant">Google Place ID do Estabelecimento</label>
+                            <input type="text" id="i-places-id" class="w-full px-4 py-3 rounded-lg text-sm" placeholder="ChIJ... (Identificador único do seu local)">
+                            <span class="text-[10px] text-on-surface-variant font-light">Encontre seu Place ID usando a ferramenta de busca do Google Maps Platform ou no Place ID Finder.</span>
                         </div>
                     </div>
                 </div>
@@ -608,13 +710,19 @@
             "assets/images/cliente2.webp"
           ],
           location: {
+            title: "Sofisticação no Coração de São Paulo",
+            desc: "Nossa unidade principal está estrategicamente posicionada para sua maior conveniência, com estacionamento privativo e serviço de manobrista gratuito para clientes.",
+            city: "São Paulo - SP",
             address: "Av. Paulista, 1000 - Bela Vista, São Paulo - SP",
             hours: "Segunda a Sábado: 09h às 21h",
+            directions_url: "",
             map_iframe: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3657.1975870002874!2d-46.654316085022175!3d-23.561349884682054!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce59c8da06ab91%3A0xf65cd64d35eb659c!2sAv.%20Paulista%2C%201000%20-%20Bela%20Vista%2C%20S%C3%A3o%20Paulo%20-%20SP%2C%2001310-100!5e0!3m2!1spt-BR!2sbr!4v1684784910394!5m2!1spt-BR!2sbr"
           },
           integrations: {
             gtm_id: "",
-            webhook_url: ""
+            webhook_url: "",
+            places_key: "",
+            places_id: ""
           }
         };
 
@@ -755,13 +863,19 @@
             document.getElementById('g-img-externo-0').value = data.gallery_externo || '';
             
             // Localização
+            document.getElementById('l-title').value = data.location.title || '';
+            document.getElementById('l-city').value = data.location.city || '';
+            document.getElementById('l-desc').value = data.location.desc || '';
             document.getElementById('l-address').value = data.location.address;
             document.getElementById('l-hours').value = data.location.hours;
+            document.getElementById('l-directions-url').value = data.location.directions_url || '';
             document.getElementById('l-iframe').value = data.location.map_iframe;
             
             // Integrações
             document.getElementById('i-gtm').value = data.integrations ? (data.integrations.gtm_id || '') : '';
             document.getElementById('i-webhook').value = data.integrations ? (data.integrations.webhook_url || '') : '';
+            document.getElementById('i-places-key').value = data.integrations ? (data.integrations.places_key || '') : '';
+            document.getElementById('i-places-id').value = data.integrations ? (data.integrations.places_id || '') : '';
         }
 
         // SALVAR ALTERAÇÕES
@@ -836,13 +950,19 @@
                     document.getElementById('g-img-cliente-1').value
                 ],
                 location: {
+                    title: document.getElementById('l-title').value,
+                    city: document.getElementById('l-city').value,
+                    desc: document.getElementById('l-desc').value,
                     address: document.getElementById('l-address').value,
                     hours: document.getElementById('l-hours').value,
+                    directions_url: document.getElementById('l-directions-url').value,
                     map_iframe: document.getElementById('l-iframe').value
                 },
                 integrations: {
                     gtm_id: document.getElementById('i-gtm').value,
-                    webhook_url: document.getElementById('i-webhook').value
+                    webhook_url: document.getElementById('i-webhook').value,
+                    places_key: document.getElementById('i-places-key').value,
+                    places_id: document.getElementById('i-places-id').value
                 }
             };
             
@@ -950,6 +1070,91 @@
                 testBtn.innerHTML = '<span class="material-symbols-outlined text-base">send</span> Testar';
             }
         });
+
+        // MOTOR DE UPLOAD E COMPRESSÃO DE IMAGENS EM BASE64 VIA CANVAS (DELEGAÇÃO DE EVENTOS)
+        function handleImageUploadEvent(event) {
+            const trigger = event.target;
+            if (!trigger.classList || !trigger.classList.contains('img-upload-trigger')) return;
+            
+            const file = trigger.files[0];
+            if (!file) return;
+            
+            if (!file.type.startsWith('image/')) {
+                alert('Por favor, selecione apenas arquivos de imagem.');
+                return;
+            }
+            
+            const targetInputId = trigger.getAttribute('data-target');
+            const targetInput = document.getElementById(targetInputId);
+            if (!targetInput) return;
+            
+            // Feedback visual de processamento
+            const parentLabel = trigger.closest('label');
+            const originalHTML = parentLabel ? parentLabel.innerHTML : '';
+            if (parentLabel) {
+                parentLabel.innerHTML = '<span class="material-symbols-outlined text-base animate-spin">sync</span> Processando';
+                parentLabel.classList.add('opacity-75', 'pointer-events-none');
+            }
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = new Image();
+                img.onload = function() {
+                    const canvas = document.createElement('canvas');
+                    let width = img.width;
+                    let height = img.height;
+                    
+                    const maxDim = targetInputId === 'h-bg' ? 1200 : 800;
+                    
+                    if (width > maxDim || height > maxDim) {
+                        if (width > height) {
+                            height = Math.round((height * maxDim) / width);
+                            width = maxDim;
+                        } else {
+                            width = Math.round((width * maxDim) / height);
+                            height = maxDim;
+                        }
+                    }
+                    
+                    canvas.width = width;
+                    canvas.height = height;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, width, height);
+                    
+                    const base64Data = canvas.toDataURL('image/jpeg', 0.7);
+                    
+                    targetInput.value = base64Data;
+                    targetInput.dispatchEvent(new Event('input'));
+                    
+                    // Restaura label original
+                    if (parentLabel) {
+                        parentLabel.innerHTML = originalHTML;
+                        parentLabel.classList.remove('opacity-75', 'pointer-events-none');
+                    }
+                    
+                    showToast("Imagem processada e comprimida com sucesso!");
+                };
+                img.onerror = function() {
+                    if (parentLabel) {
+                        parentLabel.innerHTML = originalHTML;
+                        parentLabel.classList.remove('opacity-75', 'pointer-events-none');
+                    }
+                    alert("Erro ao ler os dados da imagem.");
+                };
+                img.src = e.target.result;
+            };
+            reader.onerror = function() {
+                if (parentLabel) {
+                    parentLabel.innerHTML = originalHTML;
+                    parentLabel.classList.remove('opacity-75', 'pointer-events-none');
+                }
+                alert("Erro ao ler o arquivo.");
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // Registrar o listener na fase de captura/bolha no documento
+        document.addEventListener('change', handleImageUploadEvent);
 
         // Executar verificação inicial de sessão
         checkSession();

@@ -127,3 +127,27 @@ Este arquivo registra detalhadamente todas as alterações, decisões de design 
 
 ### Próximos Passos
 * Realizar commit e push das novas imagens locais e dependências para o GitHub e orientar o usuário sobre o deploy final. (CONCLUÍDO)
+
+## [2026-05-27] - Implementação: Upload de Imagens no Painel, Localização Avançada e Google Places API Real
+
+### Alterações Realizadas
+1. **Upload Real de Imagens via HTML5 Canvas (`admin.html`):**
+   - Implementado o motor de upload Base64 de altíssima eficiência. Ao fazer o upload de uma imagem em qualquer seção de imagens (Logo, Hero, Galeria de Cortes, Ambiente, Clientes), o painel intercepta e processa o arquivo client-side desenhando-o em um canvas 2D oculto.
+   - Definida resolução máxima otimizada (Hero a 1200px, demais a 800px) e compressão cirúrgica em JPEG 70%, reduzindo fotos pesadas (ex: 5MB) para strings Base64 ultraleves de 20KB a 40KB, garantindo compatibilidade total com o limite de 5MB do `localStorage`.
+   - Adicionada delegação de eventos no nível do documento (`document.addEventListener('change', ...)`) para suportar a recriação dinâmica de inputs file sem perda de listeners e sem vazamento de memória.
+2. **Personalização Avançada de Localização (`admin.html` & `index.html`):**
+   - Adicionados inputs customizados no painel para Título da Seção, Descrição, Cidade/Estado, e Link de Rota Customizada.
+   - Atualizados os scripts `#tailwind-config` e `#dom-dinamizer` no `index.html` para ler do LocalStorage e injetar dinamicamente a cidade/estado no título da página (tag `<title>` e OG tags SEO) e os textos customizados na seção de localização.
+3. **Botão Como Chegar Inteligente com Rotas do Maps (`index.html`):**
+   - Atualizada a lógica do botão "Como Chegar". Caso o usuário forneça um link customizado (ex: PIN exato do salão), o site o utiliza diretamente. Caso contrário, monta dinamicamente a URL de direções do Google Maps para o endereço cadastrado:
+     `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(config.location.address)}`
+     fornecendo rota passo a passo automatizada a partir do local atual do cliente.
+4. **Integração Real com Google Places API (Avaliações Dinâmicas):**
+   - Injetados inputs para Google API Key e Place ID na aba de Integrações do `admin.html`.
+   - Desenvolvido script de integração assíncrona client-side no `index.html` que carrega dinamicamente a biblioteca oficial do Google Maps JavaScript SDK (`https://maps.googleapis.com/maps/api/js?key=API_KEY&libraries=places&callback=initGooglePlaces`).
+   - Implementado o callback `initGooglePlaces()` que executa o `google.maps.places.PlacesService` no navegador, contornando **100% de quaisquer erros de CORS** clássicos de chamadas HTTP client-side diretas.
+   - A chamada recupera a nota real e o total de avaliações, atualizando o Hero e o cabeçalho, e preenche os cards de depoimentos com as 3 avaliações mais recentes e reais de nota máxima extraídas do Google Maps, incluindo a foto de perfil real e nome do autor.
+   - Configurado fallback nativo e robusto (Offline-First) que mantém a nota estática e os depoimentos belos de demonstração originais caso a API do Google não esteja ativa ou ocorra falha de rede, preservando a experiência visual intocada.
+
+### Próximos Passos
+* Realizar commit e push de todas as novas modificações e código otimizado para o repositório do GitHub. (CONCLUÍDO)

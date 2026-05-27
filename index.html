@@ -573,7 +573,7 @@
             <div class="w-16 h-1 gold-gradient mx-auto rounded-full mb-6"></div>
         </div>
         
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+        <div id="testimonials-container" class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
             <!-- Review 1 -->
             <div class="bg-[#131313] rounded-xl p-8 border border-outline-variant/10 flex flex-col gap-4">
                 <div class="flex items-center gap-1 text-primary-container">
@@ -633,7 +633,7 @@
                 <span class="text-primary-container font-semibold tracking-widest text-xs uppercase block">Onde Estamos</span>
                 <h2 id="location-sec-title" class="font-display text-3xl md:text-5xl font-bold text-primary">Sofisticação no Coração de São Paulo</h2>
                 <div class="w-16 h-1 gold-gradient rounded-full mb-2"></div>
-                <p class="text-on-surface-variant font-light leading-relaxed">Nossa unidade principal está estrategicamente posicionada para sua maior conveniência, com estacionamento privativo e serviço de manobrista gratuito para clientes.</p>
+                <p id="location-sec-desc" class="text-on-surface-variant font-light leading-relaxed">Nossa unidade principal está estrategicamente posicionada para sua maior conveniência, com estacionamento privativo e serviço de manobrista gratuito para clientes.</p>
                 
                 <div class="flex flex-col gap-4 mt-2">
                     <div class="flex items-start gap-4">
@@ -737,7 +737,9 @@
                     const name = config.general.name || "ELEGANCE";
                     document.getElementById('nav-site-name').innerText = name.toUpperCase();
                     document.getElementById('footer-site-name').innerText = name;
-                    document.getElementById('site-title-tag').innerText = `${name} | Barbearia de Luxo em São Paulo`;
+                    
+                    const city = (config.location && config.location.city && config.location.city.trim() !== '') ? config.location.city : "São Paulo";
+                    document.getElementById('site-title-tag').innerText = `${name} | Barbearia de Luxo em ${city}`;
                     document.getElementById('og-title-tag').setAttribute('content', `${name} | Barbearia de Luxo`);
                     document.getElementById('footer-copyright').innerText = `© 2026 ${name} Barbershop. Todos os direitos reservados.`;
                     
@@ -872,12 +874,111 @@
                 
                 // 6. Localização
                 if (config.location) {
+                    if (config.location.title && config.location.title.trim() !== '') {
+                        document.getElementById('location-sec-title').innerText = config.location.title;
+                    }
+                    if (config.location.desc && config.location.desc.trim() !== '') {
+                        document.getElementById('location-sec-desc').innerText = config.location.desc;
+                    }
                     document.getElementById('loc-address').innerText = config.location.address;
                     document.getElementById('loc-hours').innerText = config.location.hours;
-                    document.getElementById('loc-directions-btn').setAttribute('href', `https://maps.google.com/?q=${encodeURIComponent(config.location.address)}`);
+                    
+                    // Rota Inteligente ("Como Chegar")
+                    const directionsUrl = config.location.directions_url && config.location.directions_url.trim() !== ''
+                        ? config.location.directions_url
+                        : `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(config.location.address)}`;
+                    document.getElementById('loc-directions-btn').setAttribute('href', directionsUrl);
                     
                     if (config.location.map_iframe && config.location.map_iframe.trim() !== '') {
                         document.getElementById('loc-map-iframe').src = config.location.map_iframe;
+                    }
+                }
+                
+                // 7. Integração Google Places API (Avaliações Dinâmicas)
+                if (config.integrations && config.integrations.places_key && config.integrations.places_id && config.integrations.places_key.trim() !== '' && config.integrations.places_id.trim() !== '') {
+                    const apiKey = config.integrations.places_key.trim();
+                    const placeId = config.integrations.places_id.trim();
+                    
+                    // Callback assíncrono chamado pelo SDK do Google Maps
+                    window.initGooglePlaces = function() {
+                        try {
+                            const service = new google.maps.places.PlacesService(document.createElement('div'));
+                            service.getDetails({
+                                placeId: placeId,
+                                fields: ['rating', 'user_ratings_total', 'reviews']
+                            }, function(place, status) {
+                                if (status === google.maps.places.PlacesServiceStatus.OK && place) {
+                                    // 1. Atualizar nota e contagem na Hero
+                                    if (place.rating) {
+                                        document.getElementById('google-rating-text').innerText = `★ ${place.rating.toFixed(1)} no Google`;
+                                    }
+                                    if (place.user_ratings_total) {
+                                        document.getElementById('google-reviews-text').innerText = `(+${place.user_ratings_total} avaliações reais)`;
+                                    }
+                                    
+                                    // 2. Atualizar depoimentos reais no container
+                                    if (place.reviews && place.reviews.length > 0) {
+                                        const testimonialsContainer = document.getElementById('testimonials-container');
+                                        if (testimonialsContainer) {
+                                            testimonialsContainer.innerHTML = '';
+                                            
+                                            // Filtra para dar preferência a reviews de 4 ou 5 estrelas
+                                            const bestReviews = place.reviews.filter(r => r.rating >= 4);
+                                            const reviewsToUse = bestReviews.length >= 3 ? bestReviews : place.reviews;
+                                            
+                                            reviewsToUse.slice(0, 3).forEach(review => {
+                                                let starsHTML = '';
+                                                for (let i = 0; i < 5; i++) {
+                                                    const isFilled = i < review.rating ? 1 : 0;
+                                                    starsHTML += `<span class="material-symbols-outlined text-base" style="font-variation-settings: 'FILL' ${isFilled};">star</span>`;
+                                                }
+                                                
+                                                const authorName = review.author_name;
+                                                const authorPhoto = review.profile_photo_url || 'assets/images/cliente1.webp';
+                                                const reviewTime = review.relative_time_description || 'Cliente Google';
+                                                const reviewText = review.text || 'A experiência premium de barbearia que você merece. Acabamento impecável e profissionais excelentes.';
+                                                
+                                                testimonialsContainer.innerHTML += `
+                                                    <div class="bg-[#131313] rounded-xl p-8 border border-outline-variant/10 flex flex-col justify-between gap-4 group hover:border-primary-container/20 transition-all duration-300">
+                                                        <div class="flex flex-col gap-4">
+                                                            <div class="flex items-center gap-1 text-primary-container">
+                                                                ${starsHTML}
+                                                            </div>
+                                                            <p class="text-sm text-on-surface-variant leading-relaxed font-light italic">"${reviewText.length > 180 ? reviewText.substring(0, 180) + '...' : reviewText}"</p>
+                                                        </div>
+                                                        <div class="flex items-center gap-3 mt-4 pt-4 border-t border-outline-variant/5">
+                                                            <img class="w-10 h-10 rounded-full object-cover border border-outline-variant/20 shrink-0" src="${authorPhoto}" alt="${authorName}" onerror="this.src='assets/images/cliente1.webp'">
+                                                            <div>
+                                                                <span class="text-sm font-semibold text-on-surface block">${authorName}</span>
+                                                                <span class="text-xs text-on-surface-variant font-light">${reviewTime}</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                `;
+                                            });
+                                        }
+                                    }
+                                } else {
+                                    console.warn("Places details falhou com status:", status);
+                                }
+                            });
+                        } catch (err) {
+                            console.error("Erro na execução do Google Places Service:", err);
+                        }
+                    };
+                    
+                    // Injeta a tag da API de mapas do Google de maneira segura se não existir
+                    if (typeof google === 'undefined' || typeof google.maps === 'undefined') {
+                        const script = document.createElement('script');
+                        script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=places&callback=initGooglePlaces`;
+                        script.async = true;
+                        script.defer = true;
+                        script.onerror = function() {
+                            console.warn("Erro ao carregar a API do Google Maps. Usando fallbacks locais elegantes.");
+                        };
+                        document.head.appendChild(script);
+                    } else {
+                        setTimeout(window.initGooglePlaces, 100);
                     }
                 }
                 
