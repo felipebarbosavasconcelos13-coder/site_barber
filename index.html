@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html class="dark scroll-smooth" lang="pt-BR">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title id="site-title-tag">Elegance Premium Barbershop | Barbearia de Luxo em São Paulo</title>
+    <meta name="description" content="A experiência premium de barbearia que você merece. Cortes de cabelo precisos, barboterapia relaxante e ambiente exclusivo na Av. Paulista. Agende seu horário pelo WhatsApp." />
+    
+    <!-- Google Tag Manager Dinâmico -->
+    <script id="gtm-dynamic-injector">
+        (function() {
+            const configStr = localStorage.getItem('elegance_barber_config');
+            if (configStr) {
+                try {
+                    const config = JSON.parse(configStr);
+                    if (config.integrations && config.integrations.gtm_id && config.integrations.gtm_id.trim() !== '') {
+                        const gtmId = config.integrations.gtm_id.trim();
+                        
+                        // Snippet Head
+                        (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer',gtmId);
+                        
+                        // Snippet Body
+                        window.addEventListener('DOMContentLoaded', () => {
+                            const noscript = document.createElement('noscript');
+                            const iframe = document.createElement('iframe');
+                            iframe.src = `https://www.googletagmanager.com/ns.html?id=${gtmId}`;
+                            iframe.height = "0";
+                            iframe.width = "0";
+                            iframe.style.display = "none";
+                            iframe.style.visibility = "hidden";
+                            noscript.appendChild(iframe);
+                            document.body.insertBefore(noscript, document.body.firstChild);
+                        });
+                    }
+                } catch(e) {}
+            }
+        })();
+    </script>
+    
+    <!-- SEO Open Graph -->
+    <meta property="og:title" id="og-title-tag" content="Elegance Premium Barbershop | Barbearia de Luxo" />
+    <meta property="og:description" content="Vivencie a precisão do visagismo e o conforto de um lounge de elite na Av. Paulista. Agendamento prático via WhatsApp." />
+    <meta property="og:type" content="website" />
+    
+    <!-- Google Fonts & Tailwind -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap" rel="stylesheet"/>
+    
+    <script id="tailwind-config">
+        // Ler configurações locais para mesclar cores dinamicamente no Tailwind
+        (function() {
+            const DEFAULT_COLORS = {
+                "surface-variant": "#343539",
+                "on-primary-container": "#765100",
+                "on-primary": "#0d0e12",
+                "on-tertiary-fixed": "#1c1b1b",
+                "on-primary-fixed-variant": "#604100",
+                "primary-container": "#ffc562",
+                "secondary-fixed-dim": "#ffb693",
+                "on-error": "#690005",
+                "tertiary-fixed-dim": "#c9c6c5",
+                "outline": "#9c8f7d",
+                "secondary": "#ffb693",
+                "secondary-fixed": "#ffdbcc",
+                "tertiary-fixed": "#e5e2e1",
+                "tertiary-container": "#d1cecd",
+                "inverse-on-surface": "#2f3034",
+                "on-surface": "#e3e2e7",
+                "surface-container-lowest": "#0d0e12",
+                "surface-tint": "#f6bd5b",
+                "on-background": "#e3e2e7",
+                "on-tertiary": "#313030",
+                "on-error-container": "#ffdad6",
+                "surface-bright": "#38393d",
+                "on-secondary-fixed": "#351000",
+                "surface-container": "#1e1f23",
+                "inverse-surface": "#e3e2e7",
+                "primary-fixed": "#ffdeac",
+                "on-surface-variant": "#d3c4b1",
+                "primary": "#ffe8c7",
+                "error": "#ffb4ab",
+                "on-secondary-fixed-variant": "#7a3000",
+                "on-tertiary-fixed-variant": "#474646",
+                "background": "#0e0e0e",
+                "inverse-primary": "#7e5700",
+                "surface-container-low": "#131313",
+                "surface": "#0e0e0e",
+                "outline-variant": "#4f4536",
+                "surface-container-high": "#1a1919",
+                "error-container": "#93000a",
+                "primary-fixed-dim": "#f6bd5b",
+                "tertiary": "#edeaea",
+                "on-secondary": "#561f00",
+                "surface-dim": "#0e0e0e",
+                "secondary-container": "#853500",
+                "on-secondary-container": "#ffab83",
+                "on-tertiary-container": "#595857",
+                "surface-container-highest": "#262626",
+                "on-primary-fixed": "#281900"
+            };
+            
+            let colors = { ...DEFAULT_COLORS };
+            const configStr = localStorage.getItem('elegance_barber_config');
+            if (configStr) {
+                try {
+                    const config = JSON.parse(configStr);
+                    if (config.colors) {
+                        colors.background = config.colors.background;
+                        colors.surface = config.colors.surface;
+                        colors.primary = config.colors.primary;
+                        colors.secondary = config.colors.secondary;
+                        
+                        colors["surface-dim"] = config.colors.background;
+                        colors["surface-container-low"] = config.colors.surface;
+                        colors["primary-container"] = config.colors.primary;
+                        colors["surface-tint"] = config.colors.primary;
+                    }
+                } catch(e) {}
+            }
+
+            tailwind.config = {
+              darkMode: "class",
+              theme: {
+                extend: {
+                  colors: colors,
+                  borderRadius: {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+                  },
+                  spacing: {
+                    "section-gap": "80px",
+                    "base": "8px",
+                    "container-padding": "24px",
+                    "gutter": "16px"
+                  },
+                  fontFamily: {
+                    "sans": ["Inter", "sans-serif"],
+                    "display": ["Space Grotesk", "sans-serif"]
+                  }
+                }
+              }
+            };
+        })();
+    </script>
+    <style>
+        .gold-gradient {
+            background: linear-gradient(135deg, var(--dynamic-primary, #ffc562) 0%, var(--dynamic-secondary, #ff9159) 100%) !important;
+        }
+        .gold-glow {
+            box-shadow: 0 0 20px rgba(var(--dynamic-primary-rgb, 255, 197, 98), 0.15) !important;
+        }
+        .gold-glow-hover:hover {
+            box-shadow: 0 0 30px rgba(var(--dynamic-primary-rgb, 255, 197, 98), 0.35) !important;
+        }
+        .text-glow {
+            text-shadow: 0 0 10px rgba(var(--dynamic-primary-rgb, 255, 197, 98), 0.3) !important;
+        }
+        /* Efeito de mapa no modo escuro */
+        .dark-map {
+            filter: invert(90%) hue-rotate(180deg) opacity(75%);
+            transition: all 0.5s ease;
+        }
+        .dark-map:hover {
+            filter: invert(90%) hue-rotate(180deg) opacity(90%);
+        }
+    </style>
+    
+    <!-- Script de Injeção Rápida de Estilos Dinâmicos (Evita FOUC) -->
+    <script id="theme-injector">
+        (function() {
+            const configStr = localStorage.getItem('elegance_barber_config');
+            if (configStr) {
+                try {
+                    const config = JSON.parse(configStr);
+                    if (config.colors) {
+                        const hexToRgb = hex => {
+                            const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+                            return result ? `${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(result[3], 16)}` : '255, 197, 98';
+                        };
+                        
+                        const style = document.createElement('style');
+                        style.id = 'dynamic-theme-vars';
+                        style.innerHTML = `
+                            :root {
+                                --dynamic-primary: ${config.colors.primary} !important;
+                                --dynamic-secondary: ${config.colors.secondary} !important;
+                                --dynamic-primary-rgb: ${hexToRgb(config.colors.primary)} !important;
+                            }
+                        `;
+                        document.head.appendChild(style);
+                    }
+                } catch(e) {}
+            }
+        })();
+    </script>
+</head>
+<body class="bg-background text-on-background font-sans antialiased selection:bg-primary-container selection:text-on-primary-container flex flex-col min-h-screen">
+
+    <!-- Navigation -->
+    <nav id="navbar" class="fixed top-0 w-full z-50 bg-background/25 backdrop-blur-[20px] shadow-[0px_20px_40px_rgba(0,0,0,0.5)] transition-all duration-300 py-4">
+        <div class="flex justify-between items-center px-container-padding max-w-[1200px] mx-auto">
+            <div class="flex items-center gap-3">
+                <!-- SVG Monogram Logo (Ocultado se houver imagem customizada da logo) -->
+                <svg id="nav-logo-svg" class="h-9 w-9 text-primary-container" viewBox="0 0 100 100" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="100" height="100" rx="4" fill="#131313"/>
+                    <path d="M30 25H70V37H45V44H65V54H45V63H70V75H30V25Z" fill="url(#gold-grad)"/>
+                    <defs>
+                        <linearGradient id="gold-grad" x1="30" y1="25" x2="70" y2="75" gradientUnits="userSpaceOnUse">
+                            <stop offset="0%" stop-color="var(--dynamic-primary, #ffc562)"/>
+                            <stop offset="100%" stop-color="var(--dynamic-secondary, #ff9159)"/>
+                        </linearGradient>
+                    </defs>
+                </svg>
+                <!-- Imagem customizada de Logo (Exibida dinamicamente caso o usuário insira uma URL) -->
+                <img id="nav-logo-img" alt="Logo" class="h-9 w-9 object-contain rounded-lg hidden" src=""/>
+                
+                <span id="nav-site-name" class="font-display font-bold text-xl tracking-wider text-primary text-glow">ELEGANCE</span>
+            </div>
+            
+            <!-- Desktop Links -->
+            <div class="hidden md:flex gap-8 items-center">
+                <a class="text-on-surface-variant hover:text-primary transition-colors text-sm font-medium tracking-wide uppercase" href="#about">Sobre</a>
+                <a class="text-on-surface-variant hover:text-primary transition-colors text-sm font-medium tracking-wide uppercase" href="#services">Serviços</a>
+                <a class="text-on-surface-variant hover:text-primary transition-colors text-sm font-medium tracking-wide uppercase" href="#gallery">Galeria</a>
+                <a class="text-on-surface-variant hover:text-primary transition-colors text-sm font-medium tracking-wide uppercase" href="#location">Localização</a>
+            </div>
+            
+            <a class="hidden md:inline-flex items-center gap-2 gold-gradient text-on-primary font-bold text-xs uppercase tracking-wider px-6 py-3 rounded-xl gold-glow gold-glow-hover transition-all duration-300 transform hover:scale-105 active:scale-95 wa-link" href="https://wa.me/5511999999999?text=Olá!%20Gostaria%20de%20agendar%20um%20horário%20na%20barbearia.">
+                <span>Agendar Horário</span>
+            </a>
+            
+            <!-- Mobile Menu Button -->
+            <button id="menu-btn" class="md:hidden text-primary-container p-2 focus:outline-none">
+                <span class="material-symbols-outlined text-3xl">menu</span>
+            </button>
+        </div>
+        
+        <!-- Mobile Drawer -->
+        <div id="mobile-menu" class="hidden md:hidden w-full bg-surface-container-high/95 backdrop-blur-lg absolute left-0 top-full py-6 px-6 shadow-2xl border-t border-outline-variant/30 flex flex-col gap-5">
+            <a class="text-on-surface-variant hover:text-primary text-base font-semibold uppercase tracking-wider" href="#about">Sobre</a>
+            <a class="text-on-surface-variant hover:text-primary text-base font-semibold uppercase tracking-wider" href="#services">Serviços</a>
+            <a class="text-on-surface-variant hover:text-primary text-base font-semibold uppercase tracking-wider" href="#gallery">Galeria</a>
+            <a class="text-on-surface-variant hover:text-primary text-base font-semibold uppercase tracking-wider" href="#location">Localização</a>
+            <a class="flex items-center justify-center gap-2 gold-gradient text-on-primary font-bold text-sm uppercase py-4 rounded-xl gold-glow text-center wa-link" href="https://wa.me/5511999999999?text=Olá!%20Gostaria%20de%20agendar%20um%20horário%20na%20barbearia.">
+                <span class="material-symbols-outlined text-lg">chat</span>
+                Agendar via WhatsApp
+            </a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-[95vh] flex items-center pt-[100px] pb-section-gap overflow-hidden">
+        <!-- Background Imagem Real com Overlay de Tonalidade Escura -->
+        <div class="absolute inset-0 z-0">
+            <img id="hero-bg-img" alt="Interior de Barbearia Luxuosa" class="w-full h-full object-cover opacity-25 mix-blend-luminosity" src="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?auto=format&fit=crop&q=80&w=1920"/>
+            <div class="absolute inset-0 bg-gradient-to-t from-background via-background/85 to-transparent"></div>
+            <div class="absolute inset-0 bg-gradient-to-r from-background via-background/60 to-transparent"></div>
+        </div>
+        
+        <div class="relative z-10 w-full max-w-[1200px] mx-auto px-container-padding flex flex-col items-start gap-8">
+            <div class="inline-flex items-center gap-2 bg-surface-container-high/80 backdrop-blur-md px-4 py-2 rounded-full border border-outline-variant/20">
+                <span id="google-rating-text" class="text-primary-container font-semibold tracking-wider text-xs uppercase">★ 4.9 no Google</span>
+                <span id="google-reviews-text" class="text-on-surface-variant text-xs">(+500 avaliações de clientes)</span>
+            </div>
+            
+            <h1 id="hero-title" class="font-display text-4xl sm:text-5xl md:text-7xl font-bold text-primary max-w-4xl leading-[1.1] tracking-tight">
+                Estilo Incomparável para o Homem Moderno
+            </h1>
+            
+            <p id="hero-subtitle" class="text-lg sm:text-xl text-on-surface-variant max-w-2xl leading-relaxed font-light">
+                A experiência premium de barbearia que você merece. Acabamento impecável, ambiente de altíssimo padrão, drinks selecionados e profissionais de elite prontos para esculpir sua melhor versão.
+            </p>
+            
+            <div class="flex flex-col sm:flex-row gap-4 w-full sm:w-auto mt-2">
+                <a class="inline-flex items-center justify-center gap-3 gold-gradient text-on-primary font-bold text-sm uppercase tracking-wider px-8 py-5 rounded-xl gold-glow gold-glow-hover transition-all duration-300 transform hover:scale-[1.03] active:scale-95 wa-link" href="https://wa.me/5511999999999?text=Olá!%20Gostaria%20de%20agendar%20um%20horário%20na%20barbearia.">
+                    <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">chat</span>
+                    Agendar pelo WhatsApp
+                </a>
+                <a class="inline-flex items-center justify-center gap-2 bg-surface-container-high/50 hover:bg-surface-container-highest/80 backdrop-blur-sm text-on-background border border-outline-variant/30 font-semibold text-sm uppercase tracking-wider px-8 py-5 rounded-xl transition-all duration-300" href="#services">
+                    Conhecer Serviços
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Problem / Solution Section -->
+    <section class="py-section-gap px-container-padding w-full max-w-[1200px] mx-auto scroll-mt-24" id="about">
+        <div class="grid md:grid-cols-2 gap-gutter md:gap-12 relative">
+            <!-- Problem -->
+            <div class="bg-surface-container-low rounded-xl p-8 md:p-12 flex flex-col gap-6 relative overflow-hidden group hover:bg-surface-container transition-all duration-500 border border-outline-variant/10">
+                <div class="absolute -right-10 -top-10 w-40 h-40 bg-error/5 rounded-full blur-3xl group-hover:bg-error/10 transition-colors duration-500"></div>
+                <div class="w-12 h-12 rounded-full bg-error/10 flex items-center justify-center text-error">
+                    <span class="material-symbols-outlined text-2xl">sentiment_dissatisfied</span>
+                </div>
+                <h2 id="problem-title" class="font-display text-2xl md:text-3xl font-semibold text-on-surface opacity-90">Cansado de cortes genéricos?</h2>
+                <ul id="problem-list" class="space-y-4">
+                    <li class="flex items-start gap-3 text-on-surface-variant font-light">
+                        <span class="material-symbols-outlined text-error mt-0.5" style="font-variation-settings: 'FILL' 0;">close</span>
+                        <span>Espera interminável em recepções barulhentas.</span>
+                    </li>
+                    <li class="flex items-start gap-3 text-on-surface-variant font-light">
+                        <span class="material-symbols-outlined text-error mt-0.5" style="font-variation-settings: 'FILL' 0;">close</span>
+                        <span>Falta de atenção aos detalhes e acabamentos apressados.</span>
+                    </li>
+                    <li class="flex items-start gap-3 text-on-surface-variant font-light">
+                        <span class="material-symbols-outlined text-error mt-0.5" style="font-variation-settings: 'FILL' 0;">close</span>
+                        <span>Profissionais sem especialização em visagismo masculino.</span>
+                    </li>
+                    <li class="flex items-start gap-3 text-on-surface-variant font-light">
+                        <span class="material-symbols-outlined text-error mt-0.5" style="font-variation-settings: 'FILL' 0;">close</span>
+                        <span>Ambientes desconfortáveis que parecem fábricas de corte.</span>
+                    </li>
+                </ul>
+            </div>
+            
+            <!-- Solution -->
+            <div class="bg-surface-container-high rounded-xl p-8 md:p-12 flex flex-col gap-6 relative overflow-hidden shadow-[0px_20px_40px_rgba(0,0,0,0.5)] group transform hover:-translate-y-2 transition-all duration-500 border border-outline-variant/30">
+                <div class="absolute -right-10 -top-10 w-40 h-40 bg-primary-container/10 rounded-full blur-3xl group-hover:bg-primary-container/20 transition-colors duration-500"></div>
+                <div class="w-12 h-12 rounded-full bg-primary-container/10 flex items-center justify-center text-primary-container">
+                    <span class="material-symbols-outlined text-2xl">workspace_premium</span>
+                </div>
+                <h2 id="solution-title" class="font-display text-2xl md:text-3xl font-semibold text-primary">O Padrão Elegance</h2>
+                <ul id="solution-list" class="space-y-4">
+                    <li class="flex items-start gap-3 text-on-surface font-light">
+                        <span class="material-symbols-outlined text-primary-container mt-0.5" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                        <span><strong>Atendimento Pontual e Exclusivo:</strong> Respeito total à sua agenda.</span>
+                    </li>
+                    <li class="flex items-start gap-3 text-on-surface font-light">
+                        <span class="material-symbols-outlined text-primary-container mt-0.5" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                        <span><strong>Visagismo Avançado:</strong> Alinhamento com a estrutura do seu rosto.</span>
+                    </li>
+                    <li class="flex items-start gap-3 text-on-surface font-light">
+                        <span class="material-symbols-outlined text-primary-container mt-0.5" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                        <span><strong>Lounge de Elite:</strong> Café gourmet e cervejas artesanais cortesia.</span>
+                    </li>
+                    <li class="flex items-start gap-3 text-on-surface font-light">
+                        <span class="material-symbols-outlined text-primary-container mt-0.5" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                        <span><strong>Navalha clássica & toalha quente:</strong> O ritual tradicional em alto nível.</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="py-section-gap px-container-padding w-full max-w-[1200px] mx-auto scroll-mt-24" id="services">
+        <div class="text-center mb-16">
+            <span class="text-primary-container font-semibold tracking-widest text-xs uppercase block mb-3">Tabela de Serviços</span>
+            <h2 class="font-display text-3xl md:text-5xl font-bold text-primary mb-4">Experiências de Grooming Premium</h2>
+            <div class="w-16 h-1 gold-gradient mx-auto rounded-full mb-6"></div>
+            <p class="text-on-surface-variant max-w-2xl mx-auto font-light">A combinação impecável de técnicas clássicas com o dinamismo do estilo moderno.</p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+            <!-- Service Card 1 -->
+            <div class="bg-[#131313] rounded-xl p-8 flex flex-col items-center text-center gap-6 group hover:bg-[#1a1919] transition-all duration-300 border border-outline-variant/10 hover:border-outline-variant/30">
+                <div class="w-16 h-16 rounded-full bg-surface-container flex items-center justify-center text-primary-container group-hover:scale-110 transition-transform duration-300">
+                    <span class="material-symbols-outlined text-3xl">content_cut</span>
+                </div>
+                <div>
+                    <h3 id="serv-0-name" class="font-display text-2xl font-semibold text-on-surface mb-2">Corte Signature</h3>
+                    <p id="serv-0-desc" class="text-sm text-on-surface-variant mb-6 leading-relaxed font-light">Análise visagista, lavagem capilar revitalizante com shampoo especial, corte preciso (tesoura ou fade) e estilização profissional com pomada de luxo.</p>
+                </div>
+                <div class="mt-auto w-full flex flex-col gap-4">
+                    <span id="serv-0-price" class="inline-block bg-primary-container/10 text-primary-container font-display font-semibold text-xl px-6 py-2 rounded-full border border-primary-container/20">R$ 120</span>
+                    <a id="serv-0-btn" class="inline-flex items-center justify-center gap-2 bg-surface-container-highest hover:bg-primary-container hover:text-on-primary transition-all duration-300 text-xs font-bold uppercase tracking-wider py-3.5 rounded-lg border border-outline-variant/20 wa-link" href="https://wa.me/5511999999999?text=Olá!%20Gostaria%20de%20agendar%20o%20Corte%20Signature%20na%20barbearia.">
+                        Reservar Agora
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Service Card 2 (Destaque) -->
+            <div class="bg-[#1a1919] rounded-xl p-8 flex flex-col items-center text-center gap-6 group hover:bg-[#201f1f] transition-all duration-300 relative overflow-hidden border-2 border-primary-container/30 gold-glow">
+                <div class="absolute top-0 left-0 w-full h-1.5 gold-gradient"></div>
+                <div class="absolute -top-3 -right-3 bg-primary-container text-on-primary font-bold text-[9px] uppercase tracking-widest px-4 py-3 rotate-45 transform origin-top-left">VIP</div>
+                <div class="w-16 h-16 rounded-full bg-surface-container flex items-center justify-center text-primary-container group-hover:scale-110 transition-transform duration-300">
+                    <span class="material-symbols-outlined text-3xl">face</span>
+                </div>
+                <div>
+                    <h3 id="serv-1-name" class="font-display text-2xl font-semibold text-primary mb-2">Barba Elegance</h3>
+                    <p id="serv-1-desc" class="text-sm text-on-surface-variant mb-6 leading-relaxed font-light">Ritual tradicional de toalha quente com óleos essenciais, massagem facial relaxante, espuma artesanal sob medida, barbear cirúrgico com navalhete clássico e bálsamo refrescante.</p>
+                </div>
+                <div class="mt-auto w-full flex flex-col gap-4">
+                    <span id="serv-1-price" class="inline-block gold-gradient text-on-primary font-display font-bold text-xl px-6 py-2 rounded-full">R$ 90</span>
+                    <a id="serv-1-btn" class="inline-flex items-center justify-center gap-2 gold-gradient text-on-primary font-bold uppercase tracking-wider py-3.5 rounded-lg transition-all duration-300 transform hover:scale-[1.02] wa-link" href="https://wa.me/5511999999999?text=Olá!%20Gostaria%20de%20agendar%20a%20Barba%20Elegance%20na%20barbearia.">
+                        Reservar Agora
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Service Card 3 -->
+            <div class="bg-[#131313] rounded-xl p-8 flex flex-col items-center text-center gap-6 group hover:bg-[#1a1919] transition-all duration-300 border border-outline-variant/10 hover:border-outline-variant/30">
+                <div class="w-16 h-16 rounded-full bg-surface-container flex items-center justify-center text-primary-container group-hover:scale-110 transition-transform duration-300">
+                    <span class="material-symbols-outlined text-3xl">diamond</span>
+                </div>
+                <div>
+                    <h3 id="serv-2-name" class="font-display text-2xl font-semibold text-on-surface mb-2">Combo Imperial</h3>
+                    <p id="serv-2-desc" class="text-sm text-on-surface-variant mb-6 leading-relaxed font-light">A experiência suprema em cuidados masculinos. Combina o Corte Signature completo com o ritual clássico da Barba Elegance, finalizado com lavagem especial e uma dose do nosso melhor Single Malt.</p>
+                </div>
+                <div class="mt-auto w-full flex flex-col gap-4">
+                    <span id="serv-2-price" class="inline-block bg-primary-container/10 text-primary-container font-display font-semibold text-xl px-6 py-2 rounded-full border border-primary-container/20">R$ 190</span>
+                    <a id="serv-2-btn" class="inline-flex items-center justify-center gap-2 bg-surface-container-highest hover:bg-primary-container hover:text-on-primary transition-all duration-300 text-xs font-bold uppercase tracking-wider py-3.5 rounded-lg border border-outline-variant/20 wa-link" href="https://wa.me/5511999999999?text=Olá!%20Gostaria%20de%20agendar%20o%20Combo%20Imperial%20na%20barbearia.">
+                        Reservar Agora
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="py-section-gap px-container-padding w-full max-w-[1200px] mx-auto scroll-mt-24" id="gallery">
+        <div class="text-center mb-16">
+            <span class="text-primary-container font-semibold tracking-widest text-xs uppercase block mb-3">Galeria Visual</span>
+            <h2 class="font-display text-3xl md:text-5xl font-bold text-primary mb-4">Meticulosidade nos Detalhes</h2>
+            <div class="w-16 h-1 gold-gradient mx-auto rounded-full mb-6"></div>
+            <p class="text-on-surface-variant max-w-2xl mx-auto font-light">Explore a excelência visual, nossa estrutura de luxo e a maestria em cada acabamento.</p>
+        </div>
+        
+        <!-- Grid de Imagens -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+            <!-- Galeria 1 -->
+            <div class="relative rounded-xl overflow-hidden group aspect-[3/4] border border-outline-variant/10 shadow-lg">
+                <img id="gallery-img-0" alt="Corte Masculino Degradê Fade" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" src="https://images.unsplash.com/photo-1621605815971-fbc98d665033?auto=format&fit=crop&q=80&w=600"/>
+                <div class="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent opacity-80 group-hover:opacity-90 transition-opacity"></div>
+                <div class="absolute bottom-6 left-6 right-6">
+                    <span class="text-primary-container font-display font-semibold text-lg tracking-wide">Corte Impecável</span>
+                    <p class="text-xs text-on-surface-variant font-light mt-1">Acabamentos precisos com as melhores técnicas de degradê.</p>
+                </div>
+            </div>
+            
+            <!-- Galeria 2 -->
+            <div class="relative rounded-xl overflow-hidden group aspect-[3/4] border border-outline-variant/10 shadow-lg">
+                <img id="gallery-img-1" alt="Barboterapia Clássica" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&q=80&w=600"/>
+                <div class="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent opacity-80 group-hover:opacity-90 transition-opacity"></div>
+                <div class="absolute bottom-6 left-6 right-6">
+                    <span class="text-primary-container font-display font-semibold text-lg tracking-wide">Ritual da Navalha</span>
+                    <p class="text-xs text-on-surface-variant font-light mt-1">Toalha quente com aromaterapia e navalhar clássico.</p>
+                </div>
+            </div>
+            
+            <!-- Galeria 3 -->
+            <div class="relative rounded-xl overflow-hidden group aspect-[3/4] border border-outline-variant/10 shadow-lg">
+                <img id="gallery-img-2" alt="Ambiente da Barbearia de Luxo" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" src="https://images.unsplash.com/photo-1599351431247-f50940f3fde3?auto=format&fit=crop&q=80&w=600"/>
+                <div class="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent opacity-80 group-hover:opacity-90 transition-opacity"></div>
+                <div class="absolute bottom-6 left-6 right-6">
+                    <span class="text-primary-container font-display font-semibold text-lg tracking-wide">Lounge Exclusivo</span>
+                    <p class="text-xs text-on-surface-variant font-light mt-1">Uma experiência de relaxamento em poltronas de alta classe.</p>
+                </div>
+            </div>
+            
+            <!-- Galeria 4 -->
+            <div class="relative rounded-xl overflow-hidden group aspect-[3/4] border border-outline-variant/10 shadow-lg">
+                <img id="gallery-img-3" alt="Cosméticos Premium Barbearia" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&q=80&w=600"/>
+                <div class="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent opacity-80 group-hover:opacity-90 transition-opacity"></div>
+                <div class="absolute bottom-6 left-6 right-6">
+                    <span class="text-primary-container font-display font-semibold text-lg tracking-wide">Produtos Importados</span>
+                    <p class="text-xs text-on-surface-variant font-light mt-1">Cosméticos exclusivos para barba e cabelos impecáveis.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="py-section-gap px-container-padding w-full max-w-[1200px] mx-auto">
+        <div class="text-center mb-16">
+            <span class="text-primary-container font-semibold tracking-widest text-xs uppercase block mb-3">Depoimentos</span>
+            <h2 class="font-display text-3xl md:text-5xl font-bold text-primary mb-4">O Que Dizem Nossos Membros</h2>
+            <div class="w-16 h-1 gold-gradient mx-auto rounded-full mb-6"></div>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+            <!-- Review 1 -->
+            <div class="bg-[#131313] rounded-xl p-8 border border-outline-variant/10 flex flex-col gap-4">
+                <div class="flex items-center gap-1 text-primary-container">
+                    <span class="material-symbols-outlined text-base" style="font-variation-settings: 'FILL' 1;">star</span>
+                    <span class="material-symbols-outlined text-base" style="font-variation-settings: 'FILL' 1;">star</span>
+                    <span class="material-symbols-outlined text-base" style="font-variation-settings: 'FILL' 1;">star</span>
+                    <span class="material-symbols-outlined text-base" style="font-variation-settings: 'FILL' 1;">star</span>
+                    <span class="material-symbols-outlined text-base" style="font-variation-settings: 'FILL' 1;">star</span>
+                </div>
+                <p class="text-sm text-on-surface-variant leading-relaxed font-light italic">"Melhor barbearia de São Paulo de longe. Pontualidade britânica, ambiente extremamente sofisticado e o profissional fez um degradê cirúrgico. A cerveja artesanal é geladíssima!"</p>
+                <div class="mt-4">
+                    <span class="text-sm font-semibold text-on-surface block">Guilherme R.</span>
+                    <span class="text-xs text-on-surface-variant font-light">Cliente Executivo há 2 anos</span>
+                </div>
+            </div>
+            
+            <!-- Review 2 -->
+            <div class="bg-[#131313] rounded-xl p-8 border border-outline-variant/10 flex flex-col gap-4">
+                <div class="flex items-center gap-1 text-primary-container">
+                    <span class="material-symbols-outlined text-base" style="font-variation-settings: 'FILL' 1;">star</span>
+                    <span class="material-symbols-outlined text-base" style="font-variation-settings: 'FILL' 1;">star</span>
+                    <span class="material-symbols-outlined text-base" style="font-variation-settings: 'FILL' 1;">star</span>
+                    <span class="material-symbols-outlined text-base" style="font-variation-settings: 'FILL' 1;">star</span>
+                    <span class="material-symbols-outlined text-base" style="font-variation-settings: 'FILL' 1;">star</span>
+                </div>
+                <p class="text-sm text-on-surface-variant leading-relaxed font-light italic">"O ritual de toalha quente com massagem facial é imperdível. Uma verdadeira terapia de relaxamento após um dia longo de reuniões. Atendimento impecável."</p>
+                <div class="mt-4">
+                    <span class="text-sm font-semibold text-on-surface block">Marcelo S.</span>
+                    <span class="text-xs text-on-surface-variant font-light">Membro Club Imperial</span>
+                </div>
+            </div>
+            
+            <!-- Review 3 -->
+            <div class="bg-[#131313] rounded-xl p-8 border border-outline-variant/10 flex flex-col gap-4">
+                <div class="flex items-center gap-1 text-primary-container">
+                    <span class="material-symbols-outlined text-base" style="font-variation-settings: 'FILL' 1;">star</span>
+                    <span class="material-symbols-outlined text-base" style="font-variation-settings: 'FILL' 1;">star</span>
+                    <span class="material-symbols-outlined text-base" style="font-variation-settings: 'FILL' 1;">star</span>
+                    <span class="material-symbols-outlined text-base" style="font-variation-settings: 'FILL' 1;">star</span>
+                    <span class="material-symbols-outlined text-base" style="font-variation-settings: 'FILL' 1;">star</span>
+                </div>
+                <p class="text-sm text-on-surface-variant leading-relaxed font-light italic">"Equipe de barbeiros é altamente técnica. O corte cresce perfeitamente mantendo a forma, algo que eu nunca vi em outro lugar. A infraestrutura e atendimento são diferenciados."</p>
+                <div class="mt-4">
+                    <span class="text-sm font-semibold text-on-surface block">Felipe M.</span>
+                    <span class="text-xs text-on-surface-variant font-light">Cliente Frequente</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Location & Contact Section -->
+    <section class="py-section-gap px-container-padding w-full max-w-[1200px] mx-auto scroll-mt-24" id="location">
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+            
+            <!-- Detalhes do Local -->
+            <div class="flex flex-col gap-6">
+                <span class="text-primary-container font-semibold tracking-widest text-xs uppercase block">Onde Estamos</span>
+                <h2 id="location-sec-title" class="font-display text-3xl md:text-5xl font-bold text-primary">Sofisticação no Coração de São Paulo</h2>
+                <div class="w-16 h-1 gold-gradient rounded-full mb-2"></div>
+                <p class="text-on-surface-variant font-light leading-relaxed">Nossa unidade principal está estrategicamente posicionada para sua maior conveniência, com estacionamento privativo e serviço de manobrista gratuito para clientes.</p>
+                
+                <div class="flex flex-col gap-4 mt-2">
+                    <div class="flex items-start gap-4">
+                        <div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-primary-container shrink-0">
+                            <span class="material-symbols-outlined">location_on</span>
+                        </div>
+                        <div>
+                            <span class="text-sm font-semibold text-on-surface block">Endereço</span>
+                            <span id="loc-address" class="text-sm text-on-surface-variant font-light">Av. Paulista, 1000 - Bela Vista, São Paulo - SP</span>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start gap-4">
+                        <div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-primary-container shrink-0">
+                            <span class="material-symbols-outlined">schedule</span>
+                        </div>
+                        <div>
+                            <span class="text-sm font-semibold text-on-surface block">Horário de Funcionamento</span>
+                            <span id="loc-hours" class="text-sm text-on-surface-variant font-light">Segunda a Sábado: 09h às 21h</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flex flex-col sm:flex-row gap-4 mt-6">
+                    <a id="loc-directions-btn" class="inline-flex items-center justify-center gap-2 gold-gradient text-on-primary font-bold text-xs uppercase tracking-wider px-6 py-4 rounded-xl gold-glow gold-glow-hover transition-all duration-300 transform hover:scale-[1.02]" href="https://maps.google.com/?q=Av.+Paulista,+1000" target="_blank">
+                        <span class="material-symbols-outlined">directions</span>
+                        Como Chegar
+                    </a>
+                    <a class="inline-flex items-center justify-center gap-2 bg-surface-container-high/50 hover:bg-surface-container-highest border border-outline-variant/30 text-on-background font-semibold text-xs uppercase tracking-wider px-6 py-4 rounded-xl transition-all duration-300 wa-link" href="https://wa.me/5511999999999?text=Olá!%20Gostaria%20de%20agendar%20um%20horário.">
+                        Falar com Recepção
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Mapa Estilizado Dark Mode com Iframe real do Google Maps -->
+            <div class="relative w-full aspect-[4/3] rounded-xl overflow-hidden border border-outline-variant/20 shadow-2xl bg-surface-container">
+                <iframe 
+                    id="loc-map-iframe"
+                    class="w-full h-full border-0 dark-map" 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3657.1975870002874!2d-46.654316085022175!3d-23.561349884682054!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce59c8da06ab91%3A0xf65cd64d35eb659c!2sAv.%20Paulista%2C%201000%20-%20Bela%20Vista%2C%20S%C3%A3o%20Paulo%20-%20SP%2C%2001310-100!5e0!3m2!1spt-BR!2sbr!4v1684784910394!5m2!1spt-BR!2sbr" 
+                    allowfullscreen="" 
+                    loading="lazy" 
+                    referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+            </div>
+        </div>
+    </section>
+
+    <!-- Persistent CTA Footer Section (CRO) -->
+    <section class="py-16 bg-surface-container-low border-t border-outline-variant/15 text-center w-full px-container-padding">
+        <div class="max-w-[800px] mx-auto flex flex-col gap-6 items-center">
+            <h2 id="cro-footer-title" class="font-display text-2xl md:text-4xl font-bold text-primary">Pronto para redefinir seu estilo?</h2>
+            <p class="text-on-surface-variant font-light max-w-lg">Reserve seu horário exclusivo em poucos segundos via WhatsApp. Vagas limitadas nesta semana.</p>
+            <a class="inline-flex items-center gap-3 gold-gradient text-on-primary font-bold text-sm uppercase tracking-wider px-8 py-4 rounded-xl gold-glow gold-glow-hover transition-all duration-300 transform hover:scale-[1.03] active:scale-95 wa-link" href="https://wa.me/5511999999999?text=Olá!%20Gostaria%20de%20agendar%20um%20horário%20na%20barbearia.">
+                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">chat</span>
+                Agendar Agora via WhatsApp
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-background w-full py-12 border-t border-outline-variant/10 mt-auto text-xs">
+        <div class="flex flex-col md:flex-row justify-between items-center px-container-padding max-w-[1200px] mx-auto gap-6">
+            <div class="flex flex-col items-center md:items-start gap-2">
+                <div class="flex items-center gap-2">
+                    <span id="footer-site-name" class="font-display font-bold text-primary tracking-wider uppercase text-sm">Elegance Premium</span>
+                </div>
+                <p id="footer-copyright" class="text-on-surface-variant font-light text-center md:text-left">© 2026 Elegance Premium Barbershop. Todos os direitos reservados.</p>
+            </div>
+            
+            <div class="flex flex-wrap justify-center gap-6">
+                <a class="text-on-surface-variant hover:text-primary transition-colors uppercase font-semibold" href="#">Instagram</a>
+                <a class="text-on-surface-variant hover:text-primary transition-colors uppercase font-semibold" href="#">Facebook</a>
+                <a class="text-on-surface-variant hover:text-primary transition-colors uppercase font-semibold wa-link" href="https://wa.me/5511999999999">WhatsApp</a>
+                <a class="text-on-surface-variant hover:text-primary transition-colors uppercase font-semibold" href="#">Termos de Uso</a>
+                <a class="text-on-surface-variant hover:text-primary transition-colors uppercase font-semibold" href="#">Privacidade</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Botão Flutuante Pulsante do WhatsApp (CRO de Conversão Direta) -->
+    <a class="fixed bottom-6 right-6 z-50 w-14 h-14 bg-[#25d366] rounded-full flex items-center justify-center text-white shadow-2xl transform hover:scale-110 active:scale-95 transition-all duration-300 animate-bounce hover:animate-none wa-link" 
+       href="https://wa.me/5511999999999?text=Olá!%20Gostaria%20de%20agendar%20um%20horário%20na%20barbearia." 
+       title="Falar no WhatsApp" target="_blank">
+        <svg class="w-8 h-8 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.513 2.262 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.455L0 24zm6.59-4.846c1.6.95 3.588 1.455 5.416 1.456 5.4 0 9.794-4.34 9.798-9.673.002-2.585-1.01-5.016-2.85-6.859-1.84-1.84-4.271-2.853-6.859-2.854-5.397 0-9.793 4.34-9.797 9.674-.001 1.956.513 3.865 1.492 5.568l-.982 3.58 3.676-.952zm11.233-6.425c-.29-.145-1.72-.848-1.986-.944-.267-.097-.461-.145-.655.145-.194.29-.752.944-.922 1.137-.17.194-.34.218-.63.072-2.316-1.16-3.818-2.062-5.318-4.63-.396-.68.396-.632 1.134-2.115.12-.24.06-.453-.03-.598-.09-.145-.752-1.812-1.03-2.48-.27-.655-.547-.566-.752-.576-.194-.01-.418-.01-.643-.01-.224 0-.59.084-.9.423-.309.337-1.18 1.157-1.18 2.82 0 1.662 1.21 3.268 1.38 3.5.17.23 2.383 3.638 5.772 5.099 2.81 1.212 3.38 1.0 4.6.883 1.22-.116 2.686-.598 3.06-1.176.375-.58.375-1.077.262-1.176-.112-.097-.41-.242-.7-.387z"/>
+        </svg>
+    </a>
+
+    <!-- JavaScript de Dinamização (Injeta os dados do LocalStorage no DOM) -->
+    <script id="dom-dinamizer">
+        (function() {
+            const configStr = localStorage.getItem('elegance_barber_config');
+            if (!configStr) return; // Se não houver configurações, mantém o padrão estático lindo
+            
+            try {
+                const config = JSON.parse(configStr);
+                
+                // 1. Geral & Contato
+                if (config.general) {
+                    const name = config.general.name || "ELEGANCE";
+                    document.getElementById('nav-site-name').innerText = name.toUpperCase();
+                    document.getElementById('footer-site-name').innerText = name;
+                    document.getElementById('site-title-tag').innerText = `${name} | Barbearia de Luxo em São Paulo`;
+                    document.getElementById('og-title-tag').setAttribute('content', `${name} | Barbearia de Luxo`);
+                    document.getElementById('footer-copyright').innerText = `© 2026 ${name} Barbershop. Todos os direitos reservados.`;
+                    
+                    // Logo Customizada
+                    const navLogoSvg = document.getElementById('nav-logo-svg');
+                    const navLogoImg = document.getElementById('nav-logo-img');
+                    if (config.general.logo_url && config.general.logo_url.trim() !== '') {
+                        navLogoSvg.classList.add('hidden');
+                        navLogoImg.src = config.general.logo_url;
+                        navLogoImg.classList.remove('hidden');
+                    } else {
+                        navLogoSvg.classList.remove('hidden');
+                        navLogoImg.classList.add('hidden');
+                    }
+                    
+                    // Nota Google
+                    const rating = config.general.google_rating || "4.9";
+                    const count = config.general.google_reviews_count || "500";
+                    document.getElementById('google-rating-text').innerText = `★ ${rating} no Google`;
+                    document.getElementById('google-reviews-text').innerText = `(+${count} avaliações de clientes)`;
+                    
+                    // Links de WhatsApp Dinâmicos com número customizado
+                    const whatsappNum = config.general.whatsapp ? config.general.whatsapp.replace(/\D/g, '') : "5511999999999";
+                    const waLinks = document.querySelectorAll('.wa-link');
+                    waLinks.forEach(link => {
+                        const href = link.getAttribute('href');
+                        if (href && href.includes('wa.me')) {
+                            // Extrair o texto pré-existente do WhatsApp (se houver)
+                            const urlObj = new URL(href);
+                            const text = urlObj.searchParams.get('text') || "Olá! Gostaria de agendar um horário.";
+                            link.setAttribute('href', `https://wa.me/${whatsappNum}?text=${encodeURIComponent(text)}`);
+                        }
+                    });
+                }
+                
+                // 2. Hero Section
+                if (config.hero) {
+                    if (config.hero.title) document.getElementById('hero-title').innerText = config.hero.title;
+                    if (config.hero.subtitle) document.getElementById('hero-subtitle').innerText = config.hero.subtitle;
+                    if (config.hero.bg_image && config.hero.bg_image.trim() !== '') {
+                        document.getElementById('hero-bg-img').src = config.hero.bg_image;
+                    }
+                }
+                
+                // 3. Sobre & Dores
+                if (config.about) {
+                    if (config.about.problem_title) document.getElementById('problem-title').innerText = config.about.problem_title;
+                    if (config.about.solution_title) document.getElementById('solution-title').innerText = config.about.solution_title;
+                    
+                    // Listagem do Problema
+                    if (config.about.problems && config.about.problems.length > 0) {
+                        const probList = document.getElementById('problem-list');
+                        probList.innerHTML = '';
+                        config.about.problems.forEach(prob => {
+                            if (prob.trim() === '') return;
+                            probList.innerHTML += `
+                                <li class="flex items-start gap-3 text-on-surface-variant font-light">
+                                    <span class="material-symbols-outlined text-error mt-0.5" style="font-variation-settings: 'FILL' 0;">close</span>
+                                    <span>${prob}</span>
+                                </li>
+                            `;
+                        });
+                    }
+                    
+                    // Listagem da Solução
+                    if (config.about.solutions && config.about.solutions.length > 0) {
+                        const solList = document.getElementById('solution-list');
+                        solList.innerHTML = '';
+                        config.about.solutions.forEach(sol => {
+                            if (sol.trim() === '') return;
+                            // Dividir no primeiro ":" para manter o negrito
+                            const parts = sol.split(':');
+                            let solHTML = '';
+                            if (parts.length > 1) {
+                                solHTML = `<strong>${parts[0]}:</strong>${parts.slice(1).join(':')}`;
+                            } else {
+                                solHTML = sol;
+                            }
+                            solList.innerHTML += `
+                                <li class="flex items-start gap-3 text-on-surface font-light">
+                                    <span class="material-symbols-outlined text-primary-container mt-0.5" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                                    <span>${solHTML}</span>
+                                </li>
+                            `;
+                        });
+                    }
+                }
+                
+                // 4. Serviços
+                if (config.services && config.services.length >= 3) {
+                    const whatsappNum = config.general.whatsapp ? config.general.whatsapp.replace(/\D/g, '') : "5511999999999";
+                    for (let i = 0; i < 3; i++) {
+                        const serv = config.services[i];
+                        document.getElementById(`serv-${i}-name`).innerText = serv.name;
+                        document.getElementById(`serv-${i}-desc`).innerText = serv.desc;
+                        document.getElementById(`serv-${i}-price`).innerText = `R$ ${serv.price}`;
+                        
+                        // Atualizar o link de agendamento do serviço específico
+                        const text = `Olá! Gostaria de agendar o serviço ${serv.name} na barbearia.`;
+                        document.getElementById(`serv-${i}-btn`).setAttribute('href', `https://wa.me/${whatsappNum}?text=${encodeURIComponent(text)}`);
+                    }
+                }
+                
+                // 5. Galeria
+                if (config.gallery && config.gallery.length >= 4) {
+                    for (let i = 0; i < 4; i++) {
+                        const imgUrl = config.gallery[i];
+                        if (imgUrl && imgUrl.trim() !== '') {
+                            document.getElementById(`gallery-img-${i}`).src = imgUrl;
+                        }
+                    }
+                }
+                
+                // 6. Localização
+                if (config.location) {
+                    document.getElementById('loc-address').innerText = config.location.address;
+                    document.getElementById('loc-hours').innerText = config.location.hours;
+                    document.getElementById('loc-directions-btn').setAttribute('href', `https://maps.google.com/?q=${encodeURIComponent(config.location.address)}`);
+                    
+                    if (config.location.map_iframe && config.location.map_iframe.trim() !== '') {
+                        document.getElementById('loc-map-iframe').src = config.location.map_iframe;
+                    }
+                }
+                
+            } catch(e) {
+                console.error("Erro ao carregar a dinamização do DOM:", e);
+            }
+        })();
+
+        // Interceptação e Rastreamento de Conversões via Webhook (n8n / CRM)
+        (function() {
+            const configStr = localStorage.getItem('elegance_barber_config');
+            if (!configStr) return;
+            
+            try {
+                const config = JSON.parse(configStr);
+                if (config.integrations && config.integrations.webhook_url && config.integrations.webhook_url.trim() !== '') {
+                    const webhookUrl = config.integrations.webhook_url.trim();
+                    
+                    window.addEventListener('DOMContentLoaded', () => {
+                        const waLinks = document.querySelectorAll('.wa-link');
+                        waLinks.forEach(link => {
+                            link.addEventListener('click', function(e) {
+                                let serviceName = "Agendamento Geral";
+                                let price = "0";
+                                
+                                // Detectar se o clique veio de um botão de serviço com ID específico
+                                const idAttr = link.getAttribute('id');
+                                if (idAttr && idAttr.startsWith('serv-')) {
+                                    const index = idAttr.split('-')[1]; // Ex: serv-0-btn -> 0
+                                    if (config.services && config.services[index]) {
+                                        serviceName = config.services[index].name;
+                                        price = config.services[index].price;
+                                    }
+                                } else if (link.closest('#services')) {
+                                    // Caso especial de fallback por proximidade de container
+                                    const card = link.closest('.group');
+                                    if (card) {
+                                        const nameEl = card.querySelector('h3');
+                                        const priceEl = card.querySelector('span');
+                                        if (nameEl) serviceName = nameEl.innerText.trim();
+                                        if (priceEl) price = priceEl.innerText.replace('R$', '').trim();
+                                    }
+                                }
+                                
+                                const payload = {
+                                    event: "click_whatsapp",
+                                    timestamp: new Date().toISOString(),
+                                    barber_name: (config.general && config.general.name) ? config.general.name : "Elegance Premium",
+                                    service_name: serviceName,
+                                    price: price
+                                };
+                                
+                                // Envia a requisição assíncrona POST sem bloquear a navegação (no-cors)
+                                fetch(webhookUrl, {
+                                    method: 'POST',
+                                    mode: 'no-cors',
+                                    headers: {
+                                        'Content-Type': 'application/json'
+                                    },
+                                    body: JSON.stringify(payload)
+                                }).catch(err => {
+                                    console.warn("Erro ao notificar webhook:", err);
+                                });
+                            });
+                        });
+                    });
+                }
+            } catch(e) {
+                console.error("Erro no script de monitoramento do Webhook:", e);
+            }
+        })();
+    </script>
+
+    <!-- JavaScript para Interatividade Premium -->
+    <script>
+        // Hamburguer Menu Drawer
+        const menuBtn = document.getElementById('menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // Fechar mobile menu ao clicar nos links
+        const mobileLinks = mobileMenu.querySelectorAll('a');
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+        
+        // Scroll Efeito Navbar
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('bg-background/90', 'py-3');
+                navbar.classList.remove('bg-background/25', 'py-4');
+            } else {
+                navbar.classList.add('bg-background/25', 'py-4');
+                navbar.classList.remove('bg-background/90', 'py-3');
+            }
+        });
+    </script>
+
+</body>
+</html>

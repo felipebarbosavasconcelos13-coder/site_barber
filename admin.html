@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html class="dark" lang="pt-BR">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Elegance Premium | Painel de Controle</title>
+    
+    <!-- Google Fonts & Tailwind -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap" rel="stylesheet"/>
+    
+    <script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              colors: {
+                "surface-variant": "#343539",
+                "on-primary-container": "#765100",
+                "on-primary": "#0d0e12",
+                "on-tertiary-fixed": "#1c1b1b",
+                "on-primary-fixed-variant": "#604100",
+                "primary-container": "#ffc562",
+                "secondary-fixed-dim": "#ffb693",
+                "on-error": "#690005",
+                "tertiary-fixed-dim": "#c9c6c5",
+                "outline": "#9c8f7d",
+                "secondary": "#ffb693",
+                "secondary-fixed": "#ffdbcc",
+                "tertiary-fixed": "#e5e2e1",
+                "tertiary-container": "#d1cecd",
+                "inverse-on-surface": "#2f3034",
+                "on-surface": "#e3e2e7",
+                "surface-container-lowest": "#0d0e12",
+                "surface-tint": "#f6bd5b",
+                "on-background": "#e3e2e7",
+                "on-tertiary": "#313030",
+                "on-error-container": "#ffdad6",
+                "surface-bright": "#38393d",
+                "on-secondary-fixed": "#351000",
+                "surface-container": "#1e1f23",
+                "inverse-surface": "#e3e2e7",
+                "primary-fixed": "#ffdeac",
+                "on-surface-variant": "#d3c4b1",
+                "primary": "#ffe8c7",
+                "error": "#ffb4ab",
+                "on-secondary-fixed-variant": "#7a3000",
+                "on-tertiary-fixed-variant": "#474646",
+                "background": "#0e0e0e",
+                "inverse-primary": "#7e5700",
+                "surface-container-low": "#131313",
+                "surface": "#0e0e0e",
+                "outline-variant": "#4f4536",
+                "surface-container-high": "#1a1919",
+                "error-container": "#93000a",
+                "primary-fixed-dim": "#f6bd5b",
+                "tertiary": "#edeaea",
+                "on-secondary": "#561f00",
+                "surface-dim": "#0e0e0e",
+                "secondary-container": "#853500",
+                "on-secondary-container": "#ffab83",
+                "on-tertiary-container": "#595857",
+                "surface-container-highest": "#262626",
+                "on-primary-fixed": "#281900"
+              },
+              borderRadius: {
+                "DEFAULT": "0.125rem",
+                "lg": "0.25rem",
+                "xl": "0.5rem",
+                "full": "0.75rem"
+              },
+              spacing: {
+                "section-gap": "80px",
+                "base": "8px",
+                "container-padding": "24px",
+                "gutter": "16px"
+              },
+              fontFamily: {
+                "sans": ["Inter", "sans-serif"],
+                "display": ["Space Grotesk", "sans-serif"]
+              }
+            }
+          }
+        }
+    </script>
+    <style>
+        .gold-gradient {
+            background: linear-gradient(135deg, #ffc562 0%, #ff9159 100%);
+        }
+        .gold-glow {
+            box-shadow: 0 0 20px rgba(255, 197, 98, 0.15);
+        }
+        .gold-glow-hover:hover {
+            box-shadow: 0 0 30px rgba(255, 197, 98, 0.35);
+        }
+        .text-glow {
+            text-shadow: 0 0 10px rgba(255, 197, 98, 0.3);
+        }
+        input, textarea, select {
+            background-color: #1a1919 !important;
+            border-color: #4f4536 !important;
+            color: #e3e2e7 !important;
+        }
+        input:focus, textarea:focus, select:focus {
+            border-color: #ffc562 !important;
+            box-shadow: 0 0 0 2px rgba(255, 197, 98, 0.2) !important;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-sans antialiased min-h-screen flex flex-col">
+
+    <!-- BARREIRA DE LOGIN POR SENHA -->
+    <div id="login-container" class="flex-grow flex items-center justify-center px-4 py-12 z-10">
+        <div class="w-full max-w-md bg-surface-container-low border border-outline-variant/30 rounded-2xl p-8 shadow-2xl relative overflow-hidden">
+            <div class="absolute -right-10 -top-10 w-40 h-40 bg-primary-container/5 rounded-full blur-3xl"></div>
+            
+            <div class="flex flex-col items-center gap-3 mb-8 text-center">
+                <svg class="h-14 w-14 text-primary-container" viewBox="0 0 100 100" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="100" height="100" rx="4" fill="#1a1919"/>
+                    <path d="M30 25H70V37H45V44H65V54H45V63H70V75H30V25Z" fill="url(#gold-grad-lg)"/>
+                    <defs>
+                        <linearGradient id="gold-grad-lg" x1="30" y1="25" x2="70" y2="75" gradientUnits="userSpaceOnUse">
+                            <stop offset="0%" stop-color="#ffc562"/>
+                            <stop offset="100%" stop-color="#ff9159"/>
+                        </linearGradient>
+                    </defs>
+                </svg>
+                <h1 class="font-display font-bold text-2xl tracking-wider text-primary mt-2">PAINEL DE PERSONALIZAÇÃO</h1>
+                <p class="text-xs text-on-surface-variant max-w-xs font-light">Insira a credencial mestra de segurança para acessar o controle do site.</p>
+            </div>
+            
+            <form id="login-form" class="flex flex-col gap-5">
+                <div class="flex flex-col gap-2">
+                    <label for="password" class="text-xs font-semibold uppercase tracking-wider text-on-surface-variant">Chave de Acesso</label>
+                    <input type="password" id="password" required class="w-full px-4 py-3.5 rounded-xl text-sm" placeholder="••••••••••••••••">
+                    <p id="error-msg" class="text-xs text-error font-medium hidden mt-1">Acesso negado. Senha incorreta.</p>
+                </div>
+                
+                <button type="submit" class="w-full flex items-center justify-center gap-2 gold-gradient text-on-primary font-bold text-sm uppercase py-4 rounded-xl gold-glow gold-glow-hover transition-all duration-300">
+                    <span class="material-symbols-outlined text-lg">vpn_key</span>
+                    Desbloquear Painel
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- PAINEL DE CONTROLE (OCULTO POR PADRÃO) -->
+    <div id="admin-panel" class="hidden flex-grow flex flex-col md:flex-row max-w-[1400px] w-full mx-auto p-4 md:p-8 gap-6">
+        
+        <!-- Sidebar lateral de navegação de abas -->
+        <aside class="md:w-64 flex flex-col gap-2 shrink-0">
+            <div class="bg-surface-container-low border border-outline-variant/20 rounded-xl p-4 flex flex-col gap-4">
+                <div class="flex items-center gap-3">
+                    <svg class="h-8 w-8 text-primary-container" viewBox="0 0 100 100" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="100" height="100" rx="4" fill="#1a1919"/>
+                        <path d="M30 25H70V37H45V44H65V54H45V63H70V75H30V25Z" fill="url(#gold-grad-side)"/>
+                        <defs>
+                            <linearGradient id="gold-grad-side" x1="30" y1="25" x2="70" y2="75" gradientUnits="userSpaceOnUse">
+                                <stop offset="0%" stop-color="#ffc562"/>
+                                <stop offset="100%" stop-color="#ff9159"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                    <div>
+                        <span class="font-display font-semibold text-sm tracking-wide text-primary block">Elegance</span>
+                        <span class="text-[10px] text-on-surface-variant uppercase tracking-wider block font-light">Painel de Edição</span>
+                    </div>
+                </div>
+                
+                <hr class="border-outline-variant/20">
+                
+                <!-- Abas -->
+                <nav class="flex flex-col gap-1">
+                    <button data-tab="geral" class="tab-btn active flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-semibold tracking-wide uppercase transition-colors text-left bg-primary-container/10 text-primary-container">
+                        <span class="material-symbols-outlined text-lg">settings</span> Geral & Contato
+                    </button>
+                    <button data-tab="cores" class="tab-btn flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-semibold tracking-wide uppercase transition-colors text-left text-on-surface-variant hover:bg-surface-container-high hover:text-primary">
+                        <span class="material-symbols-outlined text-lg">palette</span> Paleta de Cores
+                    </button>
+                    <button data-tab="hero" class="tab-btn flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-semibold tracking-wide uppercase transition-colors text-left text-on-surface-variant hover:bg-surface-container-high hover:text-primary">
+                        <span class="material-symbols-outlined text-lg">image</span> Seção Hero
+                    </button>
+                    <button data-tab="sobre" class="tab-btn flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-semibold tracking-wide uppercase transition-colors text-left text-on-surface-variant hover:bg-surface-container-high hover:text-primary">
+                        <span class="material-symbols-outlined text-lg">info</span> Sobre & Dores
+                    </button>
+                    <button data-tab="servicos" class="tab-btn flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-semibold tracking-wide uppercase transition-colors text-left text-on-surface-variant hover:bg-surface-container-high hover:text-primary">
+                        <span class="material-symbols-outlined text-lg">content_cut</span> Serviços
+                    </button>
+                    <button data-tab="galeria" class="tab-btn flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-semibold tracking-wide uppercase transition-colors text-left text-on-surface-variant hover:bg-surface-container-high hover:text-primary">
+                        <span class="material-symbols-outlined text-lg">photo_library</span> Galeria
+                    </button>
+                    <button data-tab="localizacao" class="tab-btn flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-semibold tracking-wide uppercase transition-colors text-left text-on-surface-variant hover:bg-surface-container-high hover:text-primary">
+                        <span class="material-symbols-outlined text-lg">map</span> Localização
+                    </button>
+                    <button data-tab="integracoes" class="tab-btn flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-semibold tracking-wide uppercase transition-colors text-left text-on-surface-variant hover:bg-surface-container-high hover:text-primary">
+                        <span class="material-symbols-outlined text-lg">sync_alt</span> Integrações
+                    </button>
+                </nav>
+                
+                <hr class="border-outline-variant/20">
+                
+                <button id="logout-btn" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-semibold tracking-wide uppercase text-error hover:bg-error/10 transition-colors text-left">
+                    <span class="material-symbols-outlined text-lg">logout</span> Bloquear Painel
+                </button>
+            </div>
+            
+            <!-- Link Clicável para o Site -->
+            <a href="index.html" class="flex items-center justify-center gap-2 bg-surface-container-low border border-outline-variant/20 rounded-xl p-3 text-xs font-bold uppercase tracking-wider text-primary hover:bg-surface-container transition-colors shadow-md">
+                <span class="material-symbols-outlined text-base">visibility</span>
+                Visualizar Site
+            </a>
+        </aside>
+        
+        <!-- Conteúdo principal do painel -->
+        <main class="flex-grow bg-surface-container-low border border-outline-variant/20 rounded-xl p-6 md:p-8 flex flex-col gap-6 shadow-xl relative overflow-hidden">
+            
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <div>
+                    <h2 id="panel-title" class="font-display font-bold text-2xl text-primary uppercase">Geral & Contato</h2>
+                    <p class="text-xs text-on-surface-variant font-light mt-1">Gerencie as informações fundamentais e links de agendamento de forma dinâmica.</p>
+                </div>
+                
+                <!-- Ações de Backup e Restauração -->
+                <div class="flex flex-wrap gap-2">
+                    <button id="export-btn" class="flex items-center gap-1.5 bg-surface-container-high hover:bg-surface-container-highest border border-outline-variant/30 px-4 py-2 rounded-lg text-xs font-bold uppercase transition-all duration-300">
+                        <span class="material-symbols-outlined text-base">download</span> Exportar (.JSON)
+                    </button>
+                    <label class="flex items-center gap-1.5 bg-surface-container-high hover:bg-surface-container-highest border border-outline-variant/30 px-4 py-2 rounded-lg text-xs font-bold uppercase cursor-pointer transition-all duration-300">
+                        <span class="material-symbols-outlined text-base">upload</span> Importar Backup
+                        <input type="file" id="import-btn" class="hidden" accept=".json">
+                    </label>
+                    <button id="reset-btn" class="flex items-center gap-1.5 bg-error/10 hover:bg-error/20 border border-error/30 text-error px-4 py-2 rounded-lg text-xs font-bold uppercase transition-all duration-300">
+                        <span class="material-symbols-outlined text-base">restart_alt</span> Resetar
+                    </button>
+                </div>
+            </div>
+            
+            <hr class="border-outline-variant/15">
+            
+            <!-- Formulário Dinâmico -->
+            <form id="config-form" class="flex-grow flex flex-col gap-6">
+                
+                <!-- ABA: GERAL -->
+                <div id="tab-content-geral" class="tab-content flex flex-col gap-5">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                        <div class="flex flex-col gap-2">
+                            <label class="text-xs font-semibold uppercase tracking-wider text-on-surface-variant">Nome da Barbearia</label>
+                            <input type="text" id="g-name" class="w-full px-4 py-3 rounded-lg text-sm">
+                        </div>
+                        <div class="flex flex-col gap-2">
+                            <label class="text-xs font-semibold uppercase tracking-wider text-on-surface-variant">WhatsApp de Agendamento</label>
+                            <input type="text" id="g-whatsapp" class="w-full px-4 py-3 rounded-lg text-sm">
+                            <span class="text-[10px] text-on-surface-variant font-light">Use formato internacional com DDD (Ex: +55 11 99999-9999)</span>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                        <div class="flex flex-col gap-2">
+                            <label class="text-xs font-semibold uppercase tracking-wider text-on-surface-variant">Nota do Google Reviews</label>
+                            <input type="text" id="g-rating" class="w-full px-4 py-3 rounded-lg text-sm">
+                        </div>
+                        <div class="flex flex-col gap-2">
+                            <label class="text-xs font-semibold uppercase tracking-wider text-on-surface-variant">Contagem de Avaliações</label>
+                            <input type="text" id="g-reviews" class="w-full px-4 py-3 rounded-lg text-sm">
+                        </div>
+                        <div class="flex flex-col gap-2">
+                            <label class="text-xs font-semibold uppercase tracking-wider text-on-surface-variant">URL da Logo (Monograma)</label>
+                            <input type="text" id="g-logo" class="w-full px-4 py-3 rounded-lg text-sm">
+                            <span class="text-[10px] text-on-surface-variant font-light">Deixe em branco para usar o monograma elegante padrão de fábrica</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- ABA: PALETA DE CORES -->
+                <div id="tab-content-cores" class="tab-content hidden flex flex-col gap-5">
+                    <p class="text-xs text-on-surface-variant font-light">Modifique em tempo real as cores estruturais do site e o estilo visual.</p>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+                        <div class="bg-[#1a1919] p-5 rounded-xl border border-outline-variant/20 flex flex-col gap-4 items-center">
+                            <span class="text-xs font-semibold uppercase tracking-wider text-on-surface-variant">Cor de Fundo</span>
+                            <input type="color" id="c-bg" class="w-20 h-20 rounded-xl cursor-pointer">
+                            <span class="text-xs font-mono" id="c-bg-hex">#0e0e0e</span>
+                        </div>
+                        <div class="bg-[#1a1919] p-5 rounded-xl border border-outline-variant/20 flex flex-col gap-4 items-center">
+                            <span class="text-xs font-semibold uppercase tracking-wider text-on-surface-variant">Cor dos Cards</span>
+                            <input type="color" id="c-surf" class="w-20 h-20 rounded-xl cursor-pointer">
+                            <span class="text-xs font-mono" id="c-surf-hex">#131313</span>
+                        </div>
+                        <div class="bg-[#1a1919] p-5 rounded-xl border border-outline-variant/20 flex flex-col gap-4 items-center">
+                            <span class="text-xs font-semibold uppercase tracking-wider text-on-surface-variant">Cor Primária (Ouro)</span>
+                            <input type="color" id="c-pri" class="w-20 h-20 rounded-xl cursor-pointer">
+                            <span class="text-xs font-mono" id="c-pri-hex">#ffc562</span>
+                        </div>
+                        <div class="bg-[#1a1919] p-5 rounded-xl border border-outline-variant/20 flex flex-col gap-4 items-center">
+                            <span class="text-xs font-semibold uppercase tracking-wider text-on-surface-variant">Cor Secundária (Cobre)</span>
+                            <input type="color" id="c-sec" class="w-20 h-20 rounded-xl cursor-pointer">
+                            <span class="text-xs font-mono" id="c-sec-hex">#ff9159</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- ABA: HERO -->
+                <div id="tab-content-hero" class="tab-content hidden flex flex-col gap-5">
+                    <div class="flex flex-col gap-2">
+                        <label class="text-xs font-semibold uppercase tracking-wider text-on-surface-variant">Título Principal (Headline)</label>
+                        <input type="text" id="h-title" class="w-full px-4 py-3 rounded-lg text-sm">
+                    </div>
+                    <div class="flex flex-col gap-2">
+                        <label class="text-xs font-semibold uppercase tracking-wider text-on-surface-variant">Subtítulo (Proposta de Valor)</label>
+                        <textarea id="h-subtitle" rows="3" class="w-full px-4 py-3 rounded-lg text-sm"></textarea>
+                    </div>
+                    <div class="flex flex-col gap-2">
+                        <label class="text-xs font-semibold uppercase tracking-wider text-on-surface-variant">URL da Imagem de Fundo (Background)</label>
+                        <input type="text" id="h-bg" class="w-full px-4 py-3 rounded-lg text-sm">
+                        <span class="text-[10px] text-on-surface-variant font-light">Forneça o link de uma imagem de alta resolução (ex: do Unsplash).</span>
+                    </div>
+                </div>
+                
+                <!-- ABA: SOBRE -->
+                <div id="tab-content-sobre" class="tab-content hidden flex flex-col gap-6">
+                    <!-- Problema -->
+                    <div class="bg-[#1a1919] p-6 rounded-xl border border-outline-variant/15 flex flex-col gap-4">
+                        <h3 class="font-display font-semibold text-lg text-error flex items-center gap-2">
+                            <span class="material-symbols-outlined">sentiment_dissatisfied</span> Seção do Problema (Dores do Cliente)
+                        </h3>
+                        <div class="flex flex-col gap-2">
+                            <label class="text-xs font-semibold uppercase tracking-wider text-on-surface-variant">Título do Problema</label>
+                            <input type="text" id="s-p-title" class="w-full px-4 py-3 rounded-lg text-sm">
+                        </div>
+                        <div class="flex flex-col gap-3">
+                            <label class="text-xs font-semibold uppercase tracking-wider text-on-surface-variant">Dores (Listagem)</label>
+                            <input type="text" id="s-p-item-0" class="w-full px-4 py-2 text-xs rounded-lg" placeholder="Dor 1">
+                            <input type="text" id="s-p-item-1" class="w-full px-4 py-2 text-xs rounded-lg" placeholder="Dor 2">
+                            <input type="text" id="s-p-item-2" class="w-full px-4 py-2 text-xs rounded-lg" placeholder="Dor 3">
+                            <input type="text" id="s-p-item-3" class="w-full px-4 py-2 text-xs rounded-lg" placeholder="Dor 4">
+                        </div>
+                    </div>
+                    
+                    <!-- Solução -->
+                    <div class="bg-[#1a1919] p-6 rounded-xl border border-outline-variant/15 flex flex-col gap-4">
+                        <h3 class="font-display font-semibold text-lg text-primary flex items-center gap-2">
+                            <span class="material-symbols-outlined">workspace_premium</span> Seção da Solução (O Diferencial)
+                        </h3>
+                        <div class="flex flex-col gap-2">
+                            <label class="text-xs font-semibold uppercase tracking-wider text-on-surface-variant">Título da Solução</label>
+                            <input type="text" id="s-s-title" class="w-full px-4 py-3 rounded-lg text-sm">
+                        </div>
+                        <div class="flex flex-col gap-3">
+                            <label class="text-xs font-semibold uppercase tracking-wider text-on-surface-variant">Diferenciais (Listagem)</label>
+                            <input type="text" id="s-s-item-0" class="w-full px-4 py-2 text-xs rounded-lg" placeholder="Diferencial 1">
+                            <input type="text" id="s-s-item-1" class="w-full px-4 py-2 text-xs rounded-lg" placeholder="Diferencial 2">
+                            <input type="text" id="s-s-item-2" class="w-full px-4 py-2 text-xs rounded-lg" placeholder="Diferencial 3">
+                            <input type="text" id="s-s-item-3" class="w-full px-4 py-2 text-xs rounded-lg" placeholder="Diferencial 4">
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- ABA: SERVICOS -->
+                <div id="tab-content-servicos" class="tab-content hidden flex flex-col gap-6">
+                    <p class="text-xs text-on-surface-variant font-light">Personalize o catálogo de serviços oferecidos com descrição e preços.</p>
+                    
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <!-- Serviço 1 -->
+                        <div class="bg-[#1a1919] p-5 rounded-xl border border-outline-variant/15 flex flex-col gap-4">
+                            <span class="text-xs font-bold uppercase tracking-wider text-primary">Serviço 1</span>
+                            <div class="flex flex-col gap-2">
+                                <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Nome do Serviço</label>
+                                <input type="text" id="serv-0-name" class="w-full px-3 py-2 text-xs rounded-lg">
+                            </div>
+                            <div class="flex flex-col gap-2">
+                                <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Descrição</label>
+                                <textarea id="serv-0-desc" rows="3" class="w-full px-3 py-2 text-xs rounded-lg"></textarea>
+                            </div>
+                            <div class="flex flex-col gap-2">
+                                <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Preço (R$)</label>
+                                <input type="text" id="serv-0-price" class="w-full px-3 py-2 text-xs rounded-lg">
+                            </div>
+                        </div>
+                        
+                        <!-- Serviço 2 -->
+                        <div class="bg-[#1a1919] p-5 rounded-xl border border-outline-variant/15 flex flex-col gap-4 border-primary-container/30 gold-glow">
+                            <span class="text-xs font-bold uppercase tracking-wider text-primary-container">Serviço 2 (Mais Vendido)</span>
+                            <div class="flex flex-col gap-2">
+                                <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Nome do Serviço</label>
+                                <input type="text" id="serv-1-name" class="w-full px-3 py-2 text-xs rounded-lg">
+                            </div>
+                            <div class="flex flex-col gap-2">
+                                <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Descrição</label>
+                                <textarea id="serv-1-desc" rows="3" class="w-full px-3 py-2 text-xs rounded-lg"></textarea>
+                            </div>
+                            <div class="flex flex-col gap-2">
+                                <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Preço (R$)</label>
+                                <input type="text" id="serv-1-price" class="w-full px-3 py-2 text-xs rounded-lg">
+                            </div>
+                        </div>
+                        
+                        <!-- Serviço 3 -->
+                        <div class="bg-[#1a1919] p-5 rounded-xl border border-outline-variant/15 flex flex-col gap-4">
+                            <span class="text-xs font-bold uppercase tracking-wider text-primary">Serviço 3</span>
+                            <div class="flex flex-col gap-2">
+                                <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Nome do Serviço</label>
+                                <input type="text" id="serv-2-name" class="w-full px-3 py-2 text-xs rounded-lg">
+                            </div>
+                            <div class="flex flex-col gap-2">
+                                <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Descrição</label>
+                                <textarea id="serv-2-desc" rows="3" class="w-full px-3 py-2 text-xs rounded-lg"></textarea>
+                            </div>
+                            <div class="flex flex-col gap-2">
+                                <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Preço (R$)</label>
+                                <input type="text" id="serv-2-price" class="w-full px-3 py-2 text-xs rounded-lg">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- ABA: GALERIA -->
+                <div id="tab-content-galeria" class="tab-content hidden flex flex-col gap-5">
+                    <p class="text-xs text-on-surface-variant font-light">Forneça os links das imagens reais para o grid da galeria. Você pode usar imagens do Unsplash ou gerá-las.</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                        <div class="flex flex-col gap-2">
+                            <label class="text-xs font-semibold uppercase tracking-wider text-on-surface-variant">Imagem 1 (Corte)</label>
+                            <input type="text" id="g-img-0" class="w-full px-4 py-3 rounded-lg text-sm">
+                        </div>
+                        <div class="flex flex-col gap-2">
+                            <label class="text-xs font-semibold uppercase tracking-wider text-on-surface-variant">Imagem 2 (Barba)</label>
+                            <input type="text" id="g-img-1" class="w-full px-4 py-3 rounded-lg text-sm">
+                        </div>
+                        <div class="flex flex-col gap-2">
+                            <label class="text-xs font-semibold uppercase tracking-wider text-on-surface-variant">Imagem 3 (Lounge)</label>
+                            <input type="text" id="g-img-2" class="w-full px-4 py-3 rounded-lg text-sm">
+                        </div>
+                        <div class="flex flex-col gap-2">
+                            <label class="text-xs font-semibold uppercase tracking-wider text-on-surface-variant">Imagem 4 (Produtos)</label>
+                            <input type="text" id="g-img-3" class="w-full px-4 py-3 rounded-lg text-sm">
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- ABA: LOCALIZACAO -->
+                <div id="tab-content-localizacao" class="tab-content hidden flex flex-col gap-5">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                        <div class="flex flex-col gap-2">
+                            <label class="text-xs font-semibold uppercase tracking-wider text-on-surface-variant">Endereço Completo</label>
+                            <input type="text" id="l-address" class="w-full px-4 py-3 rounded-lg text-sm">
+                        </div>
+                        <div class="flex flex-col gap-2">
+                            <label class="text-xs font-semibold uppercase tracking-wider text-on-surface-variant">Horário de Funcionamento</label>
+                            <input type="text" id="l-hours" class="w-full px-4 py-3 rounded-lg text-sm">
+                        </div>
+                    </div>
+                    <div class="flex flex-col gap-2">
+                        <label class="text-xs font-semibold uppercase tracking-wider text-on-surface-variant">Link de Incorporação do Google Maps (iframe src)</label>
+                        <textarea id="l-iframe" rows="4" class="w-full px-4 py-3 rounded-lg text-sm"></textarea>
+                        <span class="text-[10px] text-on-surface-variant font-light">Copie o conteúdo dentro do atributo `src` da tag iframe de incorporação do Google Maps (Compartilhar -> Incorporar um mapa).</span>
+                    </div>
+                </div>
+                
+                <!-- ABA: INTEGRAÇÕES -->
+                <div id="tab-content-integracoes" class="tab-content hidden flex flex-col gap-5">
+                    <p class="text-xs text-on-surface-variant font-light">Configure ferramentas de marketing e rastreamento para automação do seu negócio.</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                        <div class="flex flex-col gap-2">
+                            <label class="text-xs font-semibold uppercase tracking-wider text-on-surface-variant">Google Tag Manager (ID)</label>
+                            <input type="text" id="i-gtm" class="w-full px-4 py-3 rounded-lg text-sm" placeholder="GTM-XXXXXX">
+                            <span class="text-[10px] text-on-surface-variant font-light">Insira o código identificador GTM para ativar o rastreamento dinamicamente no site.</span>
+                        </div>
+                        <div class="flex flex-col gap-2">
+                            <label class="text-xs font-semibold uppercase tracking-wider text-on-surface-variant">URL do Webhook de Conversão (n8n / API)</label>
+                            <div class="flex gap-2">
+                                <input type="text" id="i-webhook" class="flex-grow px-4 py-3 rounded-lg text-sm" placeholder="https://seu-n8n.webhook.gmn/webhook/conversao">
+                                <button type="button" id="test-webhook-btn" class="bg-surface-container-high hover:bg-surface-container-highest border border-outline-variant/30 text-primary-container px-4 py-2 rounded-lg text-xs font-bold uppercase transition-colors shrink-0 flex items-center gap-1">
+                                    <span class="material-symbols-outlined text-base">send</span> Testar
+                                </button>
+                            </div>
+                            <span class="text-[10px] text-on-surface-variant font-light">Dispara um evento de teste via requisição assíncrona POST para validar seu fluxo de automação no n8n.</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Rodapé de Ações do Formulário -->
+                <div class="mt-auto pt-6 border-t border-outline-variant/15 flex justify-end gap-3">
+                    <button type="button" id="cancel-btn" class="bg-surface-container-high hover:bg-surface-container-highest border border-outline-variant/30 text-on-surface px-6 py-3 rounded-lg text-xs font-bold uppercase transition-colors">
+                        Cancelar
+                    </button>
+                    <button type="submit" class="gold-gradient text-on-primary px-8 py-3 rounded-lg text-xs font-bold uppercase gold-glow hover:scale-[1.02] transform active:scale-95 transition-all duration-300">
+                        Salvar Alterações
+                    </button>
+                </div>
+            </form>
+        </main>
+    </div>
+
+    <!-- Alert / Toast de Notificação -->
+    <div id="toast" class="fixed top-6 right-6 z-50 bg-[#131313] border-l-4 border-primary-container px-6 py-4 rounded-lg shadow-2xl flex items-center gap-3 transform translate-x-full transition-transform duration-500">
+        <span class="material-symbols-outlined text-primary-container">check_circle</span>
+        <div>
+            <span class="text-xs font-bold uppercase tracking-wider block text-on-surface">Sucesso!</span>
+            <span class="text-[10px] text-on-surface-variant" id="toast-msg">As alterações foram salvas.</span>
+        </div>
+    </div>
+
+    <!-- Script de Lógica do Painel de Edição -->
+    <script>
+        // CONFIGURAÇÕES PADRÃO (FACTORY RESET)
+        const DEFAULT_CONFIG = {
+          general: {
+            name: "Elegance Premium",
+            whatsapp: "+55 11 99999-9999",
+            google_rating: "4.9",
+            google_reviews_count: "500",
+            logo_url: ""
+          },
+          colors: {
+            background: "#0e0e0e",
+            surface: "#131313",
+            primary: "#ffc562",
+            secondary: "#ff9159"
+          },
+          hero: {
+            title: "Estilo Incomparável para o Homem Moderno",
+            subtitle: "A experiência premium de barbearia que você merece. Acabamento impecável, ambiente de alto padrão e profissionais de elite.",
+            bg_image: "https://images.unsplash.com/photo-1585747860715-2ba37e788b70?auto=format&fit=crop&q=80&w=1920"
+          },
+          about: {
+            problem_title: "Cansado de cortes genéricos?",
+            problems: [
+              "Espera interminável em recepções barulhentas.",
+              "Falta de atenção aos detalhes e acabamentos apressados.",
+              "Profissionais sem especialização em visagismo masculino.",
+              "Ambientes desconfortáveis que parecem fábricas de corte."
+            ],
+            solution_title: "O Padrão Elegance",
+            solutions: [
+              "Atendimento Pontual e Exclusivo: Respeito total à sua agenda.",
+              "Visagismo Avançado: Alinhamento com a estrutura do seu rosto.",
+              "Lounge de Elite: Café gourmet e cervejas artesanais cortesia.",
+              "Navalha clássica & toalha quente: O ritual tradicional em alto nível."
+            ]
+          },
+          services: [
+            {
+              name: "Corte Signature",
+              desc: "Análise visagista, lavagem capilar revitalizante com shampoo especial, corte preciso (tesoura ou fade) e estilização profissional com pomada de luxo.",
+              price: "120"
+            },
+            {
+              name: "Barba Elegance",
+              desc: "Ritual tradicional de toalha quente com óleos essenciais, massagem facial relaxante, espuma artesanal sob medida, barbear cirúrgico com navalhete clássico e bálsamo refrescante.",
+              price: "90"
+            },
+            {
+              name: "Combo Imperial",
+              desc: "A experiência suprema em cuidados masculinos. Combina o Corte Signature completo com o ritual clássico da Barba Elegance, finalizado com lavagem especial e uma dose do nosso melhor Single Malt.",
+              price: "190"
+            }
+          ],
+          gallery: [
+            "https://images.unsplash.com/photo-1621605815971-fbc98d665033?auto=format&fit=crop&q=80&w=600",
+            "https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&q=80&w=600",
+            "https://images.unsplash.com/photo-1599351431247-f50940f3fde3?auto=format&fit=crop&q=80&w=600",
+            "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&q=80&w=600"
+          ],
+          location: {
+            address: "Av. Paulista, 1000 - Bela Vista, São Paulo - SP",
+            hours: "Segunda a Sábado: 09h às 21h",
+            map_iframe: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3657.1975870002874!2d-46.654316085022175!3d-23.561349884682054!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce59c8da06ab91%3A0xf65cd64d35eb659c!2sAv.%20Paulista%2C%201000%20-%20Bela%20Vista%2C%20S%C3%A3o%20Paulo%20-%20SP%2C%2001310-100!5e0!3m2!1spt-BR!2sbr!4v1684784910394!5m2!1spt-BR!2sbr"
+          },
+          integrations: {
+            gtm_id: "",
+            webhook_url: ""
+          }
+        };
+
+        // SENHA DE SEGURANÇA
+        const MASTER_PASSWORD = "6AEwhQnQCoTWHWF!id$52z";
+
+        // CONTROLE DE AUTENTICAÇÃO
+        const loginContainer = document.getElementById('login-container');
+        const adminPanel = document.getElementById('admin-panel');
+        const loginForm = document.getElementById('login-form');
+        const errorMsg = document.getElementById('error-msg');
+        
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const enteredPassword = document.getElementById('password').value;
+            
+            if (enteredPassword === MASTER_PASSWORD) {
+                sessionStorage.setItem('elegance_session', 'authenticated');
+                showPanel();
+            } else {
+                errorMsg.classList.remove('hidden');
+            }
+        });
+
+        function checkSession() {
+            if (sessionStorage.getItem('elegance_session') === 'authenticated') {
+                showPanel();
+            }
+        }
+
+        function showPanel() {
+            loginContainer.classList.add('hidden');
+            adminPanel.classList.remove('hidden');
+            loadCurrentConfig();
+        }
+
+        document.getElementById('logout-btn').addEventListener('click', () => {
+            sessionStorage.removeItem('elegance_session');
+            window.location.reload();
+        });
+
+        // NAVEGAÇÃO DE ABAS
+        const tabs = document.querySelectorAll('.tab-btn');
+        const contents = document.querySelectorAll('.tab-content');
+        const panelTitle = document.getElementById('panel-title');
+        
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remover active
+                tabs.forEach(t => {
+                    t.classList.remove('bg-primary-container/10', 'text-primary-container');
+                    t.classList.add('text-on-surface-variant');
+                });
+                contents.forEach(c => c.classList.add('hidden'));
+                
+                // Adicionar active
+                tab.classList.add('bg-primary-container/10', 'text-primary-container');
+                tab.classList.remove('text-on-surface-variant');
+                
+                const tabName = tab.getAttribute('data-tab');
+                document.getElementById(`tab-content-${tabName}`).classList.remove('hidden');
+                
+                // Mudar título
+                panelTitle.innerText = tab.innerText.trim();
+            });
+        });
+
+        // ATUALIZAÇÃO DOS HEX DE CORES EM TEMPO REAL
+        const colorInputs = ['c-bg', 'c-surf', 'c-pri', 'c-sec'];
+        colorInputs.forEach(id => {
+            const input = document.getElementById(id);
+            const label = document.getElementById(`${id}-hex`);
+            input.addEventListener('input', () => {
+                label.innerText = input.value.toUpperCase();
+            });
+        });
+
+        // CARREGAR E PREENCHER CONFIGURAÇÕES ATUAIS
+        function loadCurrentConfig() {
+            let config = localStorage.getItem('elegance_barber_config');
+            if (!config) {
+                config = JSON.stringify(DEFAULT_CONFIG);
+                localStorage.setItem('elegance_barber_config', config);
+            }
+            const data = JSON.parse(config);
+            
+            // Geral
+            document.getElementById('g-name').value = data.general.name;
+            document.getElementById('g-whatsapp').value = data.general.whatsapp;
+            document.getElementById('g-rating').value = data.general.google_rating;
+            document.getElementById('g-reviews').value = data.general.google_reviews_count;
+            document.getElementById('g-logo').value = data.general.logo_url || '';
+            
+            // Cores
+            document.getElementById('c-bg').value = data.colors.background;
+            document.getElementById('c-bg-hex').innerText = data.colors.background.toUpperCase();
+            document.getElementById('c-surf').value = data.colors.surface;
+            document.getElementById('c-surf-hex').innerText = data.colors.surface.toUpperCase();
+            document.getElementById('c-pri').value = data.colors.primary;
+            document.getElementById('c-pri-hex').innerText = data.colors.primary.toUpperCase();
+            document.getElementById('c-sec').value = data.colors.secondary;
+            document.getElementById('c-sec-hex').innerText = data.colors.secondary.toUpperCase();
+            
+            // Hero
+            document.getElementById('h-title').value = data.hero.title;
+            document.getElementById('h-subtitle').value = data.hero.subtitle;
+            document.getElementById('h-bg').value = data.hero.bg_image;
+            
+            // Sobre
+            document.getElementById('s-p-title').value = data.about.problem_title;
+            document.getElementById('s-p-item-0').value = data.about.problems[0] || '';
+            document.getElementById('s-p-item-1').value = data.about.problems[1] || '';
+            document.getElementById('s-p-item-2').value = data.about.problems[2] || '';
+            document.getElementById('s-p-item-3').value = data.about.problems[3] || '';
+            
+            document.getElementById('s-s-title').value = data.about.solution_title;
+            document.getElementById('s-s-item-0').value = data.about.solutions[0] || '';
+            document.getElementById('s-s-item-1').value = data.about.solutions[1] || '';
+            document.getElementById('s-s-item-2').value = data.about.solutions[2] || '';
+            document.getElementById('s-s-item-3').value = data.about.solutions[3] || '';
+            
+            // Serviços
+            for (let i = 0; i < 3; i++) {
+                document.getElementById(`serv-${i}-name`).value = data.services[i].name;
+                document.getElementById(`serv-${i}-desc`).value = data.services[i].desc;
+                document.getElementById(`serv-${i}-price`).value = data.services[i].price;
+            }
+            
+            // Galeria
+            for (let i = 0; i < 4; i++) {
+                document.getElementById(`g-img-${i}`).value = data.gallery[i] || '';
+            }
+            
+            // Localização
+            document.getElementById('l-address').value = data.location.address;
+            document.getElementById('l-hours').value = data.location.hours;
+            document.getElementById('l-iframe').value = data.location.map_iframe;
+            
+            // Integrações
+            document.getElementById('i-gtm').value = data.integrations ? (data.integrations.gtm_id || '') : '';
+            document.getElementById('i-webhook').value = data.integrations ? (data.integrations.webhook_url || '') : '';
+        }
+
+        // SALVAR ALTERAÇÕES
+        document.getElementById('config-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const newConfig = {
+                general: {
+                    name: document.getElementById('g-name').value,
+                    whatsapp: document.getElementById('g-whatsapp').value,
+                    google_rating: document.getElementById('g-rating').value,
+                    google_reviews_count: document.getElementById('g-reviews').value,
+                    logo_url: document.getElementById('g-logo').value
+                },
+                colors: {
+                    background: document.getElementById('c-bg').value,
+                    surface: document.getElementById('c-surf').value,
+                    primary: document.getElementById('c-pri').value,
+                    secondary: document.getElementById('c-sec').value
+                },
+                hero: {
+                    title: document.getElementById('h-title').value,
+                    subtitle: document.getElementById('h-subtitle').value,
+                    bg_image: document.getElementById('h-bg').value
+                },
+                about: {
+                    problem_title: document.getElementById('s-p-title').value,
+                    problems: [
+                        document.getElementById('s-p-item-0').value,
+                        document.getElementById('s-p-item-1').value,
+                        document.getElementById('s-p-item-2').value,
+                        document.getElementById('s-p-item-3').value
+                    ],
+                    solution_title: document.getElementById('s-s-title').value,
+                    solutions: [
+                        document.getElementById('s-s-item-0').value,
+                        document.getElementById('s-s-item-1').value,
+                        document.getElementById('s-s-item-2').value,
+                        document.getElementById('s-s-item-3').value
+                    ]
+                },
+                services: [
+                    {
+                        name: document.getElementById('serv-0-name').value,
+                        desc: document.getElementById('serv-0-desc').value,
+                        price: document.getElementById('serv-0-price').value
+                    },
+                    {
+                        name: document.getElementById('serv-1-name').value,
+                        desc: document.getElementById('serv-1-desc').value,
+                        price: document.getElementById('serv-1-price').value
+                    },
+                    {
+                        name: document.getElementById('serv-2-name').value,
+                        desc: document.getElementById('serv-2-desc').value,
+                        price: document.getElementById('serv-2-price').value
+                    }
+                ],
+                gallery: [
+                    document.getElementById('g-img-0').value,
+                    document.getElementById('g-img-1').value,
+                    document.getElementById('g-img-2').value,
+                    document.getElementById('g-img-3').value
+                ],
+                location: {
+                    address: document.getElementById('l-address').value,
+                    hours: document.getElementById('l-hours').value,
+                    map_iframe: document.getElementById('l-iframe').value
+                },
+                integrations: {
+                    gtm_id: document.getElementById('i-gtm').value,
+                    webhook_url: document.getElementById('i-webhook').value
+                }
+            };
+            
+            localStorage.setItem('elegance_barber_config', JSON.stringify(newConfig));
+            showToast("As alterações foram salvas com sucesso!");
+        });
+
+        // EVENTO CANCELAR
+        document.getElementById('cancel-btn').addEventListener('click', () => {
+            loadCurrentConfig();
+            showToast("As edições pendentes foram descartadas.");
+        });
+
+        // EXPORTAR CONFIGURAÇÃO (JSON)
+        document.getElementById('export-btn').addEventListener('click', () => {
+            const dataStr = localStorage.getItem('elegance_barber_config') || JSON.stringify(DEFAULT_CONFIG);
+            const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+            
+            const exportFileDefaultName = 'backup_elegance_barber.json';
+            
+            const linkElement = document.createElement('a');
+            linkElement.setAttribute('href', dataUri);
+            linkElement.setAttribute('download', exportFileDefaultName);
+            linkElement.click();
+        });
+
+        // IMPORTAR CONFIGURAÇÃO (JSON)
+        document.getElementById('import-btn').addEventListener('change', (e) => {
+            const fileReader = new FileReader();
+            fileReader.onload = function(event) {
+                try {
+                    const parsedData = JSON.parse(event.target.result);
+                    // Validação de estrutura básica
+                    if (parsedData.general && parsedData.colors && parsedData.services) {
+                        localStorage.setItem('elegance_barber_config', JSON.stringify(parsedData));
+                        loadCurrentConfig();
+                        showToast("Backup restaurado com sucesso!");
+                    } else {
+                        alert("Erro: Arquivo JSON de backup inválido.");
+                    }
+                } catch (err) {
+                    alert("Erro ao ler o arquivo de backup.");
+                }
+            };
+            if (e.target.files.length > 0) {
+                fileReader.readAsText(e.target.files[0]);
+            }
+        });
+
+        // FACTORY RESET (RESETAR)
+        document.getElementById('reset-btn').addEventListener('click', () => {
+            if (confirm("Tem certeza que deseja resetar todas as configurações para o padrão original de fábrica? Isso apagará todas as edições locais.")) {
+                localStorage.setItem('elegance_barber_config', JSON.stringify(DEFAULT_CONFIG));
+                loadCurrentConfig();
+                showToast("Configurações resetadas para o padrão de fábrica.");
+            }
+        });
+
+        // FUNÇÃO DE MOSTRAR NOTIFICAÇÃO (TOAST)
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-msg').innerText = msg;
+            toast.classList.remove('translate-x-full');
+            
+            setTimeout(() => {
+                toast.classList.add('translate-x-full');
+            }, 4000);
+        }
+
+        // TESTAR DISPARO DE WEBHOOK
+        document.getElementById('test-webhook-btn').addEventListener('click', async () => {
+            const webhookUrl = document.getElementById('i-webhook').value;
+            if (!webhookUrl || webhookUrl.trim() === '') {
+                alert("Por favor, insira uma URL de Webhook válida primeiro.");
+                return;
+            }
+            
+            const testBtn = document.getElementById('test-webhook-btn');
+            testBtn.disabled = true;
+            testBtn.innerText = "Enviando...";
+            
+            const payload = {
+                event: "test_connection",
+                timestamp: new Date().toISOString(),
+                barber_name: document.getElementById('g-name').value || "Elegance Premium",
+                message: "Este é um disparo de teste do seu Painel de Personalização da Barbearia!"
+            };
+            
+            try {
+                const response = await fetch(webhookUrl, {
+                    method: 'POST',
+                    mode: 'no-cors', // Evita erros de CORS
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(payload)
+                });
+                
+                showToast("Disparo de teste efetuado com sucesso!");
+            } catch (err) {
+                console.error("Erro no teste de webhook:", err);
+                alert("O disparo foi efetuado! Note que se o servidor de webhook não retornar cabeçalhos CORS, o navegador pode acusar um erro, mas a requisição é transmitida.");
+            } finally {
+                testBtn.disabled = false;
+                testBtn.innerHTML = '<span class="material-symbols-outlined text-base">send</span> Testar';
+            }
+        });
+
+        // Executar verificação inicial de sessão
+        checkSession();
+    </script>
+</body>
+</html>
