@@ -316,22 +316,22 @@
                         <div class="bg-[#1a1919] p-5 rounded-xl border border-outline-variant/20 flex flex-col gap-4 items-center">
                             <span class="text-xs font-semibold uppercase tracking-wider text-on-surface-variant">Cor de Fundo</span>
                             <input type="color" id="c-bg" class="w-20 h-20 rounded-xl cursor-pointer">
-                            <span class="text-xs font-mono" id="c-bg-hex">#0e0e0e</span>
+                            <input type="text" id="c-bg-hex" class="w-24 px-2 py-1 text-xs font-mono text-center rounded border border-outline-variant/50 focus:border-primary-container outline-none" style="background-color: #0e0e0e !important; border-color: #4f4536 !important;" placeholder="#0E0E0E">
                         </div>
                         <div class="bg-[#1a1919] p-5 rounded-xl border border-outline-variant/20 flex flex-col gap-4 items-center">
                             <span class="text-xs font-semibold uppercase tracking-wider text-on-surface-variant">Cor dos Cards</span>
                             <input type="color" id="c-surf" class="w-20 h-20 rounded-xl cursor-pointer">
-                            <span class="text-xs font-mono" id="c-surf-hex">#131313</span>
+                            <input type="text" id="c-surf-hex" class="w-24 px-2 py-1 text-xs font-mono text-center rounded border border-outline-variant/50 focus:border-primary-container outline-none" style="background-color: #0e0e0e !important; border-color: #4f4536 !important;" placeholder="#131313">
                         </div>
                         <div class="bg-[#1a1919] p-5 rounded-xl border border-outline-variant/20 flex flex-col gap-4 items-center">
                             <span class="text-xs font-semibold uppercase tracking-wider text-on-surface-variant">Cor Primária (Ouro)</span>
                             <input type="color" id="c-pri" class="w-20 h-20 rounded-xl cursor-pointer">
-                            <span class="text-xs font-mono" id="c-pri-hex">#ffc562</span>
+                            <input type="text" id="c-pri-hex" class="w-24 px-2 py-1 text-xs font-mono text-center rounded border border-outline-variant/50 focus:border-primary-container outline-none" style="background-color: #0e0e0e !important; border-color: #4f4536 !important;" placeholder="#FFC562">
                         </div>
                         <div class="bg-[#1a1919] p-5 rounded-xl border border-outline-variant/20 flex flex-col gap-4 items-center">
                             <span class="text-xs font-semibold uppercase tracking-wider text-on-surface-variant">Cor Secundária (Cobre)</span>
                             <input type="color" id="c-sec" class="w-20 h-20 rounded-xl cursor-pointer">
-                            <span class="text-xs font-mono" id="c-sec-hex">#ff9159</span>
+                            <input type="text" id="c-sec-hex" class="w-24 px-2 py-1 text-xs font-mono text-center rounded border border-outline-variant/50 focus:border-primary-container outline-none" style="background-color: #0e0e0e !important; border-color: #4f4536 !important;" placeholder="#FF9159">
                         </div>
                     </div>
                 </div>
@@ -1034,13 +1034,48 @@
             });
         });
 
-        // ATUALIZAÇÃO DOS HEX DE CORES EM TEMPO REAL
+        // ATUALIZAÇÃO DOS HEX DE CORES EM TEMPO REAL (Bidirecional)
         const colorInputs = ['c-bg', 'c-surf', 'c-pri', 'c-sec'];
         colorInputs.forEach(id => {
-            const input = document.getElementById(id);
-            const label = document.getElementById(`${id}-hex`);
-            input.addEventListener('input', () => {
-                label.innerText = input.value.toUpperCase();
+            const colorInput = document.getElementById(id);
+            const textInput = document.getElementById(`${id}-hex`);
+            
+            // Quando altera no seletor visual
+            colorInput.addEventListener('input', () => {
+                textInput.value = colorInput.value.toUpperCase();
+            });
+            
+            // Quando digita na caixa de texto
+            textInput.addEventListener('input', () => {
+                let value = textInput.value.trim();
+                
+                // Adiciona a hashtag se o usuário esqueceu
+                if (value.length > 0 && !value.startsWith('#')) {
+                    value = '#' + value;
+                }
+                
+                // Expressão regular para validar formato HEX (#FFFFFF)
+                const hexRegex = /^#[0-9A-F]{6}$/i;
+                if (hexRegex.test(value)) {
+                    colorInput.value = value;
+                }
+            });
+            
+            // Corrige e padroniza o texto ao sair do foco
+            textInput.addEventListener('blur', () => {
+                let value = textInput.value.trim();
+                if (value.length > 0 && !value.startsWith('#')) {
+                    value = '#' + value;
+                }
+                
+                const hexRegex = /^#[0-9A-F]{6}$/i;
+                if (hexRegex.test(value)) {
+                    textInput.value = value.toUpperCase();
+                    colorInput.value = value;
+                } else {
+                    // Se inválido, reseta para o valor atual do colorInput
+                    textInput.value = colorInput.value.toUpperCase();
+                }
             });
         });
 
@@ -1065,13 +1100,13 @@
             
             // Cores
             document.getElementById('c-bg').value = data.colors.background;
-            document.getElementById('c-bg-hex').innerText = data.colors.background.toUpperCase();
+            document.getElementById('c-bg-hex').value = data.colors.background.toUpperCase();
             document.getElementById('c-surf').value = data.colors.surface;
-            document.getElementById('c-surf-hex').innerText = data.colors.surface.toUpperCase();
+            document.getElementById('c-surf-hex').value = data.colors.surface.toUpperCase();
             document.getElementById('c-pri').value = data.colors.primary;
-            document.getElementById('c-pri-hex').innerText = data.colors.primary.toUpperCase();
+            document.getElementById('c-pri-hex').value = data.colors.primary.toUpperCase();
             document.getElementById('c-sec').value = data.colors.secondary;
-            document.getElementById('c-sec-hex').innerText = data.colors.secondary.toUpperCase();
+            document.getElementById('c-sec-hex').value = data.colors.secondary.toUpperCase();
             
             // Hero
             document.getElementById('h-title').value = data.hero.title;
@@ -1302,6 +1337,16 @@
                 toast.classList.add('translate-x-full');
             }, 4000);
         }
+        
+        // Fechar Toast de Notificação com a tecla Escape (Acessibilidade de teclado)
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                const toast = document.getElementById('toast');
+                if (toast && !toast.classList.contains('translate-x-full')) {
+                    toast.classList.add('translate-x-full');
+                }
+            }
+        });
 
         // TESTAR DISPARO DE WEBHOOK
         document.getElementById('test-webhook-btn').addEventListener('click', async () => {
@@ -1342,8 +1387,8 @@
             }
         });
 
-        // TESTAR CONEXÃO COM GOOGLE PLACES API
-        document.getElementById('test-places-btn').addEventListener('click', () => {
+        // TESTAR CONEXÃO COM GOOGLE PLACES API (Via Vercel Serverless Function)
+        document.getElementById('test-places-btn').addEventListener('click', async () => {
             const apiKey = document.getElementById('i-places-key').value.trim();
             const placeId = document.getElementById('i-places-id').value.trim();
             
@@ -1361,110 +1406,41 @@
             testBtn.disabled = true;
             testBtn.innerHTML = '<span class="material-symbols-outlined text-base animate-spin">sync</span> Testando...';
             
-            // Definição do Timeout de Segurança (10 segundos)
-            let isResolved = false;
-            const timeoutId = setTimeout(() => {
-                if (isResolved) return;
-                isResolved = true;
+            try {
+                const response = await fetch('/api/places', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ apiKey, placeId })
+                });
                 
-                // Restaura o botão
+                const data = await response.json();
+                
+                if (response.ok && data.success) {
+                    const ratingInfo = data.rating ? `Nota: ★ ${data.rating.toFixed(1)}` : 'Sem nota';
+                    const reviewsInfo = data.user_ratings_total ? `(${data.user_ratings_total} avaliações)` : '(Sem avaliações)';
+                    
+                    alert(`Conexão estabelecida com sucesso via Servidor!\n\nEstabelecimento: ${data.name}\n${ratingInfo} ${reviewsInfo}\nDepoimentos reais encontrados: ${data.reviews ? data.reviews.length : 0}`);
+                    showToast("Conexão com Google Places validada com sucesso!");
+                    
+                    // Preenche automaticamente os campos de nota e avaliações do painel com os dados reais
+                    if (data.rating) {
+                        document.getElementById('g-rating').value = data.rating.toFixed(1);
+                    }
+                    if (data.user_ratings_total) {
+                        document.getElementById('g-reviews').value = data.user_ratings_total.toString();
+                    }
+                } else {
+                    alert(`Erro na validação da Places API via Servidor!\n\nDetalhes do Erro: ${data.error || 'Erro desconhecido.'}\n\nVerifique se as chaves informadas estao corretas e ativas no Google Cloud Console.`);
+                }
+            } catch (err) {
+                console.error("Erro ao testar Google Places:", err);
+                alert(`Erro crítico de comunicação com o servidor:\n\n${err.message}\n\nCertifique-se de que o app esta rodando em ambiente Vercel local (vercel dev) ou publicado.`);
+            } finally {
                 testBtn.disabled = false;
                 testBtn.innerHTML = originalHTML;
-                
-                // Limpeza de resíduos
-                cleanupTempScripts();
-                
-                alert("O teste de conexão expirou (Timeout de 10s).\n\n" +
-                      "Possíveis causas:\n" +
-                      "1. A Google Places API Key fornecida é inválida ou inativa.\n" +
-                      "2. A chave não tem permissão para a API de Places (New) ou Places API (Legacy).\n" +
-                      "3. Restrições de IP/Referência (HTTP) estão bloqueando a requisição no Google Cloud Console.\n" +
-                      "4. Falha de conectividade com os servidores do Google.");
-            }, 10000);
-            
-            // Função para limpar scripts antigos de teste e redefinir o objeto google global
-            function cleanupTempScripts() {
-                // Remove scripts injetados do Google Maps com chave anterior
-                const oldScripts = document.querySelectorAll('script[src*="maps.googleapis.com"]');
-                oldScripts.forEach(script => script.remove());
-                
-                // Remove elementos temporários de iframe criados pelo Maps API
-                const mapIFrames = document.querySelectorAll('iframe[src*="google.com/maps"]');
-                mapIFrames.forEach(iframe => iframe.remove());
-                
-                // Reseta a variável global do google
-                try {
-                    window.google = undefined;
-                } catch(e) {
-                    // Ignore se for somente leitura
-                }
             }
-            
-            // Limpa antes de iniciar o novo carregamento
-            cleanupTempScripts();
-            
-            // Callback global temporário de teste
-            window.testPlacesCallback = function() {
-                if (isResolved) return;
-                
-                try {
-                    const tempDiv = document.createElement('div');
-                    document.body.appendChild(tempDiv);
-                    const service = new google.maps.places.PlacesService(tempDiv);
-                    
-                    service.getDetails({
-                        placeId: placeId,
-                        fields: ['name', 'rating', 'user_ratings_total', 'reviews']
-                    }, function(place, status) {
-                        // Se o timeout já disparou, ignore
-                        if (isResolved) {
-                            try { document.body.removeChild(tempDiv); } catch(e) {}
-                            return;
-                        }
-                        
-                        isResolved = true;
-                        clearTimeout(timeoutId);
-                        
-                        // Limpeza do DOM
-                        try { document.body.removeChild(tempDiv); } catch(e) {}
-                        testBtn.disabled = false;
-                        testBtn.innerHTML = originalHTML;
-                        
-                        if (status === google.maps.places.PlacesServiceStatus.OK && place) {
-                            const ratingInfo = place.rating ? `Nota: ★ ${place.rating.toFixed(1)}` : 'Sem nota';
-                            const reviewsInfo = place.user_ratings_total ? `(${place.user_ratings_total} avaliações)` : '(Sem avaliações)';
-                            alert(`Conexão estabelecida com sucesso!\n\nEstabelecimento: ${place.name}\n${ratingInfo} ${reviewsInfo}\nDepoimentos reais encontrados: ${place.reviews ? place.reviews.length : 0}`);
-                            showToast("Conexão com Google Places validada!");
-                        } else {
-                            alert(`Erro na validação da Places API!\n\nStatus retornado: ${status}\n\nPossíveis causas:\n1. O Place ID está incorreto.\n2. A API Key informada não tem permissão para usar o Places API.\n3. O faturamento não está ativado no Google Cloud Console ou a cota expirou.`);
-                        }
-                    });
-                } catch (err) {
-                    if (isResolved) return;
-                    isResolved = true;
-                    clearTimeout(timeoutId);
-                    
-                    testBtn.disabled = false;
-                    testBtn.innerHTML = originalHTML;
-                    alert("Erro interno durante o teste: " + err.message);
-                }
-            };
-            
-            // Força a injeção do novo script com a chave fornecida
-            const script = document.createElement('script');
-            script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=places&callback=testPlacesCallback`;
-            script.async = true;
-            script.defer = true;
-            script.onerror = function() {
-                if (isResolved) return;
-                isResolved = true;
-                clearTimeout(timeoutId);
-                
-                testBtn.disabled = false;
-                testBtn.innerHTML = originalHTML;
-                alert("Erro crítico: Não foi possível carregar a API do Google Maps. Verifique sua chave ou conexão de rede.");
-            };
-            document.head.appendChild(script);
         });
 
         // MOTOR DE UPLOAD E COMPRESSÃO DE IMAGENS EM BASE64 VIA CANVAS (DELEGAÇÃO DE EVENTOS)

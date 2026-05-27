@@ -236,8 +236,8 @@
             </a>
             
             <!-- Mobile Menu Button -->
-            <button id="menu-btn" class="md:hidden text-primary-container p-2 focus:outline-none">
-                <span class="material-symbols-outlined text-3xl">menu</span>
+            <button id="menu-btn" class="md:hidden text-primary-container p-2 focus:outline-none" aria-label="Abrir menu de navegação" aria-expanded="false">
+                <span class="material-symbols-outlined text-3xl" aria-hidden="true">menu</span>
             </button>
         </div>
         
@@ -566,16 +566,15 @@
     </section>
 
     <!-- Componente Lightbox Nativo (Oculto por Padrão) -->
-    <div id="lightbox" class="fixed inset-0 z-50 bg-black/95 backdrop-blur-sm hidden flex items-center justify-center p-4">
-        <button id="lightbox-close" class="absolute top-6 right-6 text-white hover:text-primary transition-colors flex items-center justify-center p-2 rounded-full bg-white/5 hover:bg-white/10">
-            <span class="material-symbols-outlined text-2xl">close</span>
+    <div id="lightbox" class="fixed inset-0 z-50 bg-black/95 backdrop-blur-sm hidden flex items-center justify-center p-4" role="dialog" aria-modal="true" aria-label="Visualização ampliada da foto">
+        <button id="lightbox-close" class="absolute top-6 right-6 text-white hover:text-primary transition-colors flex items-center justify-center p-2 rounded-full bg-white/5 hover:bg-white/10" aria-label="Fechar visualização ampliada">
+            <span class="material-symbols-outlined text-2xl" aria-hidden="true">close</span>
         </button>
         <div class="max-w-[90%] max-h-[85vh] flex flex-col items-center gap-4">
             <img id="lightbox-img" class="max-w-full max-h-[80vh] rounded-xl object-contain shadow-2xl border border-outline-variant/20" src="" alt="Ampliação de Foto"/>
             <span id="lightbox-caption" class="text-primary font-display font-semibold tracking-wide text-sm md:text-base text-glow text-center"></span>
         </div>
     </div>
-    </section>
 
     <!-- Testimonials Section -->
     <section class="py-section-gap px-container-padding w-full max-w-[1200px] mx-auto">
@@ -1068,114 +1067,93 @@
                     }
                 }
                 
-                // 7. Integração Google Places API (Avaliações Dinâmicas)
+                // 7. Integração Google Places API Segura via Servidor (Vercel API)
                 if (config.integrations && config.integrations.places_key && config.integrations.places_id && config.integrations.places_key.trim() !== '' && config.integrations.places_id.trim() !== '') {
                     const apiKey = config.integrations.places_key.trim();
                     const placeId = config.integrations.places_id.trim();
                     
-                    // Callback assíncrono chamado pelo SDK do Google Maps
-                    window.initGooglePlaces = function() {
-                        try {
-                            const tempDiv = document.createElement('div');
-                            document.body.appendChild(tempDiv);
-                            const service = new google.maps.places.PlacesService(tempDiv);
+                    fetch('/api/places', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ apiKey, placeId })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            // 1. Atualizar nota e contagem na Hero
+                            if (data.rating) {
+                                document.getElementById('google-rating-text').innerText = `★ ${data.rating.toFixed(1)} no Google`;
+                            }
+                            if (data.user_ratings_total) {
+                                document.getElementById('google-reviews-text').innerText = `(+${data.user_ratings_total} avaliações reais)`;
+                            }
                             
-                            service.getDetails({
-                                placeId: placeId,
-                                fields: ['rating', 'user_ratings_total', 'reviews']
-                            }, function(place, status) {
-                                // Limpeza segura do elemento do DOM
-                                try { document.body.removeChild(tempDiv); } catch(e) {}
-                                
-                                if (status === google.maps.places.PlacesServiceStatus.OK && place) {
-                                    // 1. Atualizar nota e contagem na Hero
-                                    if (place.rating) {
-                                        document.getElementById('google-rating-text').innerText = `★ ${place.rating.toFixed(1)} no Google`;
-                                    }
-                                    if (place.user_ratings_total) {
-                                        document.getElementById('google-reviews-text').innerText = `(+${place.user_ratings_total} avaliações reais)`;
-                                    }
+                            // Salva de volta no LocalStorage para cache em tempo real
+                            try {
+                                const currentConfig = JSON.parse(localStorage.getItem('elegance_barber_config') || '{}');
+                                if (!currentConfig.general) currentConfig.general = {};
+                                currentConfig.general.google_rating = data.rating.toFixed(1);
+                                currentConfig.general.google_reviews_count = data.user_ratings_total.toString();
+                                localStorage.setItem('elegance_barber_config', JSON.stringify(currentConfig));
+                            } catch (err) {
+                                console.warn("Erro ao salvar cache do Google Places:", err);
+                            }
+                            
+                            // 2. Atualizar depoimentos reais no container
+                            if (data.reviews && data.reviews.length > 0) {
+                                const testimonialsContainer = document.getElementById('testimonials-container');
+                                if (testimonialsContainer) {
+                                    testimonialsContainer.innerHTML = '';
                                     
-                                    // Salva de volta no LocalStorage para cache em tempo real
-                                    try {
-                                        const currentConfig = JSON.parse(localStorage.getItem('elegance_barber_config') || '{}');
-                                        if (!currentConfig.general) currentConfig.general = {};
-                                        currentConfig.general.google_rating = place.rating.toFixed(1);
-                                        currentConfig.general.google_reviews_count = place.user_ratings_total.toString();
-                                        localStorage.setItem('elegance_barber_config', JSON.stringify(currentConfig));
-                                    } catch (err) {
-                                        console.warn("Erro ao salvar cache do Google Places:", err);
-                                    }
+                                    // Filtra para dar preferência a reviews de 4 ou 5 estrelas
+                                    const bestReviews = data.reviews.filter(r => r.rating >= 4);
+                                    const reviewsToUse = bestReviews.length >= 5 ? bestReviews : data.reviews;
                                     
-                                    // 2. Atualizar depoimentos reais no container
-                                    if (place.reviews && place.reviews.length > 0) {
-                                        const testimonialsContainer = document.getElementById('testimonials-container');
-                                        if (testimonialsContainer) {
-                                            testimonialsContainer.innerHTML = '';
-                                            
-                                            // Filtra para dar preferência a reviews de 4 ou 5 estrelas
-                                            const bestReviews = place.reviews.filter(r => r.rating >= 4);
-                                            const reviewsToUse = bestReviews.length >= 5 ? bestReviews : place.reviews;
-                                            
-                                            reviewsToUse.slice(0, 5).forEach(review => {
-                                                let starsHTML = '';
-                                                for (let i = 0; i < 5; i++) {
-                                                    const isFilled = i < review.rating ? 1 : 0;
-                                                    starsHTML += `<span class="material-symbols-outlined text-base" style="font-variation-settings: 'FILL' ${isFilled};">star</span>`;
-                                                }
-                                                
-                                                const authorName = escapeHTML(review.author_name);
-                                                let authorPhoto = review.profile_photo_url || 'assets/images/cliente1.webp';
-                                                // Sanitização de URL da foto para evitar JavaScript URIs
-                                                if (authorPhoto && !authorPhoto.startsWith('http') && !authorPhoto.startsWith('/') && !authorPhoto.startsWith('data:')) {
-                                                    authorPhoto = 'assets/images/cliente1.webp';
-                                                }
-                                                const reviewTime = escapeHTML(review.relative_time_description || 'Cliente Google');
-                                                const rawText = review.text || 'A experiência premium de barbearia que você merece. Acabamento impecável e profissionais excelentes.';
-                                                const reviewText = escapeHTML(rawText.length > 180 ? rawText.substring(0, 180) + '...' : rawText);
-                                                
-                                                testimonialsContainer.innerHTML += `
-                                                    <div class="bg-[#131313] rounded-xl p-8 border border-outline-variant/10 flex flex-col justify-between gap-4 group hover:border-primary-container/20 transition-all duration-300">
-                                                        <div class="flex flex-col gap-4">
-                                                            <div class="flex items-center gap-1 text-primary-container">
-                                                                ${starsHTML}
-                                                            </div>
-                                                            <p class="text-sm text-on-surface-variant leading-relaxed font-light italic">"${reviewText}"</p>
-                                                        </div>
-                                                        <div class="flex items-center gap-3 mt-4 pt-4 border-t border-outline-variant/5">
-                                                            <img class="w-10 h-10 rounded-full object-cover border border-outline-variant/20 shrink-0" src="${authorPhoto}" alt="${authorName}" onerror="this.src='assets/images/cliente1.webp'">
-                                                            <div>
-                                                                <span class="text-sm font-semibold text-on-surface block">${authorName}</span>
-                                                                <span class="text-xs text-on-surface-variant font-light">${reviewTime}</span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                `;
-                                            });
+                                    reviewsToUse.slice(0, 5).forEach(review => {
+                                        let starsHTML = '';
+                                        for (let i = 0; i < 5; i++) {
+                                            const isFilled = i < review.rating ? 1 : 0;
+                                            starsHTML += `<span class="material-symbols-outlined text-base" style="font-variation-settings: 'FILL' ${isFilled};">star</span>`;
                                         }
-                                    }
-                                } else {
-                                    console.warn("Places details falhou com status:", status);
+                                        
+                                        const authorName = escapeHTML(review.author_name);
+                                        let authorPhoto = review.profile_photo_url || 'assets/images/cliente1.webp';
+                                        if (authorPhoto && !authorPhoto.startsWith('http') && !authorPhoto.startsWith('/') && !authorPhoto.startsWith('data:')) {
+                                            authorPhoto = 'assets/images/cliente1.webp';
+                                        }
+                                        const reviewTime = escapeHTML(review.relative_time_description || 'Cliente Google');
+                                        const rawText = review.text || 'A experiência premium de barbearia que você merece. Acabamento impecável e profissionais excelentes.';
+                                        const reviewText = escapeHTML(rawText.length > 180 ? rawText.substring(0, 180) + '...' : rawText);
+                                        
+                                        testimonialsContainer.innerHTML += `
+                                            <div class="bg-[#131313] rounded-xl p-8 border border-outline-variant/10 flex flex-col justify-between gap-4 group hover:border-primary-container/20 transition-all duration-300">
+                                                <div class="flex flex-col gap-4">
+                                                    <div class="flex items-center gap-1 text-primary-container">
+                                                        ${starsHTML}
+                                                    </div>
+                                                    <p class="text-sm text-on-surface-variant leading-relaxed font-light italic">"${reviewText}"</p>
+                                                </div>
+                                                <div class="flex items-center gap-3 mt-4 pt-4 border-t border-outline-variant/5">
+                                                    <img class="w-10 h-10 rounded-full object-cover border border-outline-variant/20 shrink-0" src="${authorPhoto}" alt="${authorName}" onerror="this.src='assets/images/cliente1.webp'">
+                                                    <div>
+                                                        <span class="text-sm font-semibold text-on-surface block">${authorName}</span>
+                                                        <span class="text-xs text-on-surface-variant font-light">${reviewTime}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        `;
+                                    });
                                 }
-                            });
-                        } catch (err) {
-                            console.error("Erro na execução do Google Places Service:", err);
+                            }
+                        } else {
+                            console.warn("API de Places retornou falha:", data.error);
                         }
-                    };
-                    
-                    // Injeta a tag da API de mapas do Google de maneira segura se não existir
-                    if (typeof google === 'undefined' || typeof google.maps === 'undefined') {
-                        const script = document.createElement('script');
-                        script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=places&callback=initGooglePlaces`;
-                        script.async = true;
-                        script.defer = true;
-                        script.onerror = function() {
-                            console.warn("Erro ao carregar a API do Google Maps. Usando fallbacks locais elegantes.");
-                        };
-                        document.head.appendChild(script);
-                    } else {
-                        setTimeout(window.initGooglePlaces, 100);
-                    }
+                    })
+                    .catch(err => {
+                        console.error("Erro na conexao com a API Serverless de Places:", err);
+                    });
                 }
                 
             } catch(e) {
@@ -1188,7 +1166,15 @@
             try {
                 const urlParams = new URLSearchParams(window.location.search);
                 const trackingKeys = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'fbclid', 'gclid', 'ttclid', 'msclkid'];
-                let sessionTracking = JSON.parse(sessionStorage.getItem('elegance_barber_tracking') || '{}');
+                let sessionTracking = {};
+                try {
+                    const stored = sessionStorage.getItem('elegance_barber_tracking');
+                    if (stored) {
+                        sessionTracking = JSON.parse(stored);
+                    }
+                } catch (e) {
+                    console.warn("Erro ao fazer parse das UTMs de sessão:", e);
+                }
                 let hasNewParams = false;
                 
                 trackingKeys.forEach(key => {
@@ -1290,7 +1276,8 @@
         const mobileMenu = document.getElementById('mobile-menu');
         
         menuBtn.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
+            const isHidden = mobileMenu.classList.toggle('hidden');
+            menuBtn.setAttribute('aria-expanded', !isHidden);
         });
         
         // Fechar mobile menu ao clicar nos links
@@ -1298,6 +1285,7 @@
         mobileLinks.forEach(link => {
             link.addEventListener('click', () => {
                 mobileMenu.classList.add('hidden');
+                menuBtn.setAttribute('aria-expanded', 'false');
             });
         });
         
@@ -1372,6 +1360,13 @@
         lightboxClose.addEventListener('click', closeLightbox);
         lightbox.addEventListener('click', (e) => {
             if (e.target === lightbox) {
+                closeLightbox();
+            }
+        });
+        
+        // Fechar lightbox com a tecla Escape (Acessibilidade por teclado)
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && !lightbox.classList.contains('hidden')) {
                 closeLightbox();
             }
         });

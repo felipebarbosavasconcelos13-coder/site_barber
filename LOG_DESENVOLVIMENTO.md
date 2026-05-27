@@ -2,6 +2,60 @@
 
 Este arquivo registra detalhadamente todas as alterações, decisões de design e etapas de implementação efetuadas no projeto da página de Barbearia.
 
+## [2026-05-27] - Otimizações de Código: Correções de Acessibilidade, Sintaxe HTML e Blindagem JavaScript
+
+### Alterações Realizadas
+1. **Correção de Sintaxe HTML no `index.html`:**
+   - Removido o fechamento órfão `</section>` que causava inconsistência na árvore DOM do Lightbox.
+2. **Implementação de Acessibilidade por Teclado (UX Premium):**
+   - Adicionado listener global de tecla `Escape` no `index.html` e `admin.html` para fechar imediatamente ampliações de fotos no Lightbox e o Toast de notificação administrativa.
+3. **Tags de Acessibilidade e Semântica ARIA (`index.html`):**
+   - Injetados atributos `role="dialog"`, `aria-modal="true"` e `aria-label` descritivos no Lightbox nativo para maximizar a compatibilidade com leitores de tela.
+   - Adicionados atributos `aria-label="Abrir menu de navegação"` e chaveamento reativo do atributo `aria-expanded` (true/false) no botão de menu móvel (`#menu-btn`) controlado por JavaScript para usabilidade mobile impecável.
+4. **Blindagem e Resiliência na Atribuição de UTMs (`index.html`):**
+   - Refatorada a leitura de campanhas do `sessionStorage` com tratamento defensivo no bloco JSON, contornando travamentos em caso de cache corrompido no navegador.
+
+### Próximos Passos
+* Continuar monitorando a experiência de conversão do usuário e coletando novos insights.
+
+## [2026-05-27] - Paleta de Cores: Edição Direta e Bidirecional via Hexadecimal (admin.html)
+
+### Alterações Realizadas
+1. **Inputs de Texto para Códigos de Cor:**
+   - Substituídas as tags estáticas `<span>` que exibiam o código hexadecimal das cores por inputs de texto HTML (`<input type="text">`) estilizados no painel de Cores.
+2. **Sincronização Bidirecional Reativa (JavaScript):**
+   - Desenvolvido vínculo reativo em ambas as direções para as variáveis de cores (`c-bg`, `c-surf`, `c-pri`, `c-sec`).
+   - Alterar a cor visualmente atualiza o texto do input instantaneamente em letras maiúsculas.
+   - Digitar o código da cor diretamente (ex: `#050505`) atualiza instantaneamente o seletor visual e renderiza o novo tema no site.
+3. **Resiliência a Erros de Digitação:**
+   - Adicionada formatação inteligente: se o usuário digitar os 6 caracteres hexadecimais sem a hashtag (ex: `050505`), o caractere `#` é inserido de forma automática.
+   - Implementado rollback de segurança: se o usuário digitar uma string inválida e sair do campo (`blur`), o valor é restaurado automaticamente para a última cor ativa, prevenindo quebras visuais.
+4. **Carga Inicial Otimizada:**
+   - A função `loadCurrentConfig()` foi adaptada para injetar o valor da cor diretamente no `.value` do input de texto.
+
+### Próximos Passos
+* Realizar commit e push final para deploy automático das atualizações no ar. (CONCLUÍDO)
+
+## [2026-05-27] - Correção Crítica e Arquitetura Segura: Google Places API via Vercel Serverless Function
+
+### Alterações Realizadas
+1. **Nova Arquitetura de Servidor (Inspirada no App de Agendamento):**
+   - Criada a pasta `/api` na raiz do projeto `Pag barbearia`.
+   - Desenvolvido o arquivo de backend [places.js](file:///C:/Users/felip/Desktop/N8N/Atigra/Pag%20barbearia/api/places.js) contendo a **Vercel Serverless Function** escrita em Node.js.
+   - Esse endpoint recebe as requisições `POST` contendo a chave e ID do estabelecimento e realiza consultas diretas à API REST oficial do Google Places (`maps.googleapis.com`) no lado do servidor.
+   - Isso protege a chave de faturamento do Google contra interceptações públicas e contorna **100% dos erros de CORS e restrições de referer HTTP** clássicos do navegador.
+2. **Atualização Dinâmica da Landing Page (`index.html`):**
+   - Substituída a antiga injeção pesada do SDK de mapas no navegador do cliente final.
+   - O injetor `#dom-dinamizer` agora efetua uma requisição assíncrona simples em segundo plano via `fetch('/api/places')` consumindo o novo endpoint local.
+   - Mantida toda a lógica reativa que carrega as notas médias, contagem de depoimentos e renderiza as **5 avaliações qualificadas** com foto de perfil e nomes, de forma rápida e segura.
+3. **Melhorias e Automações no Painel de Controle (`admin.html`):**
+   - O botão de teste **"Verificar Conexão"** foi reescrito para testar a chave e o Place ID por meio do novo endpoint `/api/places` no servidor.
+   - Caso a conexão seja bem-sucedida, o painel agora **preenche automaticamente** os campos de Nota Média e Total de Avaliações na aba "Geral", otimizando a usabilidade.
+   - Removido o timeout de 10s gerado por falhas ocultas de referer no navegador.
+
+### Próximos Passos
+* Realizar commit e push final para o GitHub para deploy automático na Vercel. (CONCLUÍDO)
+
 ## [2026-05-27] - Inicialização do Projeto
 
 ### Alterações Realizadas
