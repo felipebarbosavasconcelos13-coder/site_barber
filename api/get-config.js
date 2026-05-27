@@ -5,10 +5,9 @@ module.exports = async (req, res) => {
     res.setHeader('Access-Control-Allow-Methods', 'GET');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
-    // Variáveis de ambiente injetadas pela Vercel após conectar o Supabase
-    const supabaseUrl = process.env.STORAGE_URL;
-    // Aceita tanto a service role key quanto a key anônima para leitura
-    const supabaseKey = process.env.STORAGE_SERVICE_ROLE_KEY || process.env.STORAGE_ANON_KEY;
+    // Variáveis de ambiente padrão injetadas pelo Supabase na Vercel
+    const supabaseUrl = process.env.SUPABASE_URL;
+    const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_ANON_KEY;
 
     // Se o Supabase não estiver configurado na Vercel, a API informa de forma amigável
     if (!supabaseUrl || !supabaseKey) {

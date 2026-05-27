@@ -38,9 +38,10 @@ module.exports = async (req, res) => {
         return res.status(403).json({ success: false, error: "Senha de segurança administrativa incorreta." });
     }
 
-    const supabaseUrl = process.env.STORAGE_URL;
+    // Variáveis de ambiente padrão injetadas pelo Supabase na Vercel
+    const supabaseUrl = process.env.SUPABASE_URL;
     // Damos preferência à service_role para contornar RLS de gravação, senão usamos a anon
-    const supabaseKey = process.env.STORAGE_SERVICE_ROLE_KEY || process.env.STORAGE_ANON_KEY;
+    const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_ANON_KEY;
 
     if (!supabaseUrl || !supabaseKey) {
         return res.status(500).json({ 
