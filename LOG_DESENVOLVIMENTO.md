@@ -374,5 +374,23 @@ Este arquivo registra detalhadamente todas as alterações, decisões de design 
 * Realizar testes manuais locais no index.html e simulações do Google Places. (CONCLUÍDO)
 * Executar commit e push seguro das alterações para o GitHub. (CONCLUÍDO)
 
+## [2026-05-28] - Personalização Avançada: Controle de Opacidade do Hero, Textos de Botões Editáveis e Tamanhos da Galeria
 
+### Alterações Realizadas
 
+1. **Requisitos de Tamanhos das Imagens na Galeria (`admin.html`):**
+   - Inseridas de forma premium e explícita as etiquetas de dimensões de imagem recomendadas ao lado de cada caixa de upload de arquivos na aba **Galeria** do painel administrativo.
+   - Definidos os padrões ideais: `800x600 px (4:3)` para Desktop e `600x800 px (3:4)` para Mobile.
+
+2. **Personalização Dinâmica de Todos os Botões do Site (`admin.html` & `index.html`):**
+   - **Painel Administrativo:** Integrados inputs textuais dinâmicos no formulário de configuração para personalizar individualmente todos os 9 botões do site (Topo/Navegação, Hero Principal, Hero Secundário, os 3 Serviços do catálogo, Rota Como Chegar, Contato com a Recepção e Botão CTA persistente no rodapé).
+   - **Landing Page HTML:** Envolvidos todos os textos de botões no HTML de `index.html` em tags `<span>` com IDs descritivos dedicados (`hero-primary-btn-text`, `hero-secondary-btn-text`, `serv-0-btn-text`, `serv-1-btn-text`, `serv-2-btn-text`, `loc-directions-btn-text`, `loc-reception-btn-text`, `cro-footer-btn-text`) garantindo a integridade dos ícones (material-symbols) e layouts CSS.
+   - **Injetor JavaScript:** Desenvolvido no `#dom-dinamizer` o processamento do dicionário `config.buttons`, injetando os textos dinâmicos em tempo real com fallbacks resilientes para os textos padrões originais caso as chaves estejam ausentes.
+
+3. **Controle Dinâmico de Opacidade do Fundo do Hero (`admin.html` & `index.html`):**
+   - **Painel Administrativo:** Injetado um controle deslizante (slider input range de 0% a 100%, incrementos de 5%) com exibição dinâmica e em tempo real da porcentagem selecionada.
+   - **Landing Page HTML:** Removida a classe estática Tailwind `opacity-25` de `#hero-bg-img` para evitar conflito de cascata visual.
+   - **Injetor JavaScript:** Adicionada a aplicação dinâmica da opacidade diretamente no atributo inline `.style.opacity = parseFloat(config.hero.bg_opacity) / 100`, com fallback automático e seguro para `0.25` (25%).
+
+### Próximos Passos
+* Realizar validação final e publicar as atualizações no repositório remoto do GitHub para o deploy contínuo na Vercel. (CONCLUÍDO)

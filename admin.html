@@ -307,6 +307,21 @@
                             </div>
                         </div>
                     </div>
+
+                    <hr class="border-outline-variant/15 my-2">
+
+                    <!-- Textos dos Botões Geral -->
+                    <h3 class="font-display font-semibold text-sm text-primary uppercase tracking-wider">Textos dos Botões (Geral & Rodapé)</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                        <div class="flex flex-col gap-2">
+                            <label class="text-xs font-semibold uppercase tracking-wider text-on-surface-variant">Botão de Reservar (Cabeçalho)</label>
+                            <input type="text" id="b-nav-reservar" class="w-full px-4 py-3 rounded-lg text-sm" placeholder="Reservar Experiência">
+                        </div>
+                        <div class="flex flex-col gap-2">
+                            <label class="text-xs font-semibold uppercase tracking-wider text-on-surface-variant">Botão de Agendar (CTA Rodapé)</label>
+                            <input type="text" id="b-cta-footer" class="w-full px-4 py-3 rounded-lg text-sm" placeholder="Agendar Agora via WhatsApp">
+                        </div>
+                    </div>
                 </div>
                 
                 <!-- ABA: PALETA DE CORES -->
@@ -372,6 +387,37 @@
                             </div>
                         </div>
                     </div>
+
+                    <hr class="border-outline-variant/15 my-2">
+
+                    <!-- Opacidade do Hero -->
+                    <div class="flex flex-col gap-2">
+                        <label class="text-xs font-semibold uppercase tracking-wider text-on-surface-variant flex justify-between">
+                            Opacidade da Imagem de Fundo 
+                            <span id="h-bg-opacity-val" class="text-primary-container font-bold">25%</span>
+                        </label>
+                        <div class="flex items-center gap-4">
+                            <span class="text-xs text-on-surface-variant">0%</span>
+                            <input type="range" id="h-bg-opacity" min="0" max="100" step="5" class="flex-grow accent-primary-container h-2 rounded-lg bg-surface-container-high cursor-pointer">
+                            <span class="text-xs text-on-surface-variant">100%</span>
+                        </div>
+                        <span class="text-[10px] text-on-surface-variant font-light">Ajuste o controle deslizante para aumentar ou diminuir a opacidade da imagem de fundo no site.</span>
+                    </div>
+
+                    <hr class="border-outline-variant/15 my-2">
+
+                    <!-- Textos dos Botões Hero -->
+                    <h3 class="font-display font-semibold text-sm text-primary uppercase tracking-wider">Textos dos Botões (Hero)</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                        <div class="flex flex-col gap-2">
+                            <label class="text-xs font-semibold uppercase tracking-wider text-on-surface-variant">Botão Principal (Agendamento)</label>
+                            <input type="text" id="b-hero-primary" class="w-full px-4 py-3 rounded-lg text-sm" placeholder="Reservar Experiência">
+                        </div>
+                        <div class="flex flex-col gap-2">
+                            <label class="text-xs font-semibold uppercase tracking-wider text-on-surface-variant">Botão Secundário (Navegação Interna)</label>
+                            <input type="text" id="b-hero-secondary" class="w-full px-4 py-3 rounded-lg text-sm" placeholder="Conhecer Serviços">
+                        </div>
+                    </div>
                 </div>
                 
                 <!-- ABA: SOBRE -->
@@ -415,7 +461,7 @@
                 
                 <!-- ABA: SERVICOS -->
                 <div id="tab-content-servicos" class="tab-content hidden flex flex-col gap-6">
-                    <p class="text-xs text-on-surface-variant font-light">Personalize o catálogo de serviços oferecidos com descrição e preços.</p>
+                    <p class="text-xs text-on-surface-variant font-light">Personalize o catálogo de serviços oferecidos com descrição, preços e botões.</p>
                     
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                         <!-- Serviço 1 -->
@@ -432,6 +478,10 @@
                             <div class="flex flex-col gap-2">
                                 <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Preço (R$)</label>
                                 <input type="text" id="serv-0-price" class="w-full px-3 py-2 text-xs rounded-lg">
+                            </div>
+                            <div class="flex flex-col gap-2">
+                                <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Texto do Botão</label>
+                                <input type="text" id="b-serv-0" class="w-full px-3 py-2 text-xs rounded-lg" placeholder="Reservar Experiência">
                             </div>
                         </div>
                         
@@ -450,6 +500,10 @@
                                 <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Preço (R$)</label>
                                 <input type="text" id="serv-1-price" class="w-full px-3 py-2 text-xs rounded-lg">
                             </div>
+                            <div class="flex flex-col gap-2">
+                                <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Texto do Botão</label>
+                                <input type="text" id="b-serv-1" class="w-full px-3 py-2 text-xs rounded-lg" placeholder="Reservar Experiência">
+                            </div>
                         </div>
                         
                         <!-- Serviço 3 -->
@@ -464,8 +518,8 @@
                                 <textarea id="serv-2-desc" rows="3" class="w-full px-3 py-2 text-xs rounded-lg"></textarea>
                             </div>
                             <div class="flex flex-col gap-2">
-                                <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Preço (R$)</label>
-                                <input type="text" id="serv-2-price" class="w-full px-3 py-2 text-xs rounded-lg">
+                                <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Texto do Botão</label>
+                                <input type="text" id="b-serv-2" class="w-full px-3 py-2 text-xs rounded-lg" placeholder="Reservar Experiência">
                             </div>
                         </div>
                     </div>
@@ -473,7 +527,7 @@
                 
                 <!-- ABA: GALERIA -->
                 <div id="tab-content-galeria" class="tab-content hidden flex flex-col gap-6">
-                    <p class="text-xs text-on-surface-variant font-light">Gerencie os caminhos das imagens para as versões Desktop e Mobile. **Dimensão ideal recomendada para todas as fotos: 800x600 px (Proporção 4:3)** para ficarem perfeitamente enquadradas no site. Caso não faça o upload da versão Mobile, o site herdará a versão Desktop automaticamente.</p>
+                    <p class="text-xs text-on-surface-variant font-light">Gerencie os caminhos das imagens para as versões Desktop e Mobile. **Dimensão ideal recomendada para todas as fotos de galeria: 800x600 px (Proporção 4:3) para Desktop e 600x800 px (Proporção 3:4) para Mobile** para ficarem perfeitamente enquadradas no site. Caso não faça o upload da versão Mobile, o site herdará a versão Desktop automaticamente.</p>
                     
                     <!-- Categoria: Cortes e Serviços -->
                     <div class="bg-[#1a1919] p-5 rounded-xl border border-outline-variant/15 flex flex-col gap-4">
@@ -484,7 +538,7 @@
                                 <span class="text-xs font-semibold text-on-surface block mb-3">Foto 1 (Corte Signature)</span>
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     <div class="flex flex-col gap-1.5">
-                                        <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Desktop</label>
+                                        <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Desktop <span class="text-primary-container font-bold text-[9px] lowercase">(recomendado: 800x600 px - 4:3)</span></label>
                                         <div class="flex gap-2">
                                             <input type="text" id="g-img-0" class="flex-grow px-3 py-2 text-xs rounded-lg">
                                             <label class="bg-surface-container-high hover:bg-surface-container-highest border border-outline-variant/30 text-primary-container px-3 py-2 rounded-lg text-[10px] font-bold uppercase transition-colors shrink-0 flex items-center gap-1 cursor-pointer">
@@ -494,7 +548,7 @@
                                         </div>
                                     </div>
                                     <div class="flex flex-col gap-1.5">
-                                        <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Mobile (Opcional)</label>
+                                        <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Mobile (Opcional) <span class="text-primary-container font-bold text-[9px] lowercase">(recomendado: 600x800 px - 3:4)</span></label>
                                         <div class="flex gap-2">
                                             <input type="text" id="g-img-0-mobile" class="flex-grow px-3 py-2 text-xs rounded-lg" placeholder="Herda desktop se vazio">
                                             <label class="bg-surface-container-high hover:bg-surface-container-highest border border-outline-variant/30 text-primary-container px-3 py-2 rounded-lg text-[10px] font-bold uppercase transition-colors shrink-0 flex items-center gap-1 cursor-pointer">
@@ -511,7 +565,7 @@
                                 <span class="text-xs font-semibold text-on-surface block mb-3">Foto 2 (Barba Elegance)</span>
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     <div class="flex flex-col gap-1.5">
-                                        <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Desktop</label>
+                                        <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Desktop <span class="text-primary-container font-bold text-[9px] lowercase">(recomendado: 800x600 px - 4:3)</span></label>
                                         <div class="flex gap-2">
                                             <input type="text" id="g-img-1" class="flex-grow px-3 py-2 text-xs rounded-lg">
                                             <label class="bg-surface-container-high hover:bg-surface-container-highest border border-outline-variant/30 text-primary-container px-3 py-2 rounded-lg text-[10px] font-bold uppercase transition-colors shrink-0 flex items-center gap-1 cursor-pointer">
@@ -521,7 +575,7 @@
                                         </div>
                                     </div>
                                     <div class="flex flex-col gap-1.5">
-                                        <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Mobile (Opcional)</label>
+                                        <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Mobile (Opcional) <span class="text-primary-container font-bold text-[9px] lowercase">(recomendado: 600x800 px - 3:4)</span></label>
                                         <div class="flex gap-2">
                                             <input type="text" id="g-img-1-mobile" class="flex-grow px-3 py-2 text-xs rounded-lg" placeholder="Herda desktop se vazio">
                                             <label class="bg-surface-container-high hover:bg-surface-container-highest border border-outline-variant/30 text-primary-container px-3 py-2 rounded-lg text-[10px] font-bold uppercase transition-colors shrink-0 flex items-center gap-1 cursor-pointer">
@@ -538,7 +592,7 @@
                                 <span class="text-xs font-semibold text-on-surface block mb-3">Foto 3 (Combo Lounge)</span>
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     <div class="flex flex-col gap-1.5">
-                                        <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Desktop</label>
+                                        <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Desktop <span class="text-primary-container font-bold text-[9px] lowercase">(recomendado: 800x600 px - 4:3)</span></label>
                                         <div class="flex gap-2">
                                             <input type="text" id="g-img-2" class="flex-grow px-3 py-2 text-xs rounded-lg">
                                             <label class="bg-surface-container-high hover:bg-surface-container-highest border border-outline-variant/30 text-primary-container px-3 py-2 rounded-lg text-[10px] font-bold uppercase transition-colors shrink-0 flex items-center gap-1 cursor-pointer">
@@ -548,7 +602,7 @@
                                         </div>
                                     </div>
                                     <div class="flex flex-col gap-1.5">
-                                        <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Mobile (Opcional)</label>
+                                        <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Mobile (Opcional) <span class="text-primary-container font-bold text-[9px] lowercase">(recomendado: 600x800 px - 3:4)</span></label>
                                         <div class="flex gap-2">
                                             <input type="text" id="g-img-2-mobile" class="flex-grow px-3 py-2 text-xs rounded-lg" placeholder="Herda desktop se vazio">
                                             <label class="bg-surface-container-high hover:bg-surface-container-highest border border-outline-variant/30 text-primary-container px-3 py-2 rounded-lg text-[10px] font-bold uppercase transition-colors shrink-0 flex items-center gap-1 cursor-pointer">
@@ -565,7 +619,7 @@
                                 <span class="text-xs font-semibold text-on-surface block mb-3">Foto 4 (Pomadas de Luxo)</span>
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     <div class="flex flex-col gap-1.5">
-                                        <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Desktop</label>
+                                        <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Desktop <span class="text-primary-container font-bold text-[9px] lowercase">(recomendado: 800x600 px - 4:3)</span></label>
                                         <div class="flex gap-2">
                                             <input type="text" id="g-img-3" class="flex-grow px-3 py-2 text-xs rounded-lg">
                                             <label class="bg-surface-container-high hover:bg-surface-container-highest border border-outline-variant/30 text-primary-container px-3 py-2 rounded-lg text-[10px] font-bold uppercase transition-colors shrink-0 flex items-center gap-1 cursor-pointer">
@@ -575,7 +629,7 @@
                                         </div>
                                     </div>
                                     <div class="flex flex-col gap-1.5">
-                                        <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Mobile (Opcional)</label>
+                                        <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Mobile (Opcional) <span class="text-primary-container font-bold text-[9px] lowercase">(recomendado: 600x800 px - 3:4)</span></label>
                                         <div class="flex gap-2">
                                             <input type="text" id="g-img-3-mobile" class="flex-grow px-3 py-2 text-xs rounded-lg" placeholder="Herda desktop se vazio">
                                             <label class="bg-surface-container-high hover:bg-surface-container-highest border border-outline-variant/30 text-primary-container px-3 py-2 rounded-lg text-[10px] font-bold uppercase transition-colors shrink-0 flex items-center gap-1 cursor-pointer">
@@ -598,7 +652,7 @@
                                 <span class="text-xs font-semibold text-on-surface block mb-3">Interno 1 (Lounge VIP)</span>
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     <div class="flex flex-col gap-1.5">
-                                        <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Desktop</label>
+                                        <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Desktop <span class="text-primary-container font-bold text-[9px] lowercase">(recomendado: 800x600 px - 4:3)</span></label>
                                         <div class="flex gap-2">
                                             <input type="text" id="g-img-interno-0" class="flex-grow px-3 py-2 text-xs rounded-lg">
                                             <label class="bg-surface-container-high hover:bg-surface-container-highest border border-outline-variant/30 text-primary-container px-3 py-2 rounded-lg text-[10px] font-bold uppercase transition-colors shrink-0 flex items-center gap-1 cursor-pointer">
@@ -608,7 +662,7 @@
                                         </div>
                                     </div>
                                     <div class="flex flex-col gap-1.5">
-                                        <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Mobile (Opcional)</label>
+                                        <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Mobile (Opcional) <span class="text-primary-container font-bold text-[9px] lowercase">(recomendado: 600x800 px - 3:4)</span></label>
                                         <div class="flex gap-2">
                                             <input type="text" id="g-img-interno-0-mobile" class="flex-grow px-3 py-2 text-xs rounded-lg" placeholder="Herda desktop se vazio">
                                             <label class="bg-surface-container-high hover:bg-surface-container-highest border border-outline-variant/30 text-primary-container px-3 py-2 rounded-lg text-[10px] font-bold uppercase transition-colors shrink-0 flex items-center gap-1 cursor-pointer">
@@ -625,7 +679,7 @@
                                 <span class="text-xs font-semibold text-on-surface block mb-3">Interno 2 (Bar Gourmet)</span>
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     <div class="flex flex-col gap-1.5">
-                                        <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Desktop</label>
+                                        <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Desktop <span class="text-primary-container font-bold text-[9px] lowercase">(recomendado: 800x600 px - 4:3)</span></label>
                                         <div class="flex gap-2">
                                             <input type="text" id="g-img-interno-1" class="flex-grow px-3 py-2 text-xs rounded-lg">
                                             <label class="bg-surface-container-high hover:bg-surface-container-highest border border-outline-variant/30 text-primary-container px-3 py-2 rounded-lg text-[10px] font-bold uppercase transition-colors shrink-0 flex items-center gap-1 cursor-pointer">
@@ -635,7 +689,7 @@
                                         </div>
                                     </div>
                                     <div class="flex flex-col gap-1.5">
-                                        <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Mobile (Opcional)</label>
+                                        <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Mobile (Opcional) <span class="text-primary-container font-bold text-[9px] lowercase">(recomendado: 600x800 px - 3:4)</span></label>
                                         <div class="flex gap-2">
                                             <input type="text" id="g-img-interno-1-mobile" class="flex-grow px-3 py-2 text-xs rounded-lg" placeholder="Herda desktop se vazio">
                                             <label class="bg-surface-container-high hover:bg-surface-container-highest border border-outline-variant/30 text-primary-container px-3 py-2 rounded-lg text-[10px] font-bold uppercase transition-colors shrink-0 flex items-center gap-1 cursor-pointer">
@@ -652,7 +706,7 @@
                                 <span class="text-xs font-semibold text-on-surface block mb-3">Externo (Fachada Luxuosa)</span>
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     <div class="flex flex-col gap-1.5">
-                                        <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Desktop</label>
+                                        <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Desktop <span class="text-primary-container font-bold text-[9px] lowercase">(recomendado: 800x600 px - 4:3)</span></label>
                                         <div class="flex gap-2">
                                             <input type="text" id="g-img-externo-0" class="flex-grow px-3 py-2 text-xs rounded-lg">
                                             <label class="bg-surface-container-high hover:bg-surface-container-highest border border-outline-variant/30 text-primary-container px-3 py-2 rounded-lg text-[10px] font-bold uppercase transition-colors shrink-0 flex items-center gap-1 cursor-pointer">
@@ -662,7 +716,7 @@
                                         </div>
                                     </div>
                                     <div class="flex flex-col gap-1.5">
-                                        <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Mobile (Opcional)</label>
+                                        <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Mobile (Opcional) <span class="text-primary-container font-bold text-[9px] lowercase">(recomendado: 600x800 px - 3:4)</span></label>
                                         <div class="flex gap-2">
                                             <input type="text" id="g-img-externo-0-mobile" class="flex-grow px-3 py-2 text-xs rounded-lg" placeholder="Herda desktop se vazio">
                                             <label class="bg-surface-container-high hover:bg-surface-container-highest border border-outline-variant/30 text-primary-container px-3 py-2 rounded-lg text-[10px] font-bold uppercase transition-colors shrink-0 flex items-center gap-1 cursor-pointer">
@@ -685,7 +739,7 @@
                                 <span class="text-xs font-semibold text-on-surface block mb-3">Cliente 1 (Estilo e Corte)</span>
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     <div class="flex flex-col gap-1.5">
-                                        <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Desktop</label>
+                                        <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Desktop <span class="text-primary-container font-bold text-[9px] lowercase">(recomendado: 800x600 px - 4:3)</span></label>
                                         <div class="flex gap-2">
                                             <input type="text" id="g-img-cliente-0" class="flex-grow px-3 py-2 text-xs rounded-lg">
                                             <label class="bg-surface-container-high hover:bg-surface-container-highest border border-outline-variant/30 text-primary-container px-3 py-2 rounded-lg text-[10px] font-bold uppercase transition-colors shrink-0 flex items-center gap-1 cursor-pointer">
@@ -695,7 +749,7 @@
                                         </div>
                                     </div>
                                     <div class="flex flex-col gap-1.5">
-                                        <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Mobile (Opcional)</label>
+                                        <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Mobile (Opcional) <span class="text-primary-container font-bold text-[9px] lowercase">(recomendado: 600x800 px - 3:4)</span></label>
                                         <div class="flex gap-2">
                                             <input type="text" id="g-img-cliente-0-mobile" class="flex-grow px-3 py-2 text-xs rounded-lg" placeholder="Herda desktop se vazio">
                                             <label class="bg-surface-container-high hover:bg-surface-container-highest border border-outline-variant/30 text-primary-container px-3 py-2 rounded-lg text-[10px] font-bold uppercase transition-colors shrink-0 flex items-center gap-1 cursor-pointer">
@@ -712,7 +766,7 @@
                                 <span class="text-xs font-semibold text-on-surface block mb-3">Cliente 2 (Clube Lounge)</span>
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     <div class="flex flex-col gap-1.5">
-                                        <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Desktop</label>
+                                        <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Desktop <span class="text-primary-container font-bold text-[9px] lowercase">(recomendado: 800x600 px - 4:3)</span></label>
                                         <div class="flex gap-2">
                                             <input type="text" id="g-img-cliente-1" class="flex-grow px-3 py-2 text-xs rounded-lg">
                                             <label class="bg-surface-container-high hover:bg-surface-container-highest border border-outline-variant/30 text-primary-container px-3 py-2 rounded-lg text-[10px] font-bold uppercase transition-colors shrink-0 flex items-center gap-1 cursor-pointer">
@@ -722,7 +776,7 @@
                                         </div>
                                     </div>
                                     <div class="flex flex-col gap-1.5">
-                                        <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Mobile (Opcional)</label>
+                                        <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Mobile (Opcional) <span class="text-primary-container font-bold text-[9px] lowercase">(recomendado: 600x800 px - 3:4)</span></label>
                                         <div class="flex gap-2">
                                             <input type="text" id="g-img-cliente-1-mobile" class="flex-grow px-3 py-2 text-xs rounded-lg" placeholder="Herda desktop se vazio">
                                             <label class="bg-surface-container-high hover:bg-surface-container-highest border border-outline-variant/30 text-primary-container px-3 py-2 rounded-lg text-[10px] font-bold uppercase transition-colors shrink-0 flex items-center gap-1 cursor-pointer">
@@ -771,6 +825,21 @@
                         <label class="text-xs font-semibold uppercase tracking-wider text-on-surface-variant">Link de Incorporação do Google Maps (iframe src)</label>
                         <textarea id="l-iframe" rows="3" class="w-full px-4 py-3 rounded-lg text-sm"></textarea>
                         <span class="text-[10px] text-on-surface-variant font-light">Copie o conteúdo dentro do atributo `src` da tag iframe de incorporação do Google Maps (Compartilhar -> Incorporar um mapa).</span>
+                    </div>
+
+                    <hr class="border-outline-variant/15 my-2">
+
+                    <!-- Textos dos Botões Localização -->
+                    <h3 class="font-display font-semibold text-sm text-primary uppercase tracking-wider">Textos dos Botões (Localização)</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                        <div class="flex flex-col gap-2">
+                            <label class="text-xs font-semibold uppercase tracking-wider text-on-surface-variant">Botão 1 (Como Chegar)</label>
+                            <input type="text" id="b-loc-directions" class="w-full px-4 py-3 rounded-lg text-sm" placeholder="Como Chegar">
+                        </div>
+                        <div class="flex flex-col gap-2">
+                            <label class="text-xs font-semibold uppercase tracking-wider text-on-surface-variant">Botão 2 (Falar com Recepção)</label>
+                            <input type="text" id="b-loc-reception" class="w-full px-4 py-3 rounded-lg text-sm" placeholder="Falar com Recepção">
+                        </div>
                     </div>
                 </div>
                 
@@ -865,7 +934,8 @@
             title: "Estilo Incomparável para o Homem Moderno",
             subtitle: "A experiência premium de barbearia que você merece. Acabamento impecável, ambiente de alto padrão e profissionais de elite.",
             bg_image: "assets/images/hero-bg.webp",
-            bg_image_mobile: ""
+            bg_image_mobile: "",
+            bg_opacity: "25"
           },
           about: {
             problem_title: "Cansado de cortes genéricos?",
@@ -944,6 +1014,17 @@
             webhook_url: "",
             places_key: "",
             places_id: ""
+          },
+          buttons: {
+            nav_reservar: "Reservar Experiência",
+            hero_primary: "Reservar Experiência",
+            hero_secondary: "Conhecer Serviços",
+            serv_0: "Reservar Experiência",
+            serv_1: "Reservar Experiência",
+            serv_2: "Reservar Experiência",
+            loc_directions: "Como Chegar",
+            loc_reception: "Falar com Recepção",
+            cta_footer: "Agendar Agora via WhatsApp"
           }
         };
 
@@ -1109,6 +1190,9 @@
             document.getElementById('h-subtitle').value = data.hero.subtitle;
             document.getElementById('h-bg').value = data.hero.bg_image;
             document.getElementById('h-bg-mobile').value = data.hero.bg_image_mobile || '';
+            const opacityVal = data.hero.bg_opacity !== undefined ? data.hero.bg_opacity : "25";
+            document.getElementById('h-bg-opacity').value = opacityVal;
+            document.getElementById('h-bg-opacity-val').innerText = opacityVal + '%';
             
             // Sobre
             document.getElementById('s-p-title').value = data.about.problem_title;
@@ -1159,6 +1243,29 @@
             document.getElementById('i-webhook').value = data.integrations ? (data.integrations.webhook_url || '') : '';
             document.getElementById('i-places-key').value = data.integrations ? (data.integrations.places_key || '') : '';
             document.getElementById('i-places-id').value = data.integrations ? (data.integrations.places_id || '') : '';
+
+            // Botões do Site
+            if (data.buttons) {
+                document.getElementById('b-nav-reservar').value = data.buttons.nav_reservar || '';
+                document.getElementById('b-hero-primary').value = data.buttons.hero_primary || '';
+                document.getElementById('b-hero-secondary').value = data.buttons.hero_secondary || '';
+                document.getElementById('b-serv-0').value = data.buttons.serv_0 || '';
+                document.getElementById('b-serv-1').value = data.buttons.serv_1 || '';
+                document.getElementById('b-serv-2').value = data.buttons.serv_2 || '';
+                document.getElementById('b-loc-directions').value = data.buttons.loc_directions || '';
+                document.getElementById('b-loc-reception').value = data.buttons.loc_reception || '';
+                document.getElementById('b-cta-footer').value = data.buttons.cta_footer || '';
+            } else if (DEFAULT_CONFIG.buttons) {
+                document.getElementById('b-nav-reservar').value = DEFAULT_CONFIG.buttons.nav_reservar;
+                document.getElementById('b-hero-primary').value = DEFAULT_CONFIG.buttons.hero_primary;
+                document.getElementById('b-hero-secondary').value = DEFAULT_CONFIG.buttons.hero_secondary;
+                document.getElementById('b-serv-0').value = DEFAULT_CONFIG.buttons.serv_0;
+                document.getElementById('b-serv-1').value = DEFAULT_CONFIG.buttons.serv_1;
+                document.getElementById('b-serv-2').value = DEFAULT_CONFIG.buttons.serv_2;
+                document.getElementById('b-loc-directions').value = DEFAULT_CONFIG.buttons.loc_directions;
+                document.getElementById('b-loc-reception').value = DEFAULT_CONFIG.buttons.loc_reception;
+                document.getElementById('b-cta-footer').value = DEFAULT_CONFIG.buttons.cta_footer;
+            }
         }
 
         // CARREGAR E PREENCHER CONFIGURAÇÕES ATUAIS (HÍBRIDO: LOCAL + NUVEM)
@@ -1211,7 +1318,8 @@
                     title: document.getElementById('h-title').value,
                     subtitle: document.getElementById('h-subtitle').value,
                     bg_image: document.getElementById('h-bg').value,
-                    bg_image_mobile: document.getElementById('h-bg-mobile').value
+                    bg_image_mobile: document.getElementById('h-bg-mobile').value,
+                    bg_opacity: document.getElementById('h-bg-opacity').value
                 },
                 about: {
                     problem_title: document.getElementById('s-p-title').value,
@@ -1290,6 +1398,17 @@
                     webhook_url: document.getElementById('i-webhook').value,
                     places_key: document.getElementById('i-places-key').value,
                     places_id: document.getElementById('i-places-id').value
+                },
+                buttons: {
+                    nav_reservar: document.getElementById('b-nav-reservar').value,
+                    hero_primary: document.getElementById('b-hero-primary').value,
+                    hero_secondary: document.getElementById('b-hero-secondary').value,
+                    serv_0: document.getElementById('b-serv-0').value,
+                    serv_1: document.getElementById('b-serv-1').value,
+                    serv_2: document.getElementById('b-serv-2').value,
+                    loc_directions: document.getElementById('b-loc-directions').value,
+                    loc_reception: document.getElementById('b-loc-reception').value,
+                    cta_footer: document.getElementById('b-cta-footer').value
                 }
             };
             
@@ -1596,6 +1715,11 @@
 
         // Registrar o listener na fase de captura/bolha no documento
         document.addEventListener('change', handleImageUploadEvent);
+
+        // ATUALIZAÇÃO DO INDICADOR DE OPACIDADE EM TEMPO REAL
+        document.getElementById('h-bg-opacity').addEventListener('input', (e) => {
+            document.getElementById('h-bg-opacity-val').innerText = e.target.value + '%';
+        });
 
         // Executar verificação inicial de sessão
         checkSession();
