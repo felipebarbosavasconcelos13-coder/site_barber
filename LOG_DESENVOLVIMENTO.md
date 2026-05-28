@@ -429,5 +429,13 @@ Este arquivo registra detalhadamente todas as alterações, decisões de design 
    - **Backend Dinâmico:** Refatorados os endpoints serverless [`api/get-config.js`](file:///c:/Users/felip/Desktop/N8N/Atigra/Pag%20barbearia/api/get-config.js) e [`api/save-config.js`](file:///c:/Users/felip/Desktop/N8N/Atigra/Pag%20barbearia/api/save-config.js) para ler a variável `process.env.SUPABASE_CONFIG_ID` de forma prioritária (com fallback para `'barber_config'`).
    - **Fim dos Conflitos:** Ao fazer o fetch ou o Upsert (gravação), os dados de cada salão são agora lidos e salvos em linhas isoladas da tabela `configuracoes` no mesmo banco de dados do Supabase. O primeiro salvamento de cada site cria a sua respectiva linha de forma automática, eliminando qualquer conflito de sobreposição de configurações entre os projetos.
 
+6. **Carregamento Híbrido Cinematográfico Premium e Fim do Layout Shift (`index.html`):**
+   - **Estilo Animado do Loader:** Injetada a animação `@keyframes loader-bar` no `<style>` do cabeçalho para controlar o preenchimento suave da barra de progresso do loader.
+   - **Contêiner de Transição Premium:** Adicionado o contêiner `initial-loader` no início do `<body>`, contendo um fundo escuro elegante, o monograma pulsante "E" e o nome dourado da barbearia.
+   - **Lógica Inteligente de Transição (JavaScript):**
+     - *Acessos subsequentes (Cache ativo):* Se o LocalStorage já possui dados, removemos o loader da tela instantaneamente de forma síncrona, mantendo o tempo de abertura de 0ms para preservar a excelente usabilidade.
+     - *Primeiro acesso (Navegador novo):* Se o LocalStorage está vazio, o loader premium permanece na tela rodando a sua animação. Assim que os dados do Supabase chegam via `/api/get-config`, o site aplica as edições, atualiza o cache local e dissolve o loader com um fade-out suave de 700ms após um delay de estabilização visual (500ms), eliminando completamente qualquer Layout Shift ("piscada visual" de textos/imagens).
+     - *Resiliência de Rede:* Se o fetch falhar, o loader é removido imediatamente para mostrar os dados estáticos de fallback, garantindo que o site funcione sempre.
+
 ### Próximos Passos
 * Realizar deploy contínuo final e efetuar a validação operacional. (CONCLUÍDO)

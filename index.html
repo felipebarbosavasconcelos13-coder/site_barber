@@ -169,6 +169,11 @@
         .dark-map:hover {
             filter: invert(90%) hue-rotate(180deg) opacity(90%);
         }
+        @keyframes loader-bar {
+            0% { width: 0%; }
+            50% { width: 70%; }
+            100% { width: 100%; }
+        }
     </style>
     
     <!-- Script de Injeção Rápida de Estilos Dinâmicos (Evita FOUC) -->
@@ -201,6 +206,27 @@
     </script>
 </head>
 <body class="bg-background text-on-background font-sans antialiased selection:bg-primary-container selection:text-on-primary-container flex flex-col min-h-screen">
+
+    <!-- Initial Premium Loader (Efeito Reveal Cinematográfico) -->
+    <div id="initial-loader" class="fixed inset-0 z-[9999] bg-[#0e0e0e] flex flex-col items-center justify-center gap-6 transition-all duration-700 ease-in-out opacity-100">
+        <div class="flex flex-col items-center gap-4">
+            <!-- Monograma Pulsante -->
+            <svg class="h-16 w-16 text-primary-container animate-pulse" viewBox="0 0 100 100" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <rect width="100" height="100" rx="16" fill="#131313" class="border border-outline-variant/10"/>
+                <path d="M30 25H70V37H45V44H65V54H45V63H70V75H30V25Z" fill="url(#loader-gold-grad)"/>
+                <defs>
+                    <linearGradient id="loader-gold-grad" x1="30" y1="25" x2="70" y2="75" gradientUnits="userSpaceOnUse">
+                        <stop offset="0%" stop-color="#ffc562"/>
+                        <stop offset="100%" stop-color="#ff9159"/>
+                    </linearGradient>
+                </defs>
+            </svg>
+            <span class="font-display font-bold text-2xl tracking-widest text-[#ffe8c7] animate-pulse">ELEGANCE</span>
+        </div>
+        <div class="w-16 h-1 bg-outline-variant/20 rounded-full overflow-hidden">
+            <div class="h-full bg-primary-container rounded-full w-0 animate-[loader-bar_1.8s_ease-in-out_infinite]"></div>
+        </div>
+    </div>
 
     <!-- Navigation -->
     <nav id="navbar" class="fixed top-0 w-full z-50 bg-background/25 backdrop-blur-[20px] shadow-[0px_20px_40px_rgba(0,0,0,0.5)] transition-all duration-300 py-4">
@@ -1191,18 +1217,39 @@
                 }
             }
 
+            // Função para esconder o loader premium de forma suave
+            const hideLoader = (delay = 0) => {
+                const loader = document.getElementById('initial-loader');
+                if (loader) {
+                    setTimeout(() => {
+                        loader.classList.add('opacity-0', 'pointer-events-none');
+                        setTimeout(() => {
+                            loader.remove();
+                        }, 700);
+                    }, delay);
+                }
+            };
+
             // Fase 1: Carrega imediatamente do localStorage para evitar piscadas
             const localConfigStr = localStorage.getItem('elegance_barber_config');
+            let hasLocalData = false;
             if (localConfigStr) {
                 try {
                     const localConfig = JSON.parse(localConfigStr);
                     applyConfig(localConfig);
+                    hasLocalData = true;
+                    // Se já temos dados locais em cache, removemos o loader instantaneamente (0ms de espera)
+                    const loader = document.getElementById('initial-loader');
+                    if (loader) {
+                        loader.style.display = 'none';
+                        loader.remove();
+                    }
                 } catch (err) {
                     console.warn("Erro ao ler dados do localStorage:", err);
                 }
             }
 
-            // Fase 2: Sincroniza em segundo plano com a nuvem (Vercel KV)
+            // Fase 2: Sincroniza em segundo plano com a nuvem do Supabase
             fetch('/api/get-config')
                 .then(response => response.json())
                 .then(data => {
@@ -1218,9 +1265,17 @@
                             applyConfig(data.config);
                         }
                     }
+                    // Se não tínhamos dados locais, escondemos o loader suavemente agora que os dados chegaram
+                    if (!hasLocalData) {
+                        hideLoader(500); // 500ms de delay para suavização de transição visual
+                    }
                 })
                 .catch(err => {
-                    console.warn("Erro ao buscar a configuração remota da nuvem (Vercel KV):", err);
+                    console.warn("Erro ao buscar a configuração remota do Supabase:", err);
+                    // Em caso de falha de conexão, removemos o loader imediatamente para mostrar o fallback estático
+                    if (!hasLocalData) {
+                        hideLoader(0);
+                    }
                 });
         })();
 
