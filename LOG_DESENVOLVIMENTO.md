@@ -392,5 +392,9 @@ Este arquivo registra detalhadamente todas as alterações, decisões de design 
    - **Landing Page HTML:** Removida a classe estática Tailwind `opacity-25` de `#hero-bg-img` para evitar conflito de cascata visual.
    - **Injetor JavaScript:** Adicionada a aplicação dinâmica da opacidade diretamente no atributo inline `.style.opacity = parseFloat(config.hero.bg_opacity) / 100`, com fallback automático e seguro para `0.25` (25%).
 
+4. **Correção do Bug Crítico de Salvamento de Configurações (`admin.html`):**
+   - **Causa Raiz:** O input de preço para o Serviço 3 (`serv-2-price`) estava inteiramente ausente na aba de Serviços do HTML do painel. Consequentemente, ao carregar a página (`populateFormFields`) ou ao clicar no botão "Salvar Alterações" (`submit`), o JavaScript tentava ler `.value` de um elemento nulo, travando com o erro fatal `TypeError: Cannot read properties of null (reading 'value')`.
+   - **Solução Aplicada:** Adicionado o campo input com `id="serv-2-price"` no HTML da aba Serviços para o Serviço 3. Com isso, a inicialização e o salvamento em nuvem e LocalStorage voltaram a funcionar de forma estável e fluida.
+
 ### Próximos Passos
 * Realizar validação final e publicar as atualizações no repositório remoto do GitHub para o deploy contínuo na Vercel. (CONCLUÍDO)
