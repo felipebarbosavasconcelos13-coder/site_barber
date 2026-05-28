@@ -1,41 +1,65 @@
-# Plano de Mitigação: Remoção de Chave Exposta e Higienização do Histórico Git
+# Plano de Otimização de Performance Web: Velocidade Máxima Mobile (Core Web Vitals)
 
-O GitHub Secret Scanning detectou com precisão a exposição da chave do Google Places no log de desenvolvimento e no plano de implementação que foram integrados ao repositório remoto. Executaremos uma limpeza cirúrgica nos arquivos locais e no histórico de commits do Git para eliminar qualquer risco.
-
----
-
-## 🚦 Status e Diagnóstico do Risco
-
-### 1. Segredo Exposto no Histórico Git
-O GitHub identificou a credencial ativa `[CHAVE_GOOGLE_PLACES_OCULTADA]` no arquivo `LOG_DESENVOLVIMENTO.md` na linha 469. Ela também consta no arquivo `Implementation_Plan.md` que foi enviado no commit `a2339a9`.
-* **Risco:** Qualquer pessoa com acesso ao repositório público (ou scans automáticos maliciosos) poderia ler a chave de API e utilizá-la em serviços de terceiros, consumindo sua cota de faturamento no Google Cloud Console.
-* **Mitigação:** Não basta fazer uma alteração posterior de remoção, pois o segredo continuará acessível no histórico de commits passados. A solução de segurança padrão é realizar o **mascaramento do arquivo local**, amalgamar a alteração no commit problemático via `git commit --amend` e forçar o envio via `git push --force` para reescrever o histórico remoto de forma 100% limpa.
+Este documento descreve as etapas para concluir a migração da barbearia do Tailwind em tempo de execução no cliente para a folha de estilo estática compilada e otimizada de alta velocidade, tanto na Landing Page quanto no Painel Administrativo.
 
 ---
 
-## 📋 Etapas de Implementação Propostas
+## 🚦 Status e Diagnóstico do PageSpeed Insights
 
-### 1. Higienização dos Arquivos Locais
-* **LOG_DESENVOLVIMENTO.md:** Substituir a chave de API literal por `[CHAVE_GOOGLE_PLACES_OCULTADA]`.
-* **Implementation_Plan.md:** Substituir a chave de API literal por `[CHAVE_GOOGLE_PLACES_OCULTADA]`.
+O diagnóstico inicial do PageSpeed Insights no mobile apontou os seguintes gargalos principais:
+1. **Compilação Client-side do Tailwind (TBT Elevado):** O script `assets/js/tailwind.js` consumia de 1 a 2 segundos de CPU em dispositivos móveis de baixo/médio desempenho para interpretar a página e gerar as classes utilitárias no cliente.
+2. **Render-Blocking Resources:** Arquivos CSS extras desnecessários e dependências locais pesadas que bloqueavam a renderização inicial do DOM.
+3. **FOUC (Flash of Unstyled Content) ou Deslocamento de Layout (CLS):** Pequenas variações de carregamento de cores dinâmicas injetadas na nuvem.
 
-### 2. Reescrever o Último Commit Localmente
-* Executar a adição dos arquivos e a reescrita do último commit:
-  ```bash
-  git add LOG_DESENVOLVIMENTO.md Implementation_Plan.md
-  git commit --amend --no-edit
+---
+
+## 📋 Etapas de Otimização Propostas
+
+### Componente 1: Painel Administrativo (`admin.html`)
+* **Remoção do Tailwind Client-side:**
+  - Excluir a tag `<script src="assets/js/tailwind.js"></script>`.
+  - Excluir o script inline `<script id="tailwind-config">` de 70+ linhas que configurava o Tailwind local.
+  - Excluir a folha `<link href="assets/css/styles.css" rel="stylesheet"/>` legada.
+* **Inserção do CSS Estático Compilado:**
+  - Apontar para o arquivo CSS compilado de alta performance e minificado: `<link href="assets/css/app-compiled.min.css" rel="stylesheet"/>`.
+
+### Componente 2: Injetor de Tema Dinâmico (`#theme-injector`)
+* **Evitar FOUC e Piscadas Visuais:**
+  - Declarar as variáveis padrões `:root` de cores diretamente no bloco de estilo estático principal das páginas (`index.html` e `admin.html`).
+  - Atualizar o script `#theme-injector` para ler as variáveis `--dynamic-background` e `--dynamic-surface` a partir das configurações salvas e injetá-las de forma ultra-veloz no `:root` no momento exato do parseamento do `head`.
+* **Mapeamento de Variáveis Suportadas:**
+  ```css
+  :root {
+      --dynamic-background: #0e0e0e;
+      --dynamic-surface: #131313;
+      --dynamic-primary: #ffe8c7;
+      --dynamic-secondary: #ffb693;
+      --dynamic-primary-rgb: 255, 232, 199;
+  }
   ```
 
-### 3. Forçar Envio Remoto e Atualização de Histórico no GitHub
-* Executar o push forçado para apagar permanentemente o commit anterior com a credencial exposta do GitHub:
+### Componente 3: Limpeza do Workspace
+* Apagar arquivos temporários ou desnecessários da pasta de trabalho, como `assets/css/tailwind-input.css` (usado apenas na compilação do Tailwind CLI) para manter o repositório limpo.
+
+### Componente 4: Versionamento & Deploy Contínuo (Vercel)
+* Fazer commit do código limpo local e realizar o push para a branch remota:
   ```bash
-  git push origin main --force
+  git add .
+  git commit -m "perf: otimização radical Core Web Vitals no admin e injetor de tema"
+  git push origin main
   ```
+* O push acionará automaticamente a compilação estática do pipeline da Vercel para produção na Athenas Barbearia e homologação na Nórdica Barbearia.
 
 ---
 
-## 📋 Plano de Verificação
+## 📋 Plano de Verificação e Auditoria
 
-### Testes de Higienização Local e Remota
-1. **Verificação de Chave no Código:** Executar `git grep -i "AIzaSyBc"` no repositório local e garantir que nenhuma ocorrência da chave original em texto limpo permaneça.
-2. **Validação Operacional:** Acessar o link de produção `https://www.athenasbarbearia.com.br` e garantir que os depoimentos dinâmicos continuam funcionando e sincronizando normalmente (o que provará que as chaves em produção na Vercel continuam perfeitamente intactas e operacionais).
+1. **Validação do Painel de Controle:** Acessar o Painel de Controle localmente e em homologação e validar se todos os formulários, paleta de cores hexadecimais, seções de serviços e injeção do places funcionam perfeitamente sem quebras de layout.
+2. **Validação da Velocidade no Mobile:** Reexecutar as análises do PageSpeed Insights para garantir que a nota saltou para a zona verde (acima de 90) em produção.
+
+---
+
+## 🔗 Links Úteis
+* **Visualização da Landing Page (Athenas Barbearia):** [https://www.athenasbarbearia.com.br](https://www.athenasbarbearia.com.br)
+* **Visualização da Landing Page (Nórdica Barbearia):** [https://site-barber-m4gj.vercel.app](https://site-barber-m4gj.vercel.app)
+* **Painel Administrativo da Nórdica Barbearia:** [https://site-barber-m4gj.vercel.app/admin.html](https://site-barber-m4gj.vercel.app/admin.html)

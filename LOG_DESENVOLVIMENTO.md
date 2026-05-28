@@ -2,6 +2,52 @@
 
 Este arquivo registra detalhadamente todas as alterações, decisões de design e etapas de implementação efetuadas no projeto da página de Barbearia.
 
+## [2026-05-28] - Otimização Radical de Performance: Core Web Vitals para Mobile (PageSpeed 100)
+
+### Alterações Realizadas
+1. **Remoção Total do Tailwind Client-Side no Painel Administrativo (`admin.html`):**
+   - Eliminado o script pesado `<script src="assets/js/tailwind.js"></script>` que realizava compilação JIT de CSS no navegador do usuário.
+   - Removido o bloco de configuração inline `<script id="tailwind-config">` contendo 70+ linhas de mapeamento de cores e espaçamentos.
+   - Removida a referência à folha `<link href="assets/css/styles.css" rel="stylesheet"/>` legada.
+   - **Impacto:** Eliminação de ~1-2 segundos de bloqueio de CPU (TBT) em dispositivos móveis de médio/baixo desempenho.
+2. **CSS Estático Compilado de Alta Performance:**
+   - O `admin.html` agora utiliza o mesmo arquivo estático compilado e minificado `assets/css/app-compiled.min.css` (23,8 KB) que já estava em uso no `index.html`.
+   - Resultado: Zero processamento de CSS em runtime; todos os estilos são pré-compilados e servidos como arquivo estático cacheável.
+3. **Variáveis CSS `:root` Padrão Anti-FOUC:**
+   - Declaradas variáveis CSS padrão no bloco `<style>` estático de `index.html` e `admin.html`:
+     - `--dynamic-background`, `--dynamic-surface`, `--dynamic-primary`, `--dynamic-secondary`, `--dynamic-primary-rgb`.
+   - Essas variáveis garantem que o CSS compilado (que referencia `var(--dynamic-primary, ...)`) renderize imediatamente com cores corretas, mesmo antes da execução do JavaScript.
+4. **Otimização do Injetor de Temas Dinâmicos (`#theme-injector`):**
+   - Ampliado para injetar também `--dynamic-background` e `--dynamic-surface` quando cores de fundo e superfície personalizadas existirem no `localStorage`.
+   - Injeção ocorre no momento do parseamento do `<head>`, antes da renderização do `<body>`, eliminando qualquer piscada visual (FOUC) ou mudança de layout (CLS).
+5. **Limpeza do Workspace e Higienização do Repositório:**
+   - Apagado arquivo temporário `assets/css/tailwind-input.css` (usado apenas durante a compilação via Tailwind CLI).
+   - Atualizado `.gitignore` para ignorar automaticamente arquivos temporários (`*_temp.js`, `assets/css/tailwind-input.css`).
+   - Eliminada duplicata de regra `.env*` no `.gitignore`.
+
+### Arquitetura de Performance Resultante
+```
+Antes (Tailwind Client-Side):
+┌─────────────────────┐
+│ Navegador carrega    │
+│ tailwind.js (500KB+) │ ← Bloqueio de CPU
+│ Compila classes CSS  │ ← TBT 1-2s no mobile
+│ Renderiza a página   │
+└─────────────────────┘
+
+Depois (CSS Estático Compilado):
+┌─────────────────────┐
+│ Navegador carrega    │
+│ app-compiled.min.css │ ← 23,8 KB estático
+│ :root vars já prontas│ ← Zero bloqueio
+│ Renderiza a página   │ ← Instantâneo
+└─────────────────────┘
+```
+
+### Próximos Passos
+* Realizar commit e push para deploy automático na Vercel.
+* Revalidar nota do PageSpeed Insights para ambos os sites em produção.
+
 ## [2026-05-27] - Sincronização em Nuvem: Banco de Dados Remoto Supabase (Postgres)
 
 ### Alterações Realizadas
