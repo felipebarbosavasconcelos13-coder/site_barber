@@ -459,6 +459,24 @@ Este arquivo registra detalhadamente todas as alterações, decisões de design 
    - **Monograma Vetorial:** Eliminada a imagem estática gigante em Base64 do monograma de navegação no arquivo de layout de referência, substituindo-a pelo mesmo SVG vetorial do `index.html` com a letra **B**. Isso reduziu o tamanho total do arquivo de layout de forma limpa.
    - **Ajustes Gerais:** Corrigidas as strings estáticas de título, rodapé, copyright e seções em conformidade com a transição.
 
+
+## [2026-05-28] - Diagnóstico de Sincronização: Variáveis de Ambiente e Isolamento na Vercel
+
+### Alterações Realizadas
+
+1. **Investigação do Erro de Depoimentos:**
+   - Diagnosticado que os depoimentos reais do Google Places não estavam sincronizando em produção no projeto `site-barber` devido à ausência da variável de ambiente **`GOOGLE_PLACES_API_KEY`** nas configurações do projeto da Vercel. O backend `/api/places` respondia com erro de falta de chave no servidor.
+   - Identificado que a chave do Google Places (`[CHAVE_GOOGLE_PLACES_OCULTADA]`) e o place ID (`ChIJo8bRWM_zoJMRuEJF-V93o_k`) estavam salvos com segurança nas configurações no banco Supabase.
+
+2. **Identificação de Conflito de Sincronização do Supabase:**
+   - Detectada a ausência da variável **`SUPABASE_CONFIG_ID`** na Vercel para ambos os projetos (`site-barber` e `site-barber-m4gj`).
+   - Sem essa variável, ambos os ambientes usavam o ID padrão `'barber_config'`, resultando em conflito e colisão de dados no Supabase, onde edições feitas em um projeto sobrescreviam as do outro.
+
+3. **Criação do Plano de Solução:**
+   - Elaborado e criado o arquivo de planejamento de contingência [Implementation_Plan.md](file:///c:/Users/felip/Desktop/N8N/Atigra/Pag%20barbearia/Implementation_Plan.md) descrevendo as etapas exatas para injetar de forma segura as variáveis de ambiente `SUPABASE_CONFIG_ID` (`site_barber` e `site_barber_m4gj`) e `GOOGLE_PLACES_API_KEY` via API da Vercel e efetuar o re-deploy automático.
+
 ### Próximos Passos
-* Realizar git commit e push consolidados para deploy automático na Vercel. (CONCLUÍDO)
+* Aguardar a aprovação do plano de implementação pelo usuário.
+* Injetar as variáveis de ambiente na Vercel e disparar novo deploy dos projetos.
+* Validar o funcionamento e a sincronização correta dos depoimentos.
 
