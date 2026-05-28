@@ -67,3 +67,37 @@ Corrigir diferencas visuais nas cores aplicadas aos elementos da landing page, p
 
 * Fazer validacao manual no navegador.
 * Se aprovado, realizar commit e push para deploy continuo.
+
+---
+
+## [2026-05-28] Refinamento dos Botoes Secundarios
+
+### Objetivo
+
+Corrigir botoes que apareciam com texto escuro sobre fundo escuro, principalmente em Hero, cards de Servicos e Localizacao.
+
+### Arquivos Afetados
+
+* `index.html`
+* `LOG_DESENVOLVIMENTO.md`
+* `Implementation_Plan.md`
+
+### Implementacao
+
+1. **Classe `dynamic-outline-button`:** Concluido.
+   - Texto, borda e fundo translúcido usam `--dynamic-primary` e `--dynamic-primary-rgb`.
+   - Hover usa gradiente dinamico com `--dynamic-primary` e `--dynamic-secondary`.
+
+2. **Botoes atualizados:** Concluido.
+   - Hero secundario: `Conhecer Servicos`.
+   - Servico 1: `Reservar Experiencia`.
+   - Servico 2: `Reservar Experiencia`.
+   - Localizacao secundario: `Falar com Recepcao`.
+
+### Verificacao
+
+* Aguardando validacao visual no navegador.
+
+### Proximos Passos
+
+* Confirmar contraste e consistencia visual dos botoes nas cores configuradas atualmente.

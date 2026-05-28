@@ -89,6 +89,17 @@
         .hover\:border-primary-container\/50:hover {
             border-color: rgba(var(--dynamic-primary-rgb, 255, 232, 199), 0.50) !important;
         }
+        .dynamic-outline-button {
+            color: var(--dynamic-primary, #ffe8c7) !important;
+            background: rgba(var(--dynamic-primary-rgb, 255, 232, 199), 0.08) !important;
+            border-color: rgba(var(--dynamic-primary-rgb, 255, 232, 199), 0.24) !important;
+        }
+        .dynamic-outline-button:hover {
+            color: #0d0e12 !important;
+            background: linear-gradient(135deg, var(--dynamic-primary, #ffc562) 0%, var(--dynamic-secondary, #ff9159) 100%) !important;
+            border-color: transparent !important;
+            box-shadow: 0 0 24px rgba(var(--dynamic-primary-rgb, 255, 232, 199), 0.22) !important;
+        }
         /* Efeito de mapa no modo escuro */
         .dark-map {
             filter: invert(90%) hue-rotate(180deg) opacity(75%);
@@ -238,7 +249,7 @@
                     <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">chat</span>
                     <span id="hero-primary-btn-text">Reservar Experiência</span>
                 </a>
-                <a class="inline-flex items-center justify-center gap-2 bg-surface-container-high/50 hover:bg-surface-container-highest/80 backdrop-blur-sm text-on-background border border-outline-variant/30 font-semibold text-sm uppercase tracking-wider px-8 py-5 rounded-2xl transition-all duration-300" href="#services">
+                <a class="dynamic-outline-button inline-flex items-center justify-center gap-2 backdrop-blur-sm border font-semibold text-sm uppercase tracking-wider px-8 py-5 rounded-2xl transition-all duration-300" href="#services">
                     <span id="hero-secondary-btn-text">Conhecer Serviços</span>
                 </a>
             </div>
@@ -328,7 +339,7 @@
                 </div>
                 <div class="mt-auto w-full flex flex-col gap-4">
                     <span id="serv-0-price" class="inline-block bg-primary-container/10 text-primary-container font-display font-semibold text-xl px-6 py-2 rounded-full border border-primary-container/20">R$ 120</span>
-                    <a id="serv-0-btn" class="inline-flex items-center justify-center gap-2 bg-surface-container-highest hover:bg-primary-container hover:text-on-primary transition-all duration-300 text-xs font-bold uppercase tracking-wider py-3.5 rounded-2xl border border-outline-variant/20 wa-link" href="https://wa.me/5511999999999?text=Olá!%20Gostaria%20de%20agendar%20o%20Corte%20Signature%20na%20barbearia.">
+                    <a id="serv-0-btn" class="dynamic-outline-button inline-flex items-center justify-center gap-2 transition-all duration-300 text-xs font-bold uppercase tracking-wider py-3.5 rounded-2xl border wa-link" href="https://wa.me/5511999999999?text=Olá!%20Gostaria%20de%20agendar%20o%20Corte%20Signature%20na%20barbearia.">
                         <span id="serv-0-btn-text">Reservar Experiência</span>
                     </a>
                 </div>
@@ -345,7 +356,7 @@
                 </div>
                 <div class="mt-auto w-full flex flex-col gap-4">
                     <span id="serv-1-price" class="inline-block bg-primary-container/10 text-primary-container font-display font-semibold text-xl px-6 py-2 rounded-full border border-primary-container/20">R$ 90</span>
-                    <a id="serv-1-btn" class="inline-flex items-center justify-center gap-2 bg-surface-container-highest hover:bg-primary-container hover:text-on-primary transition-all duration-300 text-xs font-bold uppercase tracking-wider py-3.5 rounded-2xl border border-outline-variant/20 wa-link" href="https://wa.me/5511999999999?text=Olá!%20Gostaria%20de%20agendar%20a%20Barba%20Barber%20na%20barbearia.">
+                    <a id="serv-1-btn" class="dynamic-outline-button inline-flex items-center justify-center gap-2 transition-all duration-300 text-xs font-bold uppercase tracking-wider py-3.5 rounded-2xl border wa-link" href="https://wa.me/5511999999999?text=Olá!%20Gostaria%20de%20agendar%20a%20Barba%20Barber%20na%20barbearia.">
                         <span id="serv-1-btn-text">Reservar Experiência</span>
                     </a>
                 </div>
@@ -633,7 +644,7 @@
                         <span class="material-symbols-outlined">directions</span>
                         <span id="loc-directions-btn-text">Como Chegar</span>
                     </a>
-                    <a id="loc-reception-btn" class="inline-flex items-center justify-center gap-2 bg-surface-container-high/50 hover:bg-surface-container-highest border border-outline-variant/30 text-on-background font-semibold text-xs uppercase tracking-wider px-6 py-4 rounded-xl transition-all duration-300 wa-link" href="https://wa.me/5511999999999?text=Olá!%20Gostaria%20de%20agendar%20um%20horário.">
+                    <a id="loc-reception-btn" class="dynamic-outline-button inline-flex items-center justify-center gap-2 border font-semibold text-xs uppercase tracking-wider px-6 py-4 rounded-xl transition-all duration-300 wa-link" href="https://wa.me/5511999999999?text=Olá!%20Gostaria%20de%20agendar%20um%20horário.">
                         <span id="loc-reception-btn-text">Falar com Recepção</span>
                     </a>
                 </div>

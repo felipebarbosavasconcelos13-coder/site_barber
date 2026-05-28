@@ -558,3 +558,27 @@ Depois (CSS Estático Compilado):
 
 * Validar manualmente no navegador se todos os botões, filtros, badges, bordas e textos destacados acompanham a paleta configurada no painel.
 * Salvar uma configuração pelo painel e confirmar que os novos títulos/subtítulos persistem no LocalStorage e na nuvem.
+
+## [2026-05-28] - Refinamento Visual dos Botões Secundários e de Serviços
+
+### Alterações Realizadas
+
+1. **Correção de contraste nos botões secundários (`index.html`):**
+   - Criada a classe utilitária `dynamic-outline-button` para padronizar botões de ação secundária com texto, borda e fundo translúcido baseados em `--dynamic-primary` e `--dynamic-primary-rgb`.
+   - O hover desses botões agora usa o mesmo gradiente dinâmico dos CTAs principais, garantindo contraste com texto escuro sobre fundo claro.
+
+2. **Botões impactados:**
+   - Botão secundário do Hero (`Conhecer Serviços`).
+   - Botões dos serviços 1 e 2 (`Reservar Experiência`).
+   - Botão secundário da seção Localização (`Falar com Recepção`).
+
+3. **Motivação:**
+   - Imagens de validação mostraram botões com texto muito escuro sobre fundo escuro, indicando que algumas classes herdavam cor inadequada ou não tinham cor base explícita após a migração para CSS compilado.
+
+### Verificação
+
+* Alteração aplicada diretamente nas classes dos botões e na folha inline crítica do `index.html`.
+
+### Próximos Passos
+
+* Validar visualmente no navegador os botões destacados pelo usuário em desktop e mobile.
