@@ -587,11 +587,11 @@
             <!-- Review 1 -->
             <div class="bg-[#131313] rounded-xl p-8 border border-outline-variant/10 flex flex-col gap-4">
                 <div class="flex items-center gap-1 text-primary-container">
-                    <span class="material-symbols-outlined text-base" style="font-variation-settings: 'FILL' 1;">star</span>
-                    <span class="material-symbols-outlined text-base" style="font-variation-settings: 'FILL' 1;">star</span>
-                    <span class="material-symbols-outlined text-base" style="font-variation-settings: 'FILL' 1;">star</span>
-                    <span class="material-symbols-outlined text-base" style="font-variation-settings: 'FILL' 1;">star</span>
-                    <span class="material-symbols-outlined text-base" style="font-variation-settings: 'FILL' 1;">star</span>
+                    <span class="text-base">★</span>
+                    <span class="text-base">★</span>
+                    <span class="text-base">★</span>
+                    <span class="text-base">★</span>
+                    <span class="text-base">★</span>
                 </div>
                 <p class="text-sm text-on-surface-variant leading-relaxed font-light italic">"Melhor barbearia de São Paulo de longe. Pontualidade britânica, ambiente extremamente sofisticado e o profissional fez um degradê cirúrgico. A cerveja artesanal é geladíssima!"</p>
                 <div class="mt-4">
@@ -603,11 +603,11 @@
             <!-- Review 2 -->
             <div class="bg-[#131313] rounded-xl p-8 border border-outline-variant/10 flex flex-col gap-4">
                 <div class="flex items-center gap-1 text-primary-container">
-                    <span class="material-symbols-outlined text-base" style="font-variation-settings: 'FILL' 1;">star</span>
-                    <span class="material-symbols-outlined text-base" style="font-variation-settings: 'FILL' 1;">star</span>
-                    <span class="material-symbols-outlined text-base" style="font-variation-settings: 'FILL' 1;">star</span>
-                    <span class="material-symbols-outlined text-base" style="font-variation-settings: 'FILL' 1;">star</span>
-                    <span class="material-symbols-outlined text-base" style="font-variation-settings: 'FILL' 1;">star</span>
+                    <span class="text-base">★</span>
+                    <span class="text-base">★</span>
+                    <span class="text-base">★</span>
+                    <span class="text-base">★</span>
+                    <span class="text-base">★</span>
                 </div>
                 <p class="text-sm text-on-surface-variant leading-relaxed font-light italic">"O ritual de toalha quente com massagem facial é imperdível. Uma verdadeira terapia de relaxamento após um dia longo de reuniões. Atendimento impecável."</p>
                 <div class="mt-4">
@@ -619,11 +619,11 @@
             <!-- Review 3 -->
             <div class="bg-[#131313] rounded-xl p-8 border border-outline-variant/10 flex flex-col gap-4">
                 <div class="flex items-center gap-1 text-primary-container">
-                    <span class="material-symbols-outlined text-base" style="font-variation-settings: 'FILL' 1;">star</span>
-                    <span class="material-symbols-outlined text-base" style="font-variation-settings: 'FILL' 1;">star</span>
-                    <span class="material-symbols-outlined text-base" style="font-variation-settings: 'FILL' 1;">star</span>
-                    <span class="material-symbols-outlined text-base" style="font-variation-settings: 'FILL' 1;">star</span>
-                    <span class="material-symbols-outlined text-base" style="font-variation-settings: 'FILL' 1;">star</span>
+                    <span class="text-base">★</span>
+                    <span class="text-base">★</span>
+                    <span class="text-base">★</span>
+                    <span class="text-base">★</span>
+                    <span class="text-base">★</span>
                 </div>
                 <p class="text-sm text-on-surface-variant leading-relaxed font-light italic">"Equipe de barbeiros é altamente técnica. O corte cresce perfeitamente mantendo a forma, algo que eu nunca vi em outro lugar. A infraestrutura e atendimento são diferenciados."</p>
                 <div class="mt-4">
@@ -1114,8 +1114,8 @@
                                     reviewsToUse.slice(0, 5).forEach(review => {
                                         let starsHTML = '';
                                         for (let i = 0; i < 5; i++) {
-                                            const isFilled = i < review.rating ? 1 : 0;
-                                            starsHTML += `<span class="material-symbols-outlined text-base" style="font-variation-settings: 'FILL' ${isFilled};">star</span>`;
+                                            const isFilled = i < review.rating;
+                                            starsHTML += `<span class="text-base">${isFilled ? '★' : '☆'}</span>`;
                                         }
                                         
                                         const authorName = escapeHTML(review.author_name);

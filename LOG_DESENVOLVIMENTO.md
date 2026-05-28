@@ -419,5 +419,10 @@ Este arquivo registra detalhadamente todas as alterações, decisões de design 
    - **Try/Catch nas Operações do LocalStorage:** Envolvidas todas as gravações locais (`localStorage.setItem`) no envio do formulário, importação de backups e reset de fábrica do `admin.html` (e sincronização em segundo plano no `index.html`) em blocos de tratamento de exceção `try/catch`.
    - **Alertas Amigáveis de Cota Excedida:** Caso o navegador retorne o erro `QuotaExceededError` (estouro do limite de 5MB do LocalStorage com Base64), o sistema agora exibe um modal/alerta visual dourado premium explicando amigavelmente o problema técnico e instruindo a otimização de imagens, impedindo o travamento silencioso da página.
 
+4. **Ajuste Estético das Estrelas de Avaliação (Fundo Preenchido) (`index.html`):**
+   - Substituídas as estrelas de depoimentos estáticos baseadas na fonte de ícones offline `Material Symbols Outlined` (que por ser puramente contornada não suportava preenchimento offline por CSS) por caracteres nativos Unicode de estrela preenchida `★` com tamanho `text-base` dourado.
+   - Refatorado o loop dinâmico de renderização de avaliações da Google Places API para injetar de forma leve e robusta estrelas preenchidas (`★`) ou vazadas (`☆`) de acordo com as notas originais reais.
+   - Isso garantiu compatibilidade visual perfeita e independente de rede em qualquer dispositivo móvel e desktop (incluindo Safari e Android).
+
 ### Próximos Passos
 * Realizar deploy contínuo final e efetuar a validação operacional. (CONCLUÍDO)
