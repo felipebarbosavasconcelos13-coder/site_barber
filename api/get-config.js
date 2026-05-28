@@ -8,6 +8,7 @@ module.exports = async (req, res) => {
     // Variáveis de ambiente padrão injetadas pelo Supabase na Vercel
     const supabaseUrl = process.env.SUPABASE_URL;
     const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_ANON_KEY;
+    const configId = process.env.SUPABASE_CONFIG_ID || 'barber_config';
 
     // Se o Supabase não estiver configurado na Vercel, a API informa de forma amigável
     if (!supabaseUrl || !supabaseKey) {
@@ -20,8 +21,8 @@ module.exports = async (req, res) => {
 
     try {
         // Faz a requisição REST HTTP nativa para o Supabase (PostgREST)
-        // Busca o campo 'dados' da tabela 'configuracoes' onde 'id' é igual a 'barber_config'
-        const response = await fetch(`${supabaseUrl}/rest/v1/configuracoes?id=eq.barber_config&select=dados`, {
+        // Busca o campo 'dados' da tabela 'configuracoes' onde 'id' é igual ao configId exclusivo
+        const response = await fetch(`${supabaseUrl}/rest/v1/configuracoes?id=eq.${configId}&select=dados`, {
             headers: {
                 apikey: supabaseKey,
                 Authorization: `Bearer ${supabaseKey}`

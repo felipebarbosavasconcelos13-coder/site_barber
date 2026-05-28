@@ -424,5 +424,10 @@ Este arquivo registra detalhadamente todas as alterações, decisões de design 
    - Refatorado o loop dinâmico de renderização de avaliações da Google Places API para injetar de forma leve e robusta estrelas preenchidas (`★`) ou vazadas (`☆`) de acordo com as notas originais reais.
    - Isso garantiu compatibilidade visual perfeita e independente de rede em qualquer dispositivo móvel e desktop (incluindo Safari e Android).
 
+5. **Resolução de Conflito e Isolamento de Projetos do Supabase (`api/get-config.js` & `api/save-config.js`):**
+   - **Variáveis Exclusivas na Vercel:** Injetada a variável de ambiente `SUPABASE_CONFIG_ID` com valores exclusivos para os dois projetos da Vercel via chamada automatizada da API da Vercel (`site-barber` -> `site_barber` e `site-barber-m4gj` -> `site_barber_m4gj`) usando o token administrativo fornecido.
+   - **Backend Dinâmico:** Refatorados os endpoints serverless [`api/get-config.js`](file:///c:/Users/felip/Desktop/N8N/Atigra/Pag%20barbearia/api/get-config.js) e [`api/save-config.js`](file:///c:/Users/felip/Desktop/N8N/Atigra/Pag%20barbearia/api/save-config.js) para ler a variável `process.env.SUPABASE_CONFIG_ID` de forma prioritária (com fallback para `'barber_config'`).
+   - **Fim dos Conflitos:** Ao fazer o fetch ou o Upsert (gravação), os dados de cada salão são agora lidos e salvos em linhas isoladas da tabela `configuracoes` no mesmo banco de dados do Supabase. O primeiro salvamento de cada site cria a sua respectiva linha de forma automática, eliminando qualquer conflito de sobreposição de configurações entre os projetos.
+
 ### Próximos Passos
 * Realizar deploy contínuo final e efetuar a validação operacional. (CONCLUÍDO)

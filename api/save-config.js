@@ -42,6 +42,7 @@ module.exports = async (req, res) => {
     const supabaseUrl = process.env.SUPABASE_URL;
     // Damos preferência à service_role para contornar RLS de gravação, senão usamos a anon
     const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_ANON_KEY;
+    const configId = process.env.SUPABASE_CONFIG_ID || 'barber_config';
 
     if (!supabaseUrl || !supabaseKey) {
         return res.status(500).json({ 
@@ -63,7 +64,7 @@ module.exports = async (req, res) => {
                 'Prefer': 'resolution=merge-duplicates'
             },
             body: JSON.stringify({
-                id: 'barber_config',
+                id: configId,
                 dados: config
             })
         });
