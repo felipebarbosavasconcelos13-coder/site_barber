@@ -17,10 +17,15 @@ module.exports = async (req, res) => {
         return res.status(405).json({ error: 'Metodo nao permitido. Use POST.' });
     }
 
-    const { apiKey, placeId } = req.body || {};
+    let { apiKey, placeId } = req.body || {};
+
+    // Tenta ler prioritariamente da variavel de ambiente do servidor para maxima seguranca
+    if (!apiKey || apiKey.trim() === '') {
+        apiKey = process.env.GOOGLE_PLACES_API_KEY;
+    }
 
     if (!apiKey || apiKey.trim() === '') {
-        return res.status(400).json({ error: 'Informe a sua Google Places API Key.' });
+        return res.status(400).json({ error: 'Google Places API Key nao configurada no servidor.' });
     }
     if (!placeId || placeId.trim() === '') {
         return res.status(400).json({ error: 'Informe o Google Place ID do estabelecimento.' });

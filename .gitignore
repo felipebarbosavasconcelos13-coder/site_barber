@@ -10,4 +10,8 @@ Thumbs.db
 
 .vercel
 .env*
+
+token.md
 token_vercel*
+
+.env*

@@ -398,3 +398,19 @@ Este arquivo registra detalhadamente todas as alterações, decisões de design 
 
 ### Próximos Passos
 * Realizar validação final e publicar as atualizações no repositório remoto do GitHub para o deploy contínuo na Vercel. (CONCLUÍDO)
+
+## [2026-05-28] - Melhorias de Auditoria: Ocultação Segura da Google Places Key e Proteção de Cota do LocalStorage
+
+### Alterações Realizadas
+
+1. **Ocultação de Credenciais e Segurança no Tráfego do Cliente (`index.html` & `api/places.js`):**
+   - **Variável de Ambiente na Vercel:** Adicionado com sucesso e de forma totalmente segura a variável de ambiente criptografada `GOOGLE_PLACES_API_KEY` nas configurações da Vercel via chamada automatizada com o token administrativo fornecido.
+   - **Remoção do Tráfego Client-Side (`index.html`):** Alterado o payload da requisição HTTP POST para `/api/places` na dinamização do Google Places para **não** enviar mais a chave de API (`apiKey`) na rede, transmitindo apenas o `placeId` público. O site agora funciona mesmo se a chave do cliente estiver totalmente em branco.
+   - **Aprimoramento de Backend (`api/places.js`):** Atualizada a rota serverless na Vercel para ler de forma prioritária e segura a credencial diretamente da variável de ambiente `process.env.GOOGLE_PLACES_API_KEY` do servidor, mantendo o payload do body apenas como fallback opcional.
+
+2. **Proteção contra Estouros de Cota do LocalStorage (`admin.html` & `index.html`):**
+   - **Try/Catch nas Operações do LocalStorage:** Envolvidas todas as gravações locais (`localStorage.setItem`) no envio do formulário, importação de backups e reset de fábrica do `admin.html` (e sincronização em segundo plano no `index.html`) em blocos de tratamento de exceção `try/catch`.
+   - **Alertas Amigáveis de Cota Excedida:** Caso o navegador retorne o erro `QuotaExceededError` (estouro do limite de 5MB do LocalStorage com Base64), o sistema agora exibe um modal/alerta visual dourado premium explicando amigavelmente o problema técnico e instruindo a otimização de imagens, impedindo o travamento silencioso da página.
+
+### Próximos Passos
+* Realizar deploy contínuo final e efetuar a validação operacional. (CONCLUÍDO)

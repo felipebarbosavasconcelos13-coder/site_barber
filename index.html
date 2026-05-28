@@ -1069,8 +1069,7 @@
                 }
                 
                 // 7. Integração Google Places API Segura via Servidor (Vercel API)
-                if (config.integrations && config.integrations.places_key && config.integrations.places_id && config.integrations.places_key.trim() !== '' && config.integrations.places_id.trim() !== '') {
-                    const apiKey = config.integrations.places_key.trim();
+                if (config.integrations && config.integrations.places_id && config.integrations.places_id.trim() !== '') {
                     const placeId = config.integrations.places_id.trim();
                     
                     fetch('/api/places', {
@@ -1078,7 +1077,7 @@
                         headers: {
                             'Content-Type': 'application/json'
                         },
-                        body: JSON.stringify({ apiKey, placeId })
+                        body: JSON.stringify({ placeId })
                     })
                     .then(response => response.json())
                     .then(data => {
@@ -1211,7 +1210,11 @@
                         const cloudConfigStr = JSON.stringify(data.config);
                         // Se for diferente da do localStorage, atualiza e re-renderiza reativamente
                         if (localConfigStr !== cloudConfigStr) {
-                            localStorage.setItem('elegance_barber_config', cloudConfigStr);
+                            try {
+                                localStorage.setItem('elegance_barber_config', cloudConfigStr);
+                            } catch (e) {
+                                console.warn("Erro de cota do LocalStorage ao salvar sincronizacao remota:", e);
+                            }
                             applyConfig(data.config);
                         }
                     }

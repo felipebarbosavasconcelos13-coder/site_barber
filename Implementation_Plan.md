@@ -1,86 +1,65 @@
-# Plano de Implementação - Personalização Avançada (Galeria, Botões e Opacidade do Hero)
+# Plano de Implementação - Resolução de Segurança e Destravamento do Git Push (Auditoria de Código)
 
-Este plano detalha a implementação das melhorias de personalização solicitadas no site da Barbearia Elegance Premium:
-1. **Avisos de Tamanho na Galeria:** Exibição clara das dimensões sugeridas de imagens (desktop/mobile) na aba Galeria do painel administrativo.
-2. **Textos de Botões Editáveis:** Controle total para que o administrador possa editar o texto de cada botão do site através do painel.
-3. **Controle de Opacidade do Hero:** Slider premium no painel administrativo para controlar a opacidade da imagem de fundo do Hero (de 0% a 100%).
+Este plano detalha o procedimento técnico para remover de forma segura o arquivo sensível `token.md` do histórico de commits do Git e consertar o `.gitignore`, permitindo destravar o `git push` e concluir o deploy automático das melhorias de segurança na Vercel de forma limpa.
 
 ---
 
 ## 🚦 Status Atual do Desenvolvimento
-- [x] **Painel Administrativo (`admin.html`):** Toda a interface do painel com slider de opacidade, inputs de textos para os 9 botões do site e exibição premium dos tamanhos recomendados na Galeria já foi implementada e validada.
-- [x] **Lógica de Salvamento e Retrocompatibilidade:** JavaScript em `admin.html` atualizado com fallbacks seguros e envio correto dos campos de botões e opacidade para o LocalStorage e Supabase (via APIs Vercel).
-- [ ] **Dinamização do Site Principal (`index.html`):** Resta envolver os textos dos botões do site em tags `<span>` com IDs dedicados e injetar o processamento da opacidade do Hero e textos dinâmicos de botões no `#dom-dinamizer`.
+- [x] **Configuração da Variável de Ambiente na Vercel:** Chave secreta cadastrada de forma criptografada sob o nome `GOOGLE_PLACES_API_KEY`.
+- [x] **Segurança no Backend (`api/places.js`):** Endpoint serverless atualizado para consumir a chave segura do servidor.
+- [x] **Segurança no Frontend (`index.html`):** Chamada reativa ao places sem tráfego de credenciais client-side.
+- [x] **Robustez no LocalStorage (`admin.html`):** Tratamento `try/catch` com modais dourados explicativos de estouro de cota implementados.
+- [x] **Documentação de Logs:** Registrado e detalhado em `LOG_DESENVOLVIMENTO.md`.
+- [ ] **Destravamento do Git Push (FALHA DE SEGURANÇA LOCAL):** O arquivo contendo o token de acesso da Vercel (`token.md`) foi indexado acidentalmente no commit local `824e329` e rejeitado pelo GitHub Push Protection.
 
 ---
 
-## 🛠️ Alterações Propostas (Próxima Etapa)
+## 🛠️ Alterações e Comandos Propostos para Resolução do Git
 
-### Modificações na Landing Page (`index.html`)
+### 1. Resetar o Commit Local
+- Vamos desfazer temporariamente o último commit local mantendo todas as modificações no código local intactas:
+  ```powershell
+  git reset --soft HEAD~1
+  ```
 
-#### [MODIFY] [index.html](file:///c:/Users/felip/Desktop/N8N/Atigra/Pag%20barbearia/index.html)
+### 2. Remover `token.md` do Cache do Git e do Histórico
+- Vamos retirar o arquivo sensível `token.md` da área de preparação (*stage*) do Git:
+  ```powershell
+  git reset HEAD token.md
+  ```
+- Remover o arquivo do rastreamento definitivo do Git (mantendo-o fisicamente intacto no computador do usuário, apenas ignorado pelo Git):
+  ```powershell
+  git rm --cached token.md
+  ```
 
-1. **Estrutura HTML (Envelopamento de Botões):**
-   - Envolver os textos dos botões do site nas tags `<span>` com IDs bem definidos para dinamização em tempo real:
-     - Botão Principal do Hero (de agendamento): `<span id="hero-primary-btn-text">Reservar Experiência</span>`
-     - Botão Secundário do Hero (de rolagem interna): `<span id="hero-secondary-btn-text">Conhecer Serviços</span>`
-     - Botão do Serviço 1 (Corte Signature): `<span id="serv-0-btn-text">Reservar Experiência</span>`
-     - Botão do Serviço 2 (Barba Elegance): `<span id="serv-1-btn-text">Reservar Experiência</span>`
-     - Botão do Serviço 3 (Combo Imperial - VIP): `<span id="serv-2-btn-text">Reservar Experiência</span>`
-     - Botão de Direções (Como Chegar): `<span id="loc-directions-btn-text">Como Chegar</span>`
-     - Botão de Falar com a Recepção: `<span id="loc-reception-btn-text">Falar com Recepção</span>` (e adicionar o ID `loc-reception-btn` ao elemento `<a>`)
-     - Botão CTA do Rodapé: `<span id="cro-footer-btn-text">Agendar Agora via WhatsApp</span>`
-   - Remover a classe Tailwind estática `opacity-25` da tag `<img>` `#hero-bg-img` para evitar conflito com a opacidade inline dinâmica.
+### 3. Corrigir o Arquivo `.gitignore`
+- Ajustar a linha 14 do `.gitignore` que foi mesclada incorretamente (está como `token.mdtoken_vercel*`) para ignorar de forma estrita o arquivo de token:
+  ```gitignore
+  token.md
+  token_vercel*
+  ```
 
-2. **Lógica de Dinamização (`#dom-dinamizer`):**
-   - **Controle de Opacidade do Hero:**
-     Adicionar a aplicação dinâmica da opacidade via estilo inline diretamente no elemento `#hero-bg-img`:
-     ```javascript
-     const opacityVal = (config.hero && config.hero.bg_opacity !== undefined) ? config.hero.bg_opacity : "25";
-     document.getElementById('hero-bg-img').style.opacity = parseFloat(opacityVal) / 100;
-     ```
-   - **Textos de Botões Dinâmicos:**
-     Injetar os textos dinâmicos do objeto `config.buttons` nos respectivos IDs de spans criados, utilizando fallbacks seguros para os textos padrão originais se a configuração no banco estiver sem o dicionário `buttons` ou se os botões não estiverem preenchidos:
-     ```javascript
-     if (config.buttons) {
-         if (config.buttons.nav_reservar) {
-             const btnDesktop = document.getElementById('nav-btn-text-desktop');
-             const btnMobile = document.getElementById('nav-btn-text-mobile');
-             if (btnDesktop) btnDesktop.innerText = config.buttons.nav_reservar;
-             if (btnMobile) btnMobile.innerText = config.buttons.nav_reservar;
-         }
-         if (config.buttons.hero_primary && document.getElementById('hero-primary-btn-text')) {
-             document.getElementById('hero-primary-btn-text').innerText = config.buttons.hero_primary;
-         }
-         if (config.buttons.hero_secondary && document.getElementById('hero-secondary-btn-text')) {
-             document.getElementById('hero-secondary-btn-text').innerText = config.buttons.hero_secondary;
-         }
-         for (let i = 0; i < 3; i++) {
-             if (config.buttons[`serv_${i}`] && document.getElementById(`serv-${i}-btn-text`)) {
-                 document.getElementById(`serv-${i}-btn-text`).innerText = config.buttons[`serv_${i}`];
-             }
-         }
-         if (config.buttons.loc_directions && document.getElementById('loc-directions-btn-text')) {
-             document.getElementById('loc-directions-btn-text').innerText = config.buttons.loc_directions;
-         }
-         if (config.buttons.loc_reception && document.getElementById('loc-reception-btn-text')) {
-             document.getElementById('loc-reception-btn-text').innerText = config.buttons.loc_reception;
-         }
-         if (config.buttons.cta_footer && document.getElementById('cro-footer-btn-text')) {
-             document.getElementById('cro-footer-btn-text').innerText = config.buttons.cta_footer;
-         }
-     }
-     ```
+### 4. Criar um Commit Limpo e Seguro
+- Adicionar as correções seguras de código ao stage (incluindo o `.gitignore` corrigido):
+  ```powershell
+  git add .gitignore
+  ```
+- Refazer o commit apenas com os arquivos seguros:
+  ```powershell
+  git commit -m "security: oculta places apiKey em env var, adiciona tratamento try/catch no LocalStorage e ignora arquivos sensiveis"
+  ```
+
+### 5. Executar o Push com Sucesso
+- Enviar as atualizações de forma segura para o GitHub do usuário:
+  ```powershell
+  git push
+  ```
 
 ---
 
 ## 📋 Plano de Verificação
 
 ### Testes Visuais e Funcionais
-1. **Controle de Opacidade:** Ajustar o slider no painel de controle e salvar, verificando se a transparência da imagem de fundo no site muda instantaneamente na tela.
-2. **Edição de Botões:** Alterar o texto de todos os botões no painel administrativo, salvar, e conferir se eles foram perfeitamente alterados tanto no computador quanto no celular (inclusive no carrossel de serviços e cabeçalho).
-3. **Clareza de Imagens:** Validar que as dicas visuais de resolução da galeria aparecem de forma limpa e premium na aba do painel administrativo.
-
-### Persistência de Dados
-1. Confirmar que as novas propriedades (`hero.bg_opacity` e `buttons`) são devidamente enviadas e salvas na tabela `configuracoes` no Supabase.
-2. Confirmar o funcionamento resiliente do cache do `localStorage` mantendo as novas configurações ativas.
+1. **Verificação do Histórico do Git:** Garantir através de `git show` que o arquivo `token.md` não faz mais parte do commit e foi ignorado de forma definitiva no `.gitignore`.
+2. **Confirmação do Push:** Verificar que a árvore local foi publicada com sucesso no GitHub e que o deploy automático na Vercel foi acionado sem bloqueios de segurança.
+3. **Links Clicáveis:** Fornecer os links locais para validação das páginas e painel administrativos em apenas um clique.

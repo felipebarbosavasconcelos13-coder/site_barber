@@ -1416,7 +1416,15 @@
                 }
             };
             
-            localStorage.setItem('elegance_barber_config', JSON.stringify(newConfig));
+            try {
+                localStorage.setItem('elegance_barber_config', JSON.stringify(newConfig));
+            } catch (e) {
+                console.error("Erro ao gravar no LocalStorage:", e);
+                if (e.name === 'QuotaExceededError' || e.name === 'NS_ERROR_DOM_QUOTA_REACHED') {
+                    alert("Atenção: Limite de armazenamento do navegador excedido!\n\nAs novas alterações não puderam ser salvas localmente porque as imagens carregadas em Base64 ocuparam todo o espaço disponível de 5MB.\n\nPor favor, reduza a resolução ou o peso das imagens na aba Galeria/Logo e tente novamente.");
+                    return;
+                }
+            }
             showToast("Salvo localmente! Sincronizando com a nuvem...");
             
             // Fase 2: Sincroniza as alterações com o banco de dados Vercel KV
@@ -1481,7 +1489,15 @@
                     const parsedData = JSON.parse(event.target.result);
                     // Validação de estrutura básica
                     if (parsedData.general && parsedData.colors && parsedData.services) {
-                        localStorage.setItem('elegance_barber_config', JSON.stringify(parsedData));
+                        try {
+                            localStorage.setItem('elegance_barber_config', JSON.stringify(parsedData));
+                        } catch (e) {
+                            console.error("Erro de cota ao importar:", e);
+                            if (e.name === 'QuotaExceededError' || e.name === 'NS_ERROR_DOM_QUOTA_REACHED') {
+                                alert("Atenção: Não foi possível restaurar o backup porque os dados excedem o limite de 5MB do navegador.");
+                                return;
+                            }
+                        }
                         loadCurrentConfig();
                         showToast("Backup restaurado com sucesso!");
                     } else {
@@ -1499,7 +1515,11 @@
         // FACTORY RESET (RESETAR)
         document.getElementById('reset-btn').addEventListener('click', () => {
             if (confirm("Tem certeza que deseja resetar todas as configurações para o padrão original de fábrica? Isso apagará todas as edições locais.")) {
-                localStorage.setItem('elegance_barber_config', JSON.stringify(DEFAULT_CONFIG));
+                try {
+                    localStorage.setItem('elegance_barber_config', JSON.stringify(DEFAULT_CONFIG));
+                } catch (e) {
+                    console.error("Erro ao resetar configs:", e);
+                }
                 loadCurrentConfig();
                 showToast("Configurações resetadas para o padrão de fábrica.");
             }
