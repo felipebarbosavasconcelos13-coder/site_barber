@@ -408,7 +408,14 @@ Este arquivo registra detalhadamente todas as alterações, decisões de design 
    - **Remoção do Tráfego Client-Side (`index.html`):** Alterado o payload da requisição HTTP POST para `/api/places` na dinamização do Google Places para **não** enviar mais a chave de API (`apiKey`) na rede, transmitindo apenas o `placeId` público. O site agora funciona mesmo se a chave do cliente estiver totalmente em branco.
    - **Aprimoramento de Backend (`api/places.js`):** Atualizada a rota serverless na Vercel para ler de forma prioritária e segura a credencial diretamente da variável de ambiente `process.env.GOOGLE_PLACES_API_KEY` do servidor, mantendo o payload do body apenas como fallback opcional.
 
-2. **Proteção contra Estouros de Cota do LocalStorage (`admin.html` & `index.html`):**
+2. **Resolução de Segurança e Destravamento do Git Push:**
+   - Detectada a tentativa de indexação acidental do arquivo `token.md` (com o token Vercel) no commit local `824e329`, bloqueada preventivamente pela segurança do GitHub.
+   - Efetuado o soft reset do commit (`git reset --soft HEAD~1`) mantendo todas as otimizações de código locais intactas.
+   - Ajustado o arquivo `.gitignore` em linhas separadas para ignorar o arquivo `token.md` e `token_vercel*` definitivamente.
+   - Retirado o arquivo `token.md` do cache e da área de stage, deixando-o unicamente no disco local como untracked/ignored.
+   - Refeito o commit de forma 100% limpa e efetuado o `git push` com sucesso à branch `main` do GitHub, destravando o pipeline de deploy contínuo da Vercel de forma segura.
+
+3. **Proteção contra Estouros de Cota do LocalStorage (`admin.html` & `index.html`):**
    - **Try/Catch nas Operações do LocalStorage:** Envolvidas todas as gravações locais (`localStorage.setItem`) no envio do formulário, importação de backups e reset de fábrica do `admin.html` (e sincronização em segundo plano no `index.html`) em blocos de tratamento de exceção `try/catch`.
    - **Alertas Amigáveis de Cota Excedida:** Caso o navegador retorne o erro `QuotaExceededError` (estouro do limite de 5MB do LocalStorage com Base64), o sistema agora exibe um modal/alerta visual dourado premium explicando amigavelmente o problema técnico e instruindo a otimização de imagens, impedindo o travamento silencioso da página.
 
