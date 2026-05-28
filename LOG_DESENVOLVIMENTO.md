@@ -439,3 +439,26 @@ Este arquivo registra detalhadamente todas as alterações, decisões de design 
 
 ### Próximos Passos
 * Realizar deploy contínuo final e efetuar a validação operacional. (CONCLUÍDO)
+
+## [2026-05-28] - Transição de Identidade Visual Completa: ELEGANCE (E) para BARBER (B)
+
+### Alterações Realizadas
+
+1. **Refatoração Identitária e Textual da Landing Page (`index.html`):**
+   - **Título & Metadados SEO:** Atualizados o `<title>` do site e a tag OG Title (`og:title`) para `Barber Premium Barbershop | Barbearia de Luxo em São Paulo` e `Barber Premium Barbershop | Barbearia de Luxo` respectivamente, garantindo relevância orgânica e autoridade da marca.
+   - **Nomenclaturas de Serviços e Seções:** Atualizadas todas as referências remanescentes ao termo "Elegance" no site principal para a nova marca "Barber". Isso inclui "O Padrão Barber", "Barba Barber", "Clube Barber" e a galeria de fotos "Explore a Experiência Barber".
+   - **WhatsApp Integrado:** Ajustada a string da mensagem pré-definida de agendamento do botão de Barba na URL do WhatsApp, garantindo conformidade com a nova nomenclatura.
+   - **Fallbacks de Legendas:** Configurados novos textos de fallback para legendas da galeria de fotos, substituindo completamente a marca antiga.
+
+2. **Refatoração de SVGs, Nomes e Configurações Padrões no Painel Administrativo (`admin.html`):**
+   - **Identidade Estática:** Atualizado o título da página do painel administrativo para `Barber Premium | Painel de Controle` e a string do site name na sidebar para `Barber`.
+   - **Monograma de Login & Sidebar em SVG:** Substituídos os vetores estáticos antigos da letra "E" (desenhados manualmente via tags `<path>` estáticas) pelo mesmo monograma vetorial dinâmico do `index.html` que desenha a letra **B** com o elemento `<text>` do SVG sob a fonte display `Space Grotesk`. Isso unifica o estilo visual dourado premium com 100% de consistência.
+   - **Dicionário Padrão de Fábrica (`DEFAULT_CONFIG`):** O objeto de configuração padrão e factory reset do script administrativo foi totalmente adaptado. Caso as configurações sejam resetadas ou novos salões utilizem a plataforma, os padrões originais já carregam o nome "Barber Premium", as redes sociais com a URL `barber_barbershop` e o serviço de "Barba Barber".
+
+3. **Consistência do Repositório (`layout.html`):**
+   - **Monograma Vetorial:** Eliminada a imagem estática gigante em Base64 do monograma de navegação no arquivo de layout de referência, substituindo-a pelo mesmo SVG vetorial do `index.html` com a letra **B**. Isso reduziu o tamanho total do arquivo de layout de forma limpa.
+   - **Ajustes Gerais:** Corrigidas as strings estáticas de título, rodapé, copyright e seções em conformidade com a transição.
+
+### Próximos Passos
+* Realizar git commit e push consolidados para deploy automático na Vercel. (CONCLUÍDO)
+

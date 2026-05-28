@@ -1,44 +1,76 @@
-# Plano de Implementação - Carregamento Cinematográfico Premium (Fim do Layout Shift)
+# Plano de Implementação - Nova Identidade Visual (BARBER & Logo B)
 
-Este plano descreve o procedimento para eliminar a piscada visual ("versão estática limpa" -> "versão dinâmica editada") no primeiro carregamento do site em navegadores novos. Implementaremos um **Loader de Transição Premium** que exibe uma tela cinematográfica preta com a logo dourada pulsando suavemente enquanto os dados iniciais do Supabase são baixados na primeira visita, revelando a página 100% pronta e estável com um fade-out luxuoso.
-
----
-
-## 🚦 Status Atual do Desenvolvimento
-- [x] **Segurança e Robustez:** Chaves Places ocultadas em variáveis de ambiente, LocalStorage blindado contra cota, Git push destravado e publicado, dados do Supabase isolados por projeto Vercel.
-- [ ] **Carregamento Híbrido Cinematográfico (FALHA VISUAL):** Primeiros acessos em novos navegadores revelam brevemente o HTML limpo padrão antes de injetar as edições do Supabase, causando uma piscada de layout.
+Este plano descreve o procedimento para a transição completa da identidade visual padrão da marca de **ELEGANCE** para **BARBER**, incluindo a substituição do monograma estático da letra **E** pela letra **B** nos componentes digitais da Landing Page (`index.html`) e do Painel Administrativo (`admin.html`).
 
 ---
 
-## 🛠️ Alterações Propostas
+## 🚦 Status das Modificações
 
-### 1. Injetar a Animação da Barra de Progresso no CSS do Cabeçalho
-#### [MODIFY] [index.html](file:///c:/Users/felip/Desktop/N8N/Atigra/Pag%20barbearia/index.html)
-- Adicionar o `@keyframes loader-bar` para a animação suave de progressão da barra no bloco de estilos `<style>` do cabeçalho (linha 171-172):
-  ```css
-  @keyframes loader-bar {
-      0% { width: 0%; }
-      50% { width: 70%; }
-      100% { width: 100%; }
-  }
-  ```
+### 1. Landing Page (`index.html`)
+- [x] **Monograma no Loader:** Substituído o monograma estático antigo pela letra **B** estilizada no SVG com a fonte display de luxo `Space Grotesk`.
+- [x] **Monograma na Barra de Navegação:** Atualizado para a letra **B** no SVG com gradiente dinâmico.
+- [x] **Nome do Estabelecimento na Navegação:** Atualizado de `ELEGANCE` para `BARBER`.
+- [ ] **Título e Metadados SEO:** Mudar o título (`<title>`) e meta tag `og:title` para `Barber Premium Barbershop`.
+- [ ] **Textos Estáticos e Fallbacks:** Atualizar as menções textuais de "Elegance" nas seções de "O Padrão Elegance" para "O Padrão Barber", "Barba Elegance" para "Barba Barber", e "Clube Elegance" para "Clube Barber".
+- [ ] **Dicionários de Configuração e Scripts:** Ajustar os fallbacks de inicialização no `#dom-dinamizer` e no theme injector.
 
-### 2. Adicionar o Loader Premium no Início do Body
-#### [MODIFY] [index.html](file:///c:/Users/felip/Desktop/N8N/Atigra/Pag%20barbearia/index.html)
-- Inserir a estrutura do contêiner de transição imediatamente após a abertura do `<body>` (linha 204), contendo fundo escuro absoluto, monograma "E" de luxo e nome dourado com efeito pulso da marca.
+### 2. Painel Administrativo (`admin.html`)
+- [ ] **Monograma no Login:** Alterar o desenho vetorial (tag `<path>` estática) da letra "E" para a letra **B** usando a tag `<text>` com a tipografia premium `Space Grotesk`.
+- [ ] **Monograma na Sidebar:** Atualizar o SVG de navegação lateral para exibir a letra **B** no lugar de "E".
+- [ ] **Nome da Marca na Sidebar:** Alterar o texto estático de "Elegance" para "Barber".
+- [ ] **Dicionário Padrão (Factory Reset):** Atualizar as strings no objeto `DEFAULT_CONFIG` para refletir as novas nomenclaturas (ex: `name: "Barber Premium"`, `solution_title: "O Padrão Barber"`, `name: "Barba Barber"`, etc.).
 
-### 3. Implementar a Lógica do Loader no Injetor do DOM
+### 3. Documentação & Publicação
+- [ ] **Log de Alterações:** Detalhar todas as substituições no arquivo `LOG_DESENVOLVIMENTO.md`.
+- [ ] **Git Push:** Subir todas as modificações consolidadas para o repositório remoto no GitHub para deploy automático em produção na Vercel.
+
+---
+
+## 🛠️ Alterações Detalhadas Propostas
+
+### 1. Refatoração de Metadados e Textos Estáticos no `index.html`
 #### [MODIFY] [index.html](file:///c:/Users/felip/Desktop/N8N/Atigra/Pag%20barbearia/index.html)
-- Na lógica de inicialização de duas fases do script (linha 1194-1224):
-  - **Fase 1 (Acessos subsequentes):** Se o LocalStorage já possui dados, removemos o loader da tela instantaneamente de forma síncrona, mantendo o carregamento instantâneo de 0ms sem nenhuma tela de loading.
-  - **Fase 2 (Primeiro acesso):** Se o LocalStorage está vazio, mantemos o loader na tela rodando a animação. Assim que os dados do Supabase chegam via `/api/get-config`, aplicamos as edições, salvamos o cache local e removemos o loader com um fade-out suave de 700ms após um breve delay de estabilização visual (500ms).
-  - **Fallback:** Se o fetch falhar, o loader é removido imediatamente para exibir o site estático original com resiliência total.
+- **Título do Site (Linha 6):**
+  - Mudar de `Elegance Premium Barbershop | Barbearia de Luxo em São Paulo` para `Barber Premium Barbershop | Barbearia de Luxo em São Paulo`.
+- **Meta Tag OG Title (Linha 45):**
+  - Mudar de `Elegance Premium Barbershop | Barbearia de Luxo` para `Barber Premium Barbershop | Barbearia de Luxo`.
+- **Texto do Padrão (Linha 354):**
+  - Mudar de `O Padrão Elegance` para `O Padrão Barber`.
+- **Nome do Serviço 2 (Linha 408):**
+  - Mudar de `Barba Elegance` para `Barba Barber`.
+- **Link do WhatsApp do Serviço 2 (Linha 413):**
+  - Ajustar o texto da mensagem padrão codificado na URL de `Barba%20Elegance` para `Barba%20Barber`.
+- **Descrição do Serviço 3 (Linha 430):**
+  - Ajustar a menção de `Barba Elegance` para `Barba Barber` no texto descritivo do Combo Imperial.
+- **Título da Galeria (Linha 446):**
+  - Mudar de `Explore a Experiência Elegance` para `Explore a Experiência Barber`.
+- **Alt da Imagem da Galeria (Linha 571) e Legenda (Linha 574):**
+  - Ajustar `Clientes no Lounge Elegance` para `Clientes no Lounge Barber` e a etiqueta `Clube Elegance` para `Clube Barber`.
+- **Script da Galeria e Fallbacks (Linhas 956, 996, 1462):**
+  - Sincronizar fallbacks e strings dos objetos JSON para a nova nomenclatura.
+
+### 2. Refatoração de SVGs e Conteúdos no `admin.html`
+#### [MODIFY] [admin.html](file:///c:/Users/felip/Desktop/N8N/Atigra/Pag%20barbearia/admin.html)
+- **Título da Página (Linha 6):**
+  - Ajustar para `Barber Premium | Painel de Controle`.
+- **SVG do Card de Login (Linhas 118-127):**
+  - Remover a tag `<path>` (que desenha o "E") e substituí-la por uma tag `<text>` idêntica à do `index.html` contendo a letra **B** estilizada com `Space Grotesk`.
+- **SVG da Sidebar Lateral (Linhas 154-163):**
+  - Substituir a tag `<path>` pela tag `<text>` contendo a letra **B**.
+- **Nome do Estabelecimento na Sidebar (Linha 165):**
+  - Mudar de `Elegance` para `Barber`.
+- **Dicionário Padrão `DEFAULT_CONFIG` (Linhas 920-990):**
+  - Atualizar o nome da marca, URLs padrão das redes sociais, título da solução e o nome do serviço para a nova identidade visual.
 
 ---
 
 ## 📋 Plano de Verificação
 
-### Testes de UX e Animação
-1. **Primeira Visita (LocalStorage Vazio):** Limpar o cache do LocalStorage no console (`localStorage.clear()`), atualizar a página e verificar que a tela preta com a logo dourada pulsa suavemente e se dissolve em fade-out revelando as modificações prontas do Supabase sem piscadas de texto.
-2. **Visitas Subsequentes:** Atualizar a página novamente e verificar que o site carrega de forma instantânea (0ms de carregamento) sem exibir a tela de loader, mantendo a altíssima performance.
-3. **Resiliência Offline:** Simular perda de conexão de rede, limpar o LocalStorage e garantir que a página estática de fallback abre perfeitamente após a remoção rápida do loader.
+1. **Validação Visual Local:**
+   - Abrir o site principal (`index.html`) e o painel (`admin.html`) localmente e verificar se todos os monogramas "E" sumiram e foram perfeitamente substituídos pelo monograma "B" tipográfico com os gradientes dourados ativos.
+   - Verificar se as strings de "ELEGANCE" / "Elegance" foram completamente alteradas para "BARBER" / "Barber" em todos os cabeçalhos, rodapés, seções, descrições e botões.
+2. **Validação de Inputs e Reset:**
+   - Entrar no painel de administração (`admin.html`), clicar em "Resetar Padrões de Fábrica" e testar se os campos padrão carregam com o novo nome "Barber Premium" e se a gravação no Supabase/LocalStorage persiste de forma intacta.
+3. **Deploy em Produção (Vercel):**
+   - Executar o commit e push das melhorias estéticas para o repositório remoto.
+   - Acompanhar o deploy contínuo da Vercel e validar que o site público exibe a nova marca "BARBER" com 100% de precisão.
