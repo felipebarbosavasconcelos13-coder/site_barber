@@ -1,65 +1,69 @@
-# Plano de Otimização de Performance Web: Velocidade Máxima Mobile (Core Web Vitals)
+# Plano de Implementacao
 
-Este documento descreve as etapas para concluir a migração da barbearia do Tailwind em tempo de execução no cliente para a folha de estilo estática compilada e otimizada de alta velocidade, tanto na Landing Page quanto no Painel Administrativo.
+Este arquivo deve ser atualizado depois de cada alteracao junto com `LOG_DESENVOLVIMENTO.md`.
 
----
+## Regra Operacional Permanente
 
-## 🚦 Status e Diagnóstico do PageSpeed Insights
-
-O diagnóstico inicial do PageSpeed Insights no mobile apontou os seguintes gargalos principais:
-1. **Compilação Client-side do Tailwind (TBT Elevado):** O script `assets/js/tailwind.js` consumia de 1 a 2 segundos de CPU em dispositivos móveis de baixo/médio desempenho para interpretar a página e gerar as classes utilitárias no cliente.
-2. **Render-Blocking Resources:** Arquivos CSS extras desnecessários e dependências locais pesadas que bloqueavam a renderização inicial do DOM.
-3. **FOUC (Flash of Unstyled Content) ou Deslocamento de Layout (CLS):** Pequenas variações de carregamento de cores dinâmicas injetadas na nuvem.
-
----
-
-## 📋 Etapas de Otimização Propostas
-
-### Componente 1: Painel Administrativo (`admin.html`)
-* **Remoção do Tailwind Client-side:**
-  - Excluir a tag `<script src="assets/js/tailwind.js"></script>`.
-  - Excluir o script inline `<script id="tailwind-config">` de 70+ linhas que configurava o Tailwind local.
-  - Excluir a folha `<link href="assets/css/styles.css" rel="stylesheet"/>` legada.
-* **Inserção do CSS Estático Compilado:**
-  - Apontar para o arquivo CSS compilado de alta performance e minificado: `<link href="assets/css/app-compiled.min.css" rel="stylesheet"/>`.
-
-### Componente 2: Injetor de Tema Dinâmico (`#theme-injector`)
-* **Evitar FOUC e Piscadas Visuais:**
-  - Declarar as variáveis padrões `:root` de cores diretamente no bloco de estilo estático principal das páginas (`index.html` e `admin.html`).
-  - Atualizar o script `#theme-injector` para ler as variáveis `--dynamic-background` e `--dynamic-surface` a partir das configurações salvas e injetá-las de forma ultra-veloz no `:root` no momento exato do parseamento do `head`.
-* **Mapeamento de Variáveis Suportadas:**
-  ```css
-  :root {
-      --dynamic-background: #0e0e0e;
-      --dynamic-surface: #131313;
-      --dynamic-primary: #ffe8c7;
-      --dynamic-secondary: #ffb693;
-      --dynamic-primary-rgb: 255, 232, 199;
-  }
-  ```
-
-### Componente 3: Limpeza do Workspace
-* Apagar arquivos temporários ou desnecessários da pasta de trabalho, como `assets/css/tailwind-input.css` (usado apenas na compilação do Tailwind CLI) para manter o repositório limpo.
-
-### Componente 4: Versionamento & Deploy Contínuo (Vercel)
-* Fazer commit do código limpo local e realizar o push para a branch remota:
-  ```bash
-  git add .
-  git commit -m "perf: otimização radical Core Web Vitals no admin e injetor de tema"
-  git push origin main
-  ```
-* O push acionará automaticamente a compilação estática do pipeline da Vercel para produção na Athenas Barbearia e homologação na Nórdica Barbearia.
+1. Toda alteracao de codigo, layout, configuracao ou infraestrutura deve registrar:
+   - Objetivo da mudanca.
+   - Arquivos afetados.
+   - Status de implementacao.
+   - Verificacao realizada.
+   - Proximos passos, se houver.
+2. O `LOG_DESENVOLVIMENTO.md` registra o historico detalhado do que foi feito.
+3. Este plano registra o estado atual, tarefas em andamento e criterios de validacao.
 
 ---
 
-## 📋 Plano de Verificação e Auditoria
+## [2026-05-28] Cores Dinamicas e Edicao de Secoes
 
-1. **Validação do Painel de Controle:** Acessar o Painel de Controle localmente e em homologação e validar se todos os formulários, paleta de cores hexadecimais, seções de serviços e injeção do places funcionam perfeitamente sem quebras de layout.
-2. **Validação da Velocidade no Mobile:** Reexecutar as análises do PageSpeed Insights para garantir que a nota saltou para a zona verde (acima de 90) em produção.
+### Objetivo
 
----
+Corrigir diferencas visuais nas cores aplicadas aos elementos da landing page, principalmente botoes, filtros, badges e bordas, e permitir que o painel altere titulo/subtitulo das secoes Sobre & Dores e Servicos.
 
-## 🔗 Links Úteis
-* **Visualização da Landing Page (Athenas Barbearia):** [https://www.athenasbarbearia.com.br](https://www.athenasbarbearia.com.br)
-* **Visualização da Landing Page (Nórdica Barbearia):** [https://site-barber-m4gj.vercel.app](https://site-barber-m4gj.vercel.app)
-* **Painel Administrativo da Nórdica Barbearia:** [https://site-barber-m4gj.vercel.app/admin.html](https://site-barber-m4gj.vercel.app/admin.html)
+### Arquivos Afetados
+
+* `index.html`
+* `admin.html`
+* `LOG_DESENVOLVIMENTO.md`
+* `Implementation_Plan.md`
+
+### Implementacao
+
+1. **Cores dinamicas na landing page:** Concluido.
+   - Overrides CSS adicionados para classes com opacidade baseadas em `primary-container`.
+   - `applyConfig(config)` agora aplica variaveis CSS no `document.documentElement` quando recebe dados locais ou remotos.
+
+2. **Cores dinamicas no painel:** Concluido.
+   - `.gold-gradient`, `.gold-glow`, `.gold-glow-hover`, `.text-glow` e foco de inputs passaram a usar variaveis dinamicas.
+   - Alteracoes de seletores/campos HEX atualizam a pre-visualizacao do painel imediatamente.
+
+3. **Campos da secao Sobre & Dores:** Concluido.
+   - Criados os inputs `s-section-title` e `s-section-subtitle` no painel.
+   - Adicionados `section_title` e `section_subtitle` ao objeto `about`.
+   - Landing page atualiza `about-section-title` e `about-section-subtitle`.
+
+4. **Campos da secao Servicos:** Concluido.
+   - Criados os inputs `services-section-title-input` e `services-section-subtitle-input` no painel.
+   - Criado o objeto `services_section` com `title` e `subtitle`.
+   - Landing page atualiza `services-section-title` e `services-section-subtitle`.
+
+### Verificacao
+
+* `git diff --check`: executado sem erros de whitespace.
+* Aviso observado: conversao futura de `LF` para `CRLF` pelo Git no Windows.
+
+### Validacao Manual Recomendada
+
+1. Abrir `admin.html`.
+2. Alterar a cor primaria e secundaria na aba Cores.
+3. Confirmar que gradientes, botoes, bordas, filtros e foco dos inputs acompanham a nova paleta.
+4. Alterar titulo/subtitulo em Sobre & Dores.
+5. Alterar titulo/subtitulo em Servicos.
+6. Salvar e abrir `index.html`.
+7. Confirmar persistencia visual no LocalStorage e, se disponivel em ambiente Vercel, na nuvem.
+
+### Proximos Passos
+
+* Fazer validacao manual no navegador.
+* Se aprovado, realizar commit e push para deploy continuo.

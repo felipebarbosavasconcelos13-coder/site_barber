@@ -70,6 +70,25 @@
         .text-glow {
             text-shadow: 0 0 10px rgba(var(--dynamic-primary-rgb, 255, 197, 98), 0.3) !important;
         }
+        .bg-primary-container\/5 {
+            background-color: rgba(var(--dynamic-primary-rgb, 255, 232, 199), 0.05) !important;
+        }
+        .bg-primary-container\/10 {
+            background-color: rgba(var(--dynamic-primary-rgb, 255, 232, 199), 0.10) !important;
+        }
+        .group:hover .group-hover\:bg-primary-container\/20 {
+            background-color: rgba(var(--dynamic-primary-rgb, 255, 232, 199), 0.20) !important;
+        }
+        .border-primary-container\/20,
+        .hover\:border-primary-container\/20:hover {
+            border-color: rgba(var(--dynamic-primary-rgb, 255, 232, 199), 0.20) !important;
+        }
+        .border-primary-container\/30 {
+            border-color: rgba(var(--dynamic-primary-rgb, 255, 232, 199), 0.30) !important;
+        }
+        .hover\:border-primary-container\/50:hover {
+            border-color: rgba(var(--dynamic-primary-rgb, 255, 232, 199), 0.50) !important;
+        }
         /* Efeito de mapa no modo escuro */
         .dark-map {
             filter: invert(90%) hue-rotate(180deg) opacity(75%);
@@ -228,6 +247,11 @@
 
     <!-- Problem / Solution Section -->
     <section class="py-section-gap px-container-padding w-full max-w-[1200px] mx-auto scroll-mt-24" id="about">
+        <div class="text-center mb-16">
+            <h2 id="about-section-title" class="font-display text-3xl md:text-5xl font-bold text-primary mb-4">Sobre & Dores</h2>
+            <div class="w-16 h-1 gold-gradient mx-auto rounded-full mb-6"></div>
+            <p id="about-section-subtitle" class="text-on-surface-variant max-w-2xl mx-auto font-light">Entenda os problemas que eliminamos e o padrão premium que entregamos em cada atendimento.</p>
+        </div>
         <div class="grid md:grid-cols-2 gap-gutter md:gap-12 relative">
             <!-- Problem -->
             <div class="bg-surface-container-low rounded-2xl p-8 md:p-12 flex flex-col gap-6 relative overflow-hidden group hover:bg-surface-container transition-all duration-500 border border-outline-variant/10">
@@ -287,9 +311,9 @@
 
     <section class="py-section-gap px-container-padding w-full max-w-[1200px] mx-auto scroll-mt-24" id="services">
         <div class="text-center mb-16">
-            <h2 class="font-display text-3xl md:text-5xl font-bold text-primary mb-4">Experiências de Grooming Premium</h2>
+            <h2 id="services-section-title" class="font-display text-3xl md:text-5xl font-bold text-primary mb-4">Experiências de Grooming Premium</h2>
             <div class="w-16 h-1 gold-gradient mx-auto rounded-full mb-6"></div>
-            <p class="text-on-surface-variant max-w-2xl mx-auto font-light">A combinação impecável de técnicas clássicas com o dinamismo do estilo moderno.</p>
+            <p id="services-section-subtitle" class="text-on-surface-variant max-w-2xl mx-auto font-light">A combinação impecável de técnicas clássicas com o dinamismo do estilo moderno.</p>
         </div>
         
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -681,6 +705,22 @@
                         .replace(/"/g, '&quot;')
                         .replace(/'/g, '&#039;');
                 };
+
+                const hexToRgb = hex => {
+                    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex || '');
+                    return result ? `${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(result[3], 16)}` : '255, 232, 199';
+                };
+
+                if (config.colors) {
+                    const rootStyle = document.documentElement.style;
+                    if (config.colors.primary) {
+                        rootStyle.setProperty('--dynamic-primary', config.colors.primary);
+                        rootStyle.setProperty('--dynamic-primary-rgb', hexToRgb(config.colors.primary));
+                    }
+                    if (config.colors.secondary) rootStyle.setProperty('--dynamic-secondary', config.colors.secondary);
+                    if (config.colors.background) rootStyle.setProperty('--dynamic-background', config.colors.background);
+                    if (config.colors.surface) rootStyle.setProperty('--dynamic-surface', config.colors.surface);
+                }
                 
                 // Variável responsiva de tela móvel
                 const isMobile = window.innerWidth < 768;
@@ -754,6 +794,12 @@
                 
                 // 3. Sobre & Dores
                 if (config.about) {
+                    if (config.about.section_title && document.getElementById('about-section-title')) {
+                        document.getElementById('about-section-title').innerText = config.about.section_title;
+                    }
+                    if (config.about.section_subtitle && document.getElementById('about-section-subtitle')) {
+                        document.getElementById('about-section-subtitle').innerText = config.about.section_subtitle;
+                    }
                     if (config.about.problem_title) document.getElementById('problem-title').innerText = config.about.problem_title;
                     if (config.about.solution_title) document.getElementById('solution-title').innerText = config.about.solution_title;
                     
@@ -797,6 +843,15 @@
                 }
                 
                 // 4. Serviços
+                if (config.services_section) {
+                    if (config.services_section.title && document.getElementById('services-section-title')) {
+                        document.getElementById('services-section-title').innerText = config.services_section.title;
+                    }
+                    if (config.services_section.subtitle && document.getElementById('services-section-subtitle')) {
+                        document.getElementById('services-section-subtitle').innerText = config.services_section.subtitle;
+                    }
+                }
+
                 if (config.services && config.services.length >= 3) {
                     const whatsappNum = config.general.whatsapp ? config.general.whatsapp.replace(/\D/g, '') : "5511999999999";
                     for (let i = 0; i < 3; i++) {

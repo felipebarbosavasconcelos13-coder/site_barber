@@ -17,16 +17,25 @@
             --dynamic-primary-rgb: 255, 232, 199;
         }
         .gold-gradient {
-            background: linear-gradient(135deg, #ffc562 0%, #ff9159 100%);
+            background: linear-gradient(135deg, var(--dynamic-primary, #ffc562) 0%, var(--dynamic-secondary, #ff9159) 100%) !important;
         }
         .gold-glow {
-            box-shadow: 0 0 20px rgba(255, 197, 98, 0.15);
+            box-shadow: 0 0 20px rgba(var(--dynamic-primary-rgb, 255, 197, 98), 0.15) !important;
         }
         .gold-glow-hover:hover {
-            box-shadow: 0 0 30px rgba(255, 197, 98, 0.35);
+            box-shadow: 0 0 30px rgba(var(--dynamic-primary-rgb, 255, 197, 98), 0.35) !important;
         }
         .text-glow {
-            text-shadow: 0 0 10px rgba(255, 197, 98, 0.3);
+            text-shadow: 0 0 10px rgba(var(--dynamic-primary-rgb, 255, 197, 98), 0.3) !important;
+        }
+        .bg-primary-container\/5 {
+            background-color: rgba(var(--dynamic-primary-rgb, 255, 232, 199), 0.05) !important;
+        }
+        .bg-primary-container\/10 {
+            background-color: rgba(var(--dynamic-primary-rgb, 255, 232, 199), 0.10) !important;
+        }
+        .border-primary-container\/30 {
+            border-color: rgba(var(--dynamic-primary-rgb, 255, 232, 199), 0.30) !important;
         }
         input, textarea, select {
             background-color: #1a1919 !important;
@@ -34,8 +43,8 @@
             color: #e3e2e7 !important;
         }
         input:focus, textarea:focus, select:focus {
-            border-color: #ffc562 !important;
-            box-shadow: 0 0 0 2px rgba(255, 197, 98, 0.2) !important;
+            border-color: var(--dynamic-primary, #ffc562) !important;
+            box-shadow: 0 0 0 2px rgba(var(--dynamic-primary-rgb, 255, 197, 98), 0.2) !important;
         }
     </style>
 </head>
@@ -354,6 +363,22 @@
                 
                 <!-- ABA: SOBRE -->
                 <div id="tab-content-sobre" class="tab-content hidden flex flex-col gap-6">
+                    <div class="bg-[#1a1919] p-6 rounded-xl border border-outline-variant/15 flex flex-col gap-4">
+                        <h3 class="font-display font-semibold text-lg text-primary flex items-center gap-2">
+                            <span class="material-symbols-outlined">info</span> Título da Seção Sobre & Dores
+                        </h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                            <div class="flex flex-col gap-2">
+                                <label class="text-xs font-semibold uppercase tracking-wider text-on-surface-variant">Título Principal</label>
+                                <input type="text" id="s-section-title" class="w-full px-4 py-3 rounded-lg text-sm" placeholder="Sobre & Dores">
+                            </div>
+                            <div class="flex flex-col gap-2">
+                                <label class="text-xs font-semibold uppercase tracking-wider text-on-surface-variant">Subtítulo</label>
+                                <input type="text" id="s-section-subtitle" class="w-full px-4 py-3 rounded-lg text-sm" placeholder="Entenda os problemas que eliminamos...">
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- Problema -->
                     <div class="bg-[#1a1919] p-6 rounded-xl border border-outline-variant/15 flex flex-col gap-4">
                         <h3 class="font-display font-semibold text-lg text-error flex items-center gap-2">
@@ -394,6 +419,21 @@
                 <!-- ABA: SERVICOS -->
                 <div id="tab-content-servicos" class="tab-content hidden flex flex-col gap-6">
                     <p class="text-xs text-on-surface-variant font-light">Personalize o catálogo de serviços oferecidos com descrição, preços e botões.</p>
+                    <div class="bg-[#1a1919] p-5 rounded-xl border border-outline-variant/15 flex flex-col gap-4">
+                        <span class="text-xs font-bold uppercase tracking-wider text-primary flex items-center gap-2">
+                            <span class="material-symbols-outlined text-base">content_cut</span> Título da Seção Serviços
+                        </span>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                            <div class="flex flex-col gap-2">
+                                <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Título Principal</label>
+                                <input type="text" id="services-section-title-input" class="w-full px-3 py-2 text-xs rounded-lg" placeholder="Experiências de Grooming Premium">
+                            </div>
+                            <div class="flex flex-col gap-2">
+                                <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Subtítulo</label>
+                                <input type="text" id="services-section-subtitle-input" class="w-full px-3 py-2 text-xs rounded-lg" placeholder="A combinação impecável de técnicas clássicas...">
+                            </div>
+                        </div>
+                    </div>
                     
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                         <!-- Serviço 1 -->
@@ -874,6 +914,8 @@
             bg_opacity: "25"
           },
           about: {
+            section_title: "Sobre & Dores",
+            section_subtitle: "Entenda os problemas que eliminamos e o padrão premium que entregamos em cada atendimento.",
             problem_title: "Cansado de cortes genéricos?",
             problems: [
               "Espera interminável em recepções barulhentas.",
@@ -888,6 +930,10 @@
               "Lounge de Elite: Café gourmet e cervejas artesanais cortesia.",
               "Navalha clássica & toalha quente: O ritual tradicional em alto nível."
             ]
+          },
+          services_section: {
+            title: "Experiências de Grooming Premium",
+            subtitle: "A combinação impecável de técnicas clássicas com o dinamismo do estilo moderno."
           },
           services: [
             {
@@ -1054,6 +1100,23 @@
         });
 
         // ATUALIZAÇÃO DOS HEX DE CORES EM TEMPO REAL (Bidirecional)
+        function hexToRgb(hex) {
+            const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex || '');
+            return result ? `${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(result[3], 16)}` : '255, 232, 199';
+        }
+
+        function applyPanelThemeVars(colors) {
+            if (!colors) return;
+            const rootStyle = document.documentElement.style;
+            if (colors.primary) {
+                rootStyle.setProperty('--dynamic-primary', colors.primary);
+                rootStyle.setProperty('--dynamic-primary-rgb', hexToRgb(colors.primary));
+            }
+            if (colors.secondary) rootStyle.setProperty('--dynamic-secondary', colors.secondary);
+            if (colors.background) rootStyle.setProperty('--dynamic-background', colors.background);
+            if (colors.surface) rootStyle.setProperty('--dynamic-surface', colors.surface);
+        }
+
         const colorInputs = ['c-bg', 'c-surf', 'c-pri', 'c-sec'];
         colorInputs.forEach(id => {
             const colorInput = document.getElementById(id);
@@ -1062,6 +1125,12 @@
             // Quando altera no seletor visual
             colorInput.addEventListener('input', () => {
                 textInput.value = colorInput.value.toUpperCase();
+                applyPanelThemeVars({
+                    background: document.getElementById('c-bg').value,
+                    surface: document.getElementById('c-surf').value,
+                    primary: document.getElementById('c-pri').value,
+                    secondary: document.getElementById('c-sec').value
+                });
             });
             
             // Quando digita na caixa de texto
@@ -1077,6 +1146,12 @@
                 const hexRegex = /^#[0-9A-F]{6}$/i;
                 if (hexRegex.test(value)) {
                     colorInput.value = value;
+                    applyPanelThemeVars({
+                        background: document.getElementById('c-bg').value,
+                        surface: document.getElementById('c-surf').value,
+                        primary: document.getElementById('c-pri').value,
+                        secondary: document.getElementById('c-sec').value
+                    });
                 }
             });
             
@@ -1112,6 +1187,7 @@
             document.getElementById('g-facebook').value = data.general.facebook_url || '';
             
             // Cores
+            applyPanelThemeVars(data.colors);
             document.getElementById('c-bg').value = data.colors.background;
             document.getElementById('c-bg-hex').value = data.colors.background.toUpperCase();
             document.getElementById('c-surf').value = data.colors.surface;
@@ -1131,6 +1207,8 @@
             document.getElementById('h-bg-opacity-val').innerText = opacityVal + '%';
             
             // Sobre
+            document.getElementById('s-section-title').value = data.about.section_title || DEFAULT_CONFIG.about.section_title;
+            document.getElementById('s-section-subtitle').value = data.about.section_subtitle || DEFAULT_CONFIG.about.section_subtitle;
             document.getElementById('s-p-title').value = data.about.problem_title;
             document.getElementById('s-p-item-0').value = data.about.problems[0] || '';
             document.getElementById('s-p-item-1').value = data.about.problems[1] || '';
@@ -1143,6 +1221,10 @@
             document.getElementById('s-s-item-2').value = data.about.solutions[2] || '';
             document.getElementById('s-s-item-3').value = data.about.solutions[3] || '';
             
+            const servicesSection = data.services_section || DEFAULT_CONFIG.services_section;
+            document.getElementById('services-section-title-input').value = servicesSection.title || DEFAULT_CONFIG.services_section.title;
+            document.getElementById('services-section-subtitle-input').value = servicesSection.subtitle || DEFAULT_CONFIG.services_section.subtitle;
+
             // Serviços
             for (let i = 0; i < 3; i++) {
                 document.getElementById(`serv-${i}-name`).value = data.services[i].name;
@@ -1258,6 +1340,8 @@
                     bg_opacity: document.getElementById('h-bg-opacity').value
                 },
                 about: {
+                    section_title: document.getElementById('s-section-title').value,
+                    section_subtitle: document.getElementById('s-section-subtitle').value,
                     problem_title: document.getElementById('s-p-title').value,
                     problems: [
                         document.getElementById('s-p-item-0').value,
@@ -1272,6 +1356,10 @@
                         document.getElementById('s-s-item-2').value,
                         document.getElementById('s-s-item-3').value
                     ]
+                },
+                services_section: {
+                    title: document.getElementById('services-section-title-input').value,
+                    subtitle: document.getElementById('services-section-subtitle-input').value
                 },
                 services: [
                     {

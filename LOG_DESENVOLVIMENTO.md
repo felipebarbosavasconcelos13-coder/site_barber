@@ -526,3 +526,35 @@ Depois (CSS Estático Compilado):
 * Injetar as variáveis de ambiente na Vercel e disparar novo deploy dos projetos.
 * Validar o funcionamento e a sincronização correta dos depoimentos.
 
+## [2026-05-28] - Correção de Cores Dinâmicas e Campos Editáveis de Seções
+
+### Alterações Realizadas
+
+1. **Correção de aplicação de cores dinâmicas em botões e elementos destacados (`index.html`):**
+   - Adicionados overrides CSS para classes Tailwind com opacidade que não estavam sendo refletidas corretamente pela folha compilada, incluindo `bg-primary-container/10`, `border-primary-container/20`, `border-primary-container/30`, `hover:border-primary-container/50` e `group-hover:bg-primary-container/20`.
+   - A aplicação de configurações remotas agora também atualiza `--dynamic-primary`, `--dynamic-secondary`, `--dynamic-primary-rgb`, `--dynamic-background` e `--dynamic-surface` diretamente no `documentElement`, garantindo que cores vindas do Supabase sejam refletidas sem depender de reload.
+
+2. **Correção de consistência visual no painel administrativo (`admin.html`):**
+   - Gradientes, brilhos, foco de inputs e estados ativos do painel passaram a usar as variáveis CSS dinâmicas em vez de cores fixas.
+   - O painel atualiza a prévia visual das cores imediatamente ao alterar os seletores ou campos HEX.
+
+3. **Novos campos editáveis no painel (`admin.html`):**
+   - Adicionados campos para editar o título e subtítulo da seção **Sobre & Dores**.
+   - Adicionados campos para editar o título e subtítulo da seção **Serviços** com referência visual ao ícone `content_cut`.
+
+4. **Integração dos novos campos na landing page (`index.html`):**
+   - A seção Sobre & Dores recebeu os IDs `about-section-title` e `about-section-subtitle` e agora é atualizada pelo `dom-dinamizer`.
+   - A seção Serviços recebeu os IDs `services-section-title` e `services-section-subtitle` e agora lê os dados de `config.services_section`.
+
+5. **Regra operacional de documentação:**
+   - Definido que, após cada alteração futura, os arquivos `LOG_DESENVOLVIMENTO.md` e `Implementation_Plan.md` devem ser atualizados para manter rastreabilidade do projeto.
+   - Corrigido o nome do arquivo de plano: o arquivo temporário `PLANO_DE_IMPLEMENTACAO.md` foi removido e o plano consolidado passou a ser mantido em `Implementation_Plan.md`.
+
+### Verificação
+
+* Executado `git diff --check` sem erros de whitespace. Houve apenas o aviso padrão do Windows sobre futura conversão de `LF` para `CRLF`.
+
+### Próximos Passos
+
+* Validar manualmente no navegador se todos os botões, filtros, badges, bordas e textos destacados acompanham a paleta configurada no painel.
+* Salvar uma configuração pelo painel e confirmar que os novos títulos/subtítulos persistem no LocalStorage e na nuvem.
