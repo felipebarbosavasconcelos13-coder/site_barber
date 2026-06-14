@@ -575,10 +575,44 @@ Depois (CSS Estático Compilado):
 3. **Motivação:**
    - Imagens de validação mostraram botões com texto muito escuro sobre fundo escuro, indicando que algumas classes herdavam cor inadequada ou não tinham cor base explícita após a migração para CSS compilado.
 
-### Verificação
-
 * Alteração aplicada diretamente nas classes dos botões e na folha inline crítica do `index.html`.
 
 ### Próximos Passos
 
 * Validar visualmente no navegador os botões destacados pelo usuário em desktop e mobile.
+
+## [2026-06-14] - Implementação de Galeria Editável (Headline e Sub-headline das Imagens)
+
+### Objetivo
+Atender ao pedido do usuário de tornar os títulos (headlines) e subtítulos (sub-headlines) de todas as fotos da galeria editáveis através do painel de administração (`admin.html`), removendo textos que antes estavam hardcoded na landing page (`index.html`).
+
+### Alterações Realizadas
+
+1. **Painel Administrativo (`admin.html`):**
+   - **Campos HTML de Entrada:** Inseridos inputs textuais (`<input type="text">`) com IDs exclusivos para cada imagem de cada categoria da galeria:
+     - Cortes (4 imagens): `g-title-{0..3}` e `g-subtitle-{0..3}`.
+     - Ambiente Interno (2 imagens): `g-title-interno-{0..1}` e `g-subtitle-interno-{0..1}`.
+     - Ambiente Externo (1 imagem): `g-title-externo-0` e `g-subtitle-externo-0`.
+     - Clientes (2 imagens): `g-title-cliente-{0..1}` e `g-subtitle-cliente-{0..1}`.
+   - **Configuração Padrão (`DEFAULT_CONFIG`):** Atualizados os valores iniciais com os textos que antes eram estáticos no HTML, garantindo que o primeiro carregamento ou reset de fábrica mantenha os textos descritivos originais da barbearia.
+   - **Função `populateFormFields()`:** Atualizada para ler as propriedades `gallery_titles`, `gallery_subtitles`, `gallery_interno_titles`, `gallery_interno_subtitles`, `gallery_externo_title`, `gallery_externo_subtitle`, `gallery_clientes_titles` e `gallery_clientes_subtitles` do banco e carregar os respectivos inputs na tela.
+   - **Manipulador de Salvamento (`submit`):** Atualizado para coletar o `.value` de todos os novos inputs e anexar ao objeto de configuração final gravado no LocalStorage e no Supabase.
+
+2. **Landing Page Pública (`index.html`):**
+   - **Identificadores no DOM (HTML):** Adicionados IDs no padrão `gallery-title-{index}` e `gallery-subtitle-{index}` (e correspondentes para ambiente interno, externo e clientes) em cada elemento `<span>` (headline) e `<p>` (sub-headline) da galeria desktop.
+   - **Injeção de Dados (`updateDesktopGallery`):** Modificada a função Javascript para injetar dinamicamente as strings editadas do `config` nos respectivos elementos através de seus IDs.
+   - **Carrossel Mobile Otimizado (`renderMobileCarousel`):** Adaptado o array de itens mapeados pelo carrossel móvel para buscar dinamicamente os títulos e subtítulos personalizados da variável de configuração, mantendo fallbacks estéticos caso algum esteja vazio.
+
+3. **Atualização da Documentação:**
+   - Criado o arquivo [DOCUMENTACAO.md](file:///c:/Users/felip/Desktop/N8N/Atigra/Pag%20barbearia/DOCUMENTACAO.md) detalhando toda a engenharia do projeto.
+
+### Verificação
+
+* Inputs de texto integrados e validados visualmente.
+* Configurações mapeadas corretamente no banco local/nuvem.
+
+### Próximos Passos
+
+* Solicitar ao usuário a validação das alterações no painel e na landing page.
+* Enviar as alterações para o repositório remoto do GitHub para deploy contínuo na Vercel.
+

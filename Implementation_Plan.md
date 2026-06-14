@@ -101,3 +101,49 @@ Corrigir botoes que apareciam com texto escuro sobre fundo escuro, principalment
 ### Proximos Passos
 
 * Confirmar contraste e consistencia visual dos botoes nas cores configuradas atualmente.
+
+---
+
+## [2026-06-14] Galeria de Imagens Editável (Headline e Sub-headline)
+
+### Objetivo
+
+Tornar os títulos (headlines) e subtítulos (sub-headlines) de todas as fotos da galeria editáveis no painel de administração (`admin.html`) e injetados de forma dinâmica na landing page (`index.html`).
+
+### Arquivos Afetados
+
+* `index.html`
+* `admin.html`
+* `LOG_DESENVOLVIMENTO.md`
+* `Implementation_Plan.md`
+* `DOCUMENTACAO.md`
+
+### Implementação
+
+1. **Estrutura HTML do Painel (`admin.html`):** Concluído.
+   - Criados inputs de texto no formulário da aba Galeria para headlines e sub-headlines de cortes, ambiente interno, ambiente externo e clientes.
+
+2. **Lógica de Salvamento e Carregamento (`admin.html`):** Concluído.
+   - Mapeados os novos campos na `DEFAULT_CONFIG` (com textos padrões para evitar inputs vazios), em `populateFormFields()` para carregar os dados e no manipulador de salvamento (`submit`) para enviá-los ao LocalStorage/Supabase.
+
+3. **Injeção Dinâmica na Landing Page (`index.html`):** Concluído.
+   - Adicionados IDs descritivos para cada texto de imagem na seção da galeria desktop.
+   - Atualizada a função `updateDesktopGallery()` para ler do objeto de configuração e injetar o texto correto no DOM.
+   - Atualizado o carrossel mobile `renderMobileCarousel()` para ler os mesmos arrays de texto do objeto de configuração.
+
+4. **Criação da Documentação:** Concluído.
+   - Criado o arquivo `DOCUMENTACAO.md` contendo a arquitetura e detalhes técnicos atualizados.
+
+### Criterios de Validação
+
+1. Acessar o Painel de Administração (`/admin`).
+2. Abrir a aba **Galeria**.
+3. Alterar os títulos e subtítulos de qualquer categoria de imagem (ex: mudar "Corte Signature" para "Corte Estilizado").
+4. Salvar as alterações.
+5. Acessar a página principal (`/`) e confirmar que o texto foi atualizado no desktop e no carrossel mobile.
+
+### Próximos Passos
+
+1. Obter a aprovação do usuário para o plano e alterações executadas.
+2. Realizar o commit e push das alterações para o GitHub para deploy automático na Vercel.
+
