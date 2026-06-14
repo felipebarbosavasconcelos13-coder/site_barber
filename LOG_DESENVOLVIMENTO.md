@@ -616,3 +616,33 @@ Atender ao pedido do usuário de tornar os títulos (headlines) e subtítulos (s
 * Solicitar ao usuário a validação das alterações no painel e na landing page.
 * Enviar as alterações para o repositório remoto do GitHub para deploy contínuo na Vercel.
 
+
+## [2026-06-14] - Implementação de Galeria Dinâmica (Adicionar & Excluir Fotos nas Seções)
+
+### Objetivo
+Permitir ao administrador adicionar novas fotos ou remover fotos existentes em qualquer uma das seções da galeria (Cortes & Serviços, Estrutura Física e Clientes). A interface de gerenciamento passou a ser 100% dinâmica em vez de um número estático e fixo de inputs.
+
+### Alterações Realizadas
+
+1. **Esquema de Dados e Retrocompatibilidade (`admin.html` & `index.html`):**
+   - Unificação da estrutura de armazenamento das fotos. O formato antigo de múltiplos arrays paralelos (`gallery`, `gallery_mobile`, `gallery_titles`, `gallery_subtitles`, etc.) foi substituído por um único array de objetos: `gallery: [{ id, category, img, img_mobile, title, desc }]`.
+   - Implementação de um migrador automático `migrateGalleryFormat()` em ambos os arquivos, que detecta e converte na hora configurações no formato antigo para o formato novo, garantindo retrocompatibilidade total com 0% de perda de dados.
+
+2. **Interface e Lógica do Painel Administrativo (`admin.html`):**
+   - Substituição de todos os campos de entrada fixos das imagens por contêineres dinâmicos (`#admin-gallery-cortes`, `#admin-gallery-ambiente`, `#admin-gallery-clientes`).
+   - Implementação da função `renderAdminGallery()` para montar dinamicamente os cartões de cada foto com seus respectivos previews, inputs de edição de headline/sub-headline, inputs de link e botões de exclusão.
+   - Adicionada a função `addGalleryItem(category)` para criar dinamicamente novos itens e `deleteGalleryItem(id)` para remover itens específicos.
+   - Atualizado o evento de submit para consolidar todos os inputs e salvar o array unificado `gallery` com as fotos.
+
+3. **Renderização Dinâmica na Landing Page (`index.html`):**
+   - Substituição da grade estática `#gallery-grid` no HTML por uma injeção 100% dinâmica via JavaScript que itera sobre o array `gallery` unificado e monta os cartões na hora.
+   - Adaptação do carrossel mobile (`renderMobileCarousel()`) para ler o novo array unificado `gallery`, filtrando por categorias correspondentes.
+   - Correção do filtro de categorias: agora a filtragem de categorias busca os elementos `.gallery-item` no DOM de forma dinâmica no momento do clique (em vez de um seletor estático no carregamento da página), evitando erros com imagens recém-injetadas.
+
+4. **Delegação de Eventos para o Lightbox (`index.html`):**
+   - Substituição dos listeners estáticos de clique pelo padrão de delegação de eventos dinâmico (`document.addEventListener('click')` escutando `.lightbox-trigger`), garantindo que tanto as imagens padrão quanto as novas imagens adicionadas em tempo de execução abram perfeitamente no lightbox.
+
+### Verificação
+
+* Normalização de configurações legadas testada e funcionando sem perda de conteúdo.
+* Lógica de delegação de eventos para filtros e lightbox validada.

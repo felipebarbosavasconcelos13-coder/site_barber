@@ -67,18 +67,23 @@ No painel de controle (`admin.html`), ao salvar as alterações:
 
 ## 4. Funcionalidades e Código Detalhado
 
-### 4.1. Galeria de Imagens Editável (Recurso Recente)
-A galeria possui agora controle total e individual de imagens, headlines e sub-headlines para cada categoria, tanto no desktop quanto no carrossel mobile.
+### 4.1. Galeria de Imagens Dinâmica e Editável (Adicionar & Excluir Fotos)
+A galeria possui controle dinâmico e flexível que permite ao administrador adicionar novas fotos ou remover fotos existentes em qualquer categoria (Cortes & Serviços, Estrutura Física e Clientes).
+
+* **Esquema de Dados Unificado:**
+  * Toda a galeria é armazenada sob a chave `gallery` como um único array de objetos com a seguinte estrutura: `gallery: [{ id, category, img, img_mobile, title, desc }]`.
+  * Um migrador automático (`migrateGalleryFormat()`) reconstrói e unifica automaticamente as configurações antigas com múltiplos arrays para o novo formato de objetos on-the-fly, mantendo a compatibilidade total e evitando perdas de dados.
 
 * **admin.html:**
-  * Foram adicionados campos de entrada de texto (`<input type="text">`) com IDs no padrão `g-title-{index}`, `g-subtitle-{index}` (e correspondentes para ambiente `interno`, `externo` e `cliente`).
-  * A variável `DEFAULT_CONFIG` inicializa esses títulos padrão para evitar que fiquem vazios.
-  * O método `populateFormFields()` preenche os campos na tela com os valores do banco local/remoto.
-  * O manipulador `submit` captura estes valores e os salva nos arrays `gallery_titles`, `gallery_subtitles`, `gallery_interno_titles`, `gallery_interno_subtitles`, `gallery_clientes_titles`, `gallery_clientes_subtitles` e strings simples `gallery_externo_title`, `gallery_externo_subtitle`.
+  * Exibe contêineres vazios que são populados dinamicamente via `renderAdminGallery()` baseado na lista de fotos em `currentGalleryData`.
+  * Cada imagem possui controle individual para Headline, Sub-headline, upload de imagem Desktop e upload opcional para Mobile.
+  * A compressão e redimensionamento client-side via HTML5 Canvas são mantidos para reduzir o consumo de banco e tráfego.
+  * Botões dedicados "Adicionar Nova Imagem" e "Excluir" emitem comandos de re-renderização em tempo real e consolidação de dados ao salvar.
+
 * **index.html:**
-  * No layout desktop, os elementos `<span>` e `<p>` sob cada imagem da galeria ganharam IDs únicos como `gallery-title-0` e `gallery-subtitle-0`.
-  * A função `updateDesktopGallery()` atualiza o `innerText` desses elementos com o texto personalizado salvo no config.
-  * O carrossel mobile dinâmico (`renderMobileCarousel()`) mapeia os arrays de títulos e descrições do config para gerar os slides reativos.
+  * O contêiner `#gallery-grid` é injetado de forma 100% dinâmica em tempo de execução via JavaScript através da função `updateDesktopGallery()`, que filtra o array unificado `gallery` conforme a categoria selecionada.
+  * O carrossel responsivo mobile (`renderMobileCarousel()`) lê a mesma estrutura unificada de forma reativa.
+  * Os eventos de clique para o Lightbox nativo e para os botões de filtro usam **Delegação de Eventos** no documento/DOM (`document.addEventListener('click')`), garantindo interatividade premium em tempo real também para novos cards adicionados dinamicamente sem recarregar o site.
 
 ### 4.2. Integração Google Places API
 Para coletar a nota de avaliação real e as 5 últimas avaliações do salão de forma nativa e sem CORS:

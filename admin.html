@@ -507,352 +507,40 @@
                     
                     <!-- Categoria: Cortes e Serviços -->
                     <div class="bg-[#1a1919] p-5 rounded-xl border border-outline-variant/15 flex flex-col gap-4">
-                        <span class="text-xs font-bold uppercase tracking-wider text-primary">Cortes & Serviços</span>
-                        <div class="flex flex-col gap-6">
-                            <!-- Foto 1 -->
-                            <div class="border-b border-outline-variant/10 pb-4">
-                                <span class="text-xs font-semibold text-on-surface block mb-3">Foto 1 (Corte Signature)</span>
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-3">
-                                    <div class="flex flex-col gap-1.5">
-                                        <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Headline (Título)</label>
-                                        <input type="text" id="g-title-0" class="w-full px-3 py-2 text-xs rounded-lg" placeholder="Corte Signature">
-                                    </div>
-                                    <div class="flex flex-col gap-1.5">
-                                        <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Sub-headline (Descrição)</label>
-                                        <input type="text" id="g-subtitle-0" class="w-full px-3 py-2 text-xs rounded-lg" placeholder="Degradê preciso e finalização impecável.">
-                                    </div>
-                                </div>
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    <div class="flex flex-col gap-1.5">
-                                        <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Desktop <span class="text-primary-container font-bold text-[9px] lowercase">(recomendado: 800x600 px - 4:3)</span></label>
-                                        <div class="flex gap-2">
-                                            <input type="text" id="g-img-0" class="flex-grow px-3 py-2 text-xs rounded-lg">
-                                            <label class="bg-surface-container-high hover:bg-surface-container-highest border border-outline-variant/30 text-primary-container px-3 py-2 rounded-lg text-[10px] font-bold uppercase transition-colors shrink-0 flex items-center gap-1 cursor-pointer">
-                                                <span class="material-symbols-outlined text-sm">upload</span> Enviar
-                                                <input type="file" class="hidden img-upload-trigger" data-target="g-img-0" accept="image/*">
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="flex flex-col gap-1.5">
-                                        <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Mobile (Opcional) <span class="text-primary-container font-bold text-[9px] lowercase">(recomendado: 600x800 px - 3:4)</span></label>
-                                        <div class="flex gap-2">
-                                            <input type="text" id="g-img-0-mobile" class="flex-grow px-3 py-2 text-xs rounded-lg" placeholder="Herda desktop se vazio">
-                                            <label class="bg-surface-container-high hover:bg-surface-container-highest border border-outline-variant/30 text-primary-container px-3 py-2 rounded-lg text-[10px] font-bold uppercase transition-colors shrink-0 flex items-center gap-1 cursor-pointer">
-                                                <span class="material-symbols-outlined text-sm">upload</span> Enviar
-                                                <input type="file" class="hidden img-upload-trigger" data-target="g-img-0-mobile" accept="image/*">
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <!-- Foto 2 -->
-                            <div class="border-b border-outline-variant/10 pb-4">
-                                <span class="text-xs font-semibold text-on-surface block mb-3">Foto 2 (Barba Elegance)</span>
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-3">
-                                    <div class="flex flex-col gap-1.5">
-                                        <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Headline (Título)</label>
-                                        <input type="text" id="g-title-1" class="w-full px-3 py-2 text-xs rounded-lg" placeholder="Ritual da Navalha">
-                                    </div>
-                                    <div class="flex flex-col gap-1.5">
-                                        <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Sub-headline (Descrição)</label>
-                                        <input type="text" id="g-subtitle-1" class="w-full px-3 py-2 text-xs rounded-lg" placeholder="Toalha quente clássica e barbear ultra alinhado.">
-                                    </div>
-                                </div>
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    <div class="flex flex-col gap-1.5">
-                                        <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Desktop <span class="text-primary-container font-bold text-[9px] lowercase">(recomendado: 800x600 px - 4:3)</span></label>
-                                        <div class="flex gap-2">
-                                            <input type="text" id="g-img-1" class="flex-grow px-3 py-2 text-xs rounded-lg">
-                                            <label class="bg-surface-container-high hover:bg-surface-container-highest border border-outline-variant/30 text-primary-container px-3 py-2 rounded-lg text-[10px] font-bold uppercase transition-colors shrink-0 flex items-center gap-1 cursor-pointer">
-                                                <span class="material-symbols-outlined text-sm">upload</span> Enviar
-                                                <input type="file" class="hidden img-upload-trigger" data-target="g-img-1" accept="image/*">
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="flex flex-col gap-1.5">
-                                        <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Mobile (Opcional) <span class="text-primary-container font-bold text-[9px] lowercase">(recomendado: 600x800 px - 3:4)</span></label>
-                                        <div class="flex gap-2">
-                                            <input type="text" id="g-img-1-mobile" class="flex-grow px-3 py-2 text-xs rounded-lg" placeholder="Herda desktop se vazio">
-                                            <label class="bg-surface-container-high hover:bg-surface-container-highest border border-outline-variant/30 text-primary-container px-3 py-2 rounded-lg text-[10px] font-bold uppercase transition-colors shrink-0 flex items-center gap-1 cursor-pointer">
-                                                <span class="material-symbols-outlined text-sm">upload</span> Enviar
-                                                <input type="file" class="hidden img-upload-trigger" data-target="g-img-1-mobile" accept="image/*">
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Foto 3 -->
-                            <div class="border-b border-outline-variant/10 pb-4">
-                                <span class="text-xs font-semibold text-on-surface block mb-3">Foto 3 (Combo Lounge)</span>
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-3">
-                                    <div class="flex flex-col gap-1.5">
-                                        <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Headline (Título)</label>
-                                        <input type="text" id="g-title-2" class="w-full px-3 py-2 text-xs rounded-lg" placeholder="Lounge Clássico">
-                                    </div>
-                                    <div class="flex flex-col gap-1.5">
-                                        <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Sub-headline (Descrição)</label>
-                                        <input type="text" id="g-subtitle-2" class="w-full px-3 py-2 text-xs rounded-lg" placeholder="Drinks refinados e atendimento com single malt.">
-                                    </div>
-                                </div>
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    <div class="flex flex-col gap-1.5">
-                                        <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Desktop <span class="text-primary-container font-bold text-[9px] lowercase">(recomendado: 800x600 px - 4:3)</span></label>
-                                        <div class="flex gap-2">
-                                            <input type="text" id="g-img-2" class="flex-grow px-3 py-2 text-xs rounded-lg">
-                                            <label class="bg-surface-container-high hover:bg-surface-container-highest border border-outline-variant/30 text-primary-container px-3 py-2 rounded-lg text-[10px] font-bold uppercase transition-colors shrink-0 flex items-center gap-1 cursor-pointer">
-                                                <span class="material-symbols-outlined text-sm">upload</span> Enviar
-                                                <input type="file" class="hidden img-upload-trigger" data-target="g-img-2" accept="image/*">
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="flex flex-col gap-1.5">
-                                        <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Mobile (Opcional) <span class="text-primary-container font-bold text-[9px] lowercase">(recomendado: 600x800 px - 3:4)</span></label>
-                                        <div class="flex gap-2">
-                                            <input type="text" id="g-img-2-mobile" class="flex-grow px-3 py-2 text-xs rounded-lg" placeholder="Herda desktop se vazio">
-                                            <label class="bg-surface-container-high hover:bg-surface-container-highest border border-outline-variant/30 text-primary-container px-3 py-2 rounded-lg text-[10px] font-bold uppercase transition-colors shrink-0 flex items-center gap-1 cursor-pointer">
-                                                <span class="material-symbols-outlined text-sm">upload</span> Enviar
-                                                <input type="file" class="hidden img-upload-trigger" data-target="g-img-2-mobile" accept="image/*">
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Foto 4 -->
-                            <div>
-                                <span class="text-xs font-semibold text-on-surface block mb-3">Foto 4 (Pomadas de Luxo)</span>
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-3">
-                                    <div class="flex flex-col gap-1.5">
-                                        <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Headline (Título)</label>
-                                        <input type="text" id="g-title-3" class="w-full px-3 py-2 text-xs rounded-lg" placeholder="Pomadas de Luxo">
-                                    </div>
-                                    <div class="flex flex-col gap-1.5">
-                                        <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Sub-headline (Descrição)</label>
-                                        <input type="text" id="g-subtitle-3" class="w-full px-3 py-2 text-xs rounded-lg" placeholder="Produtos de elite para fixação e saúde dos cabelos.">
-                                    </div>
-                                </div>
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    <div class="flex flex-col gap-1.5">
-                                        <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Desktop <span class="text-primary-container font-bold text-[9px] lowercase">(recomendado: 800x600 px - 4:3)</span></label>
-                                        <div class="flex gap-2">
-                                            <input type="text" id="g-img-3" class="flex-grow px-3 py-2 text-xs rounded-lg">
-                                            <label class="bg-surface-container-high hover:bg-surface-container-highest border border-outline-variant/30 text-primary-container px-3 py-2 rounded-lg text-[10px] font-bold uppercase transition-colors shrink-0 flex items-center gap-1 cursor-pointer">
-                                                <span class="material-symbols-outlined text-sm">upload</span> Enviar
-                                                <input type="file" class="hidden img-upload-trigger" data-target="g-img-3" accept="image/*">
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="flex flex-col gap-1.5">
-                                        <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Mobile (Opcional) <span class="text-primary-container font-bold text-[9px] lowercase">(recomendado: 600x800 px - 3:4)</span></label>
-                                        <div class="flex gap-2">
-                                            <input type="text" id="g-img-3-mobile" class="flex-grow px-3 py-2 text-xs rounded-lg" placeholder="Herda desktop se vazio">
-                                            <label class="bg-surface-container-high hover:bg-surface-container-highest border border-outline-variant/30 text-primary-container px-3 py-2 rounded-lg text-[10px] font-bold uppercase transition-colors shrink-0 flex items-center gap-1 cursor-pointer">
-                                                <span class="material-symbols-outlined text-sm">upload</span> Enviar
-                                                <input type="file" class="hidden img-upload-trigger" data-target="g-img-3-mobile" accept="image/*">
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="flex justify-between items-center border-b border-outline-variant/10 pb-3">
+                            <span class="text-xs font-bold uppercase tracking-wider text-primary">Cortes & Serviços</span>
+                            <button type="button" onclick="addGalleryItem('cortes')" class="bg-primary-container/10 hover:bg-primary-container/20 border border-primary-container/30 text-primary-container px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase transition-all flex items-center gap-1">
+                                <span class="material-symbols-outlined text-sm">add</span> Adicionar Foto
+                            </button>
+                        </div>
+                        <div id="admin-gallery-cortes" class="flex flex-col gap-6">
+                            <!-- Gerado Dinamicamente -->
                         </div>
                     </div>
 
                     <!-- Categoria: Ambiente Interno e Externo -->
                     <div class="bg-[#1a1919] p-5 rounded-xl border border-outline-variant/15 flex flex-col gap-4">
-                        <span class="text-xs font-bold uppercase tracking-wider text-primary">Estrutura Física (Ambiente)</span>
-                        <div class="flex flex-col gap-6">
-                            <!-- Interno 1 -->
-                            <div class="border-b border-outline-variant/10 pb-4">
-                                <span class="text-xs font-semibold text-on-surface block mb-3">Interno 1 (Lounge VIP)</span>
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-3">
-                                    <div class="flex flex-col gap-1.5">
-                                        <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Headline (Título)</label>
-                                        <input type="text" id="g-title-interno-0" class="w-full px-3 py-2 text-xs rounded-lg" placeholder="Lounge VIP">
-                                    </div>
-                                    <div class="flex flex-col gap-1.5">
-                                        <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Sub-headline (Descrição)</label>
-                                        <input type="text" id="g-subtitle-interno-0" class="w-full px-3 py-2 text-xs rounded-lg" placeholder="Poltronas premium para relaxamento completo.">
-                                    </div>
-                                </div>
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    <div class="flex flex-col gap-1.5">
-                                        <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Desktop <span class="text-primary-container font-bold text-[9px] lowercase">(recomendado: 800x600 px - 4:3)</span></label>
-                                        <div class="flex gap-2">
-                                            <input type="text" id="g-img-interno-0" class="flex-grow px-3 py-2 text-xs rounded-lg">
-                                            <label class="bg-surface-container-high hover:bg-surface-container-highest border border-outline-variant/30 text-primary-container px-3 py-2 rounded-lg text-[10px] font-bold uppercase transition-colors shrink-0 flex items-center gap-1 cursor-pointer">
-                                                <span class="material-symbols-outlined text-sm">upload</span> Enviar
-                                                <input type="file" class="hidden img-upload-trigger" data-target="g-img-interno-0" accept="image/*">
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="flex flex-col gap-1.5">
-                                        <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Mobile (Opcional) <span class="text-primary-container font-bold text-[9px] lowercase">(recomendado: 600x800 px - 3:4)</span></label>
-                                        <div class="flex gap-2">
-                                            <input type="text" id="g-img-interno-0-mobile" class="flex-grow px-3 py-2 text-xs rounded-lg" placeholder="Herda desktop se vazio">
-                                            <label class="bg-surface-container-high hover:bg-surface-container-highest border border-outline-variant/30 text-primary-container px-3 py-2 rounded-lg text-[10px] font-bold uppercase transition-colors shrink-0 flex items-center gap-1 cursor-pointer">
-                                                <span class="material-symbols-outlined text-sm">upload</span> Enviar
-                                                <input type="file" class="hidden img-upload-trigger" data-target="g-img-interno-0-mobile" accept="image/*">
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <!-- Interno 2 -->
-                            <div class="border-b border-outline-variant/10 pb-4">
-                                <span class="text-xs font-semibold text-on-surface block mb-3">Interno 2 (Bar Gourmet)</span>
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-3">
-                                    <div class="flex flex-col gap-1.5">
-                                        <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Headline (Título)</label>
-                                        <input type="text" id="g-title-interno-1" class="w-full px-3 py-2 text-xs rounded-lg" placeholder="Bar Gourmet">
-                                    </div>
-                                    <div class="flex flex-col gap-1.5">
-                                        <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Sub-headline (Descrição)</label>
-                                        <input type="text" id="g-subtitle-interno-1" class="w-full px-3 py-2 text-xs rounded-lg" placeholder="Cafés e destilados selecionados para nossos convidados.">
-                                    </div>
-                                </div>
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    <div class="flex flex-col gap-1.5">
-                                        <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Desktop <span class="text-primary-container font-bold text-[9px] lowercase">(recomendado: 800x600 px - 4:3)</span></label>
-                                        <div class="flex gap-2">
-                                            <input type="text" id="g-img-interno-1" class="flex-grow px-3 py-2 text-xs rounded-lg">
-                                            <label class="bg-surface-container-high hover:bg-surface-container-highest border border-outline-variant/30 text-primary-container px-3 py-2 rounded-lg text-[10px] font-bold uppercase transition-colors shrink-0 flex items-center gap-1 cursor-pointer">
-                                                <span class="material-symbols-outlined text-sm">upload</span> Enviar
-                                                <input type="file" class="hidden img-upload-trigger" data-target="g-img-interno-1" accept="image/*">
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="flex flex-col gap-1.5">
-                                        <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Mobile (Opcional) <span class="text-primary-container font-bold text-[9px] lowercase">(recomendado: 600x800 px - 3:4)</span></label>
-                                        <div class="flex gap-2">
-                                            <input type="text" id="g-img-interno-1-mobile" class="flex-grow px-3 py-2 text-xs rounded-lg" placeholder="Herda desktop se vazio">
-                                            <label class="bg-surface-container-high hover:bg-surface-container-highest border border-outline-variant/30 text-primary-container px-3 py-2 rounded-lg text-[10px] font-bold uppercase transition-colors shrink-0 flex items-center gap-1 cursor-pointer">
-                                                <span class="material-symbols-outlined text-sm">upload</span> Enviar
-                                                <input type="file" class="hidden img-upload-trigger" data-target="g-img-interno-1-mobile" accept="image/*">
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Externo -->
-                            <div>
-                                <span class="text-xs font-semibold text-on-surface block mb-3">Externo (Fachada Luxuosa)</span>
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-3">
-                                    <div class="flex flex-col gap-1.5">
-                                        <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Headline (Título)</label>
-                                        <input type="text" id="g-title-externo-0" class="w-full px-3 py-2 text-xs rounded-lg" placeholder="Nossa Fachada">
-                                    </div>
-                                    <div class="flex flex-col gap-1.5">
-                                        <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Sub-headline (Descrição)</label>
-                                        <input type="text" id="g-subtitle-externo-0" class="w-full px-3 py-2 text-xs rounded-lg" placeholder="Presença majestosa com arquitetura moderna e luxuosa.">
-                                    </div>
-                                </div>
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    <div class="flex flex-col gap-1.5">
-                                        <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Desktop <span class="text-primary-container font-bold text-[9px] lowercase">(recomendado: 800x600 px - 4:3)</span></label>
-                                        <div class="flex gap-2">
-                                            <input type="text" id="g-img-externo-0" class="flex-grow px-3 py-2 text-xs rounded-lg">
-                                            <label class="bg-surface-container-high hover:bg-surface-container-highest border border-outline-variant/30 text-primary-container px-3 py-2 rounded-lg text-[10px] font-bold uppercase transition-colors shrink-0 flex items-center gap-1 cursor-pointer">
-                                                <span class="material-symbols-outlined text-sm">upload</span> Enviar
-                                                <input type="file" class="hidden img-upload-trigger" data-target="g-img-externo-0" accept="image/*">
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="flex flex-col gap-1.5">
-                                        <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Mobile (Opcional) <span class="text-primary-container font-bold text-[9px] lowercase">(recomendado: 600x800 px - 3:4)</span></label>
-                                        <div class="flex gap-2">
-                                            <input type="text" id="g-img-externo-0-mobile" class="flex-grow px-3 py-2 text-xs rounded-lg" placeholder="Herda desktop se vazio">
-                                            <label class="bg-surface-container-high hover:bg-surface-container-highest border border-outline-variant/30 text-primary-container px-3 py-2 rounded-lg text-[10px] font-bold uppercase transition-colors shrink-0 flex items-center gap-1 cursor-pointer">
-                                                <span class="material-symbols-outlined text-sm">upload</span> Enviar
-                                                <input type="file" class="hidden img-upload-trigger" data-target="g-img-externo-0-mobile" accept="image/*">
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="flex justify-between items-center border-b border-outline-variant/10 pb-3">
+                            <span class="text-xs font-bold uppercase tracking-wider text-primary">Estrutura Física (Ambiente)</span>
+                            <button type="button" onclick="addGalleryItem('interno')" class="bg-primary-container/10 hover:bg-primary-container/20 border border-primary-container/30 text-primary-container px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase transition-all flex items-center gap-1">
+                                <span class="material-symbols-outlined text-sm">add</span> Adicionar Foto
+                            </button>
+                        </div>
+                        <div id="admin-gallery-ambiente" class="flex flex-col gap-6">
+                            <!-- Gerado Dinamicamente -->
                         </div>
                     </div>
 
                     <!-- Categoria: Nossos Clientes -->
                     <div class="bg-[#1a1919] p-5 rounded-xl border border-outline-variant/15 flex flex-col gap-4">
-                        <span class="text-xs font-bold uppercase tracking-wider text-primary">Nossos Clientes (Lifestyle)</span>
-                        <div class="flex flex-col gap-6">
-                            <!-- Cliente 1 -->
-                            <div class="border-b border-outline-variant/10 pb-4">
-                                <span class="text-xs font-semibold text-on-surface block mb-3">Cliente 1 (Estilo e Corte)</span>
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-3">
-                                    <div class="flex flex-col gap-1.5">
-                                        <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Headline (Título)</label>
-                                        <input type="text" id="g-title-cliente-0" class="w-full px-3 py-2 text-xs rounded-lg" placeholder="Estilo Lifestyle">
-                                    </div>
-                                    <div class="flex flex-col gap-1.5">
-                                        <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Sub-headline (Descrição)</label>
-                                        <input type="text" id="g-subtitle-cliente-0" class="w-full px-3 py-2 text-xs rounded-lg" placeholder="Visual esculpido de acordo com a personalidade do cliente.">
-                                    </div>
-                                </div>
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    <div class="flex flex-col gap-1.5">
-                                        <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Desktop <span class="text-primary-container font-bold text-[9px] lowercase">(recomendado: 800x600 px - 4:3)</span></label>
-                                        <div class="flex gap-2">
-                                            <input type="text" id="g-img-cliente-0" class="flex-grow px-3 py-2 text-xs rounded-lg">
-                                            <label class="bg-surface-container-high hover:bg-surface-container-highest border border-outline-variant/30 text-primary-container px-3 py-2 rounded-lg text-[10px] font-bold uppercase transition-colors shrink-0 flex items-center gap-1 cursor-pointer">
-                                                <span class="material-symbols-outlined text-sm">upload</span> Enviar
-                                                <input type="file" class="hidden img-upload-trigger" data-target="g-img-cliente-0" accept="image/*">
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="flex flex-col gap-1.5">
-                                        <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Mobile (Opcional) <span class="text-primary-container font-bold text-[9px] lowercase">(recomendado: 600x800 px - 3:4)</span></label>
-                                        <div class="flex gap-2">
-                                            <input type="text" id="g-img-cliente-0-mobile" class="flex-grow px-3 py-2 text-xs rounded-lg" placeholder="Herda desktop se vazio">
-                                            <label class="bg-surface-container-high hover:bg-surface-container-highest border border-outline-variant/30 text-primary-container px-3 py-2 rounded-lg text-[10px] font-bold uppercase transition-colors shrink-0 flex items-center gap-1 cursor-pointer">
-                                                <span class="material-symbols-outlined text-sm">upload</span> Enviar
-                                                <input type="file" class="hidden img-upload-trigger" data-target="g-img-cliente-0-mobile" accept="image/*">
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <!-- Cliente 2 -->
-                            <div>
-                                <span class="text-xs font-semibold text-on-surface block mb-3">Cliente 2 (Clube Lounge)</span>
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-3">
-                                    <div class="flex flex-col gap-1.5">
-                                        <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Headline (Título)</label>
-                                        <input type="text" id="g-title-cliente-1" class="w-full px-3 py-2 text-xs rounded-lg" placeholder="Clube Barber">
-                                    </div>
-                                    <div class="flex flex-col gap-1.5">
-                                        <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Sub-headline (Descrição)</label>
-                                        <input type="text" id="g-subtitle-cliente-1" class="w-full px-3 py-2 text-xs rounded-lg" placeholder="O ponto de encontro de grandes homens de negócios.">
-                                    </div>
-                                </div>
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    <div class="flex flex-col gap-1.5">
-                                        <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Desktop <span class="text-primary-container font-bold text-[9px] lowercase">(recomendado: 800x600 px - 4:3)</span></label>
-                                        <div class="flex gap-2">
-                                            <input type="text" id="g-img-cliente-1" class="flex-grow px-3 py-2 text-xs rounded-lg">
-                                            <label class="bg-surface-container-high hover:bg-surface-container-highest border border-outline-variant/30 text-primary-container px-3 py-2 rounded-lg text-[10px] font-bold uppercase transition-colors shrink-0 flex items-center gap-1 cursor-pointer">
-                                                <span class="material-symbols-outlined text-sm">upload</span> Enviar
-                                                <input type="file" class="hidden img-upload-trigger" data-target="g-img-cliente-1" accept="image/*">
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="flex flex-col gap-1.5">
-                                        <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Mobile (Opcional) <span class="text-primary-container font-bold text-[9px] lowercase">(recomendado: 600x800 px - 3:4)</span></label>
-                                        <div class="flex gap-2">
-                                            <input type="text" id="g-img-cliente-1-mobile" class="flex-grow px-3 py-2 text-xs rounded-lg" placeholder="Herda desktop se vazio">
-                                            <label class="bg-surface-container-high hover:bg-surface-container-highest border border-outline-variant/30 text-primary-container px-3 py-2 rounded-lg text-[10px] font-bold uppercase transition-colors shrink-0 flex items-center gap-1 cursor-pointer">
-                                                <span class="material-symbols-outlined text-sm">upload</span> Enviar
-                                                <input type="file" class="hidden img-upload-trigger" data-target="g-img-cliente-1-mobile" accept="image/*">
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="flex justify-between items-center border-b border-outline-variant/10 pb-3">
+                            <span class="text-xs font-bold uppercase tracking-wider text-primary">Nossos Clientes (Lifestyle)</span>
+                            <button type="button" onclick="addGalleryItem('clientes')" class="bg-primary-container/10 hover:bg-primary-container/20 border border-primary-container/30 text-primary-container px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase transition-all flex items-center gap-1">
+                                <span class="material-symbols-outlined text-sm">add</span> Adicionar Foto
+                            </button>
+                        </div>
+                        <div id="admin-gallery-clientes" class="flex flex-col gap-6">
+                            <!-- Gerado Dinamicamente -->
                         </div>
                     </div>
                 </div>
@@ -1043,64 +731,15 @@
             }
           ],
           gallery: [
-            "assets/images/corte1.webp",
-            "assets/images/corte2.webp",
-            "assets/images/corte3.webp",
-            "assets/images/corte4.webp"
-          ],
-          gallery_mobile: [
-            "",
-            "",
-            "",
-            ""
-          ],
-          gallery_titles: [
-            "Corte Signature",
-            "Ritual da Navalha",
-            "Lounge Clássico",
-            "Pomadas de Luxo"
-          ],
-          gallery_subtitles: [
-            "Degradê preciso e finalização impecável.",
-            "Toalha quente clássica e barbear ultra alinhado.",
-            "Drinks refinados e atendimento com single malt.",
-            "Produtos de elite para fixação e saúde dos cabelos."
-          ],
-          gallery_interno: [
-            "assets/images/interno1.webp",
-            "assets/images/interno2.webp"
-          ],
-          gallery_interno_mobile: [
-            "",
-            ""
-          ],
-          gallery_interno_titles: [
-            "Lounge VIP",
-            "Bar Gourmet"
-          ],
-          gallery_interno_subtitles: [
-            "Poltronas premium para relaxamento completo.",
-            "Cafés e destilados selecionados para nossos convidados."
-          ],
-          gallery_externo: "assets/images/externo.webp",
-          gallery_externo_mobile: "",
-          gallery_externo_title: "Nossa Fachada",
-          gallery_externo_subtitle: "Presença majestosa com arquitetura moderna e luxuosa.",
-          gallery_clientes: [
-            "assets/images/cliente1.webp",
-            "assets/images/cliente2.webp"
-          ],
-          gallery_clientes_mobile: [
-            "",
-            ""
-          ],
-          gallery_clientes_titles: [
-            "Estilo Lifestyle",
-            "Clube Barber"
-          ],
-          gallery_clientes_subtitles: [
-            "Visual esculpido de acordo com a personalidade do cliente.",
-            "O ponto de encontro de grandes homens de negócios."
+            { id: "cortes-0", category: "cortes", img: "assets/images/corte1.webp", img_mobile: "", title: "Corte Signature", desc: "Degradê preciso e finalização impecável." },
+            { id: "cortes-1", category: "cortes", img: "assets/images/corte2.webp", img_mobile: "", title: "Ritual da Navalha", desc: "Toalha quente clássica e barbear ultra alinhado." },
+            { id: "cortes-2", category: "cortes", img: "assets/images/corte3.webp", img_mobile: "", title: "Lounge Clássico", desc: "Drinks refinados e atendimento com single malt." },
+            { id: "cortes-3", category: "cortes", img: "assets/images/corte4.webp", img_mobile: "", title: "Pomadas de Luxo", desc: "Produtos de elite para fixação e saúde dos cabelos." },
+            { id: "interno-0", category: "interno", img: "assets/images/interno1.webp", img_mobile: "", title: "Lounge VIP", desc: "Poltronas premium para relaxamento completo." },
+            { id: "interno-1", category: "interno", img: "assets/images/interno2.webp", img_mobile: "", title: "Bar Gourmet", desc: "Cafés e destilados selecionados para nossos convidados." },
+            { id: "externo-0", category: "interno", img: "assets/images/externo.webp", img_mobile: "", title: "Nossa Fachada", desc: "Presença majestosa com arquitetura moderna e luxuosa." },
+            { id: "clientes-0", category: "clientes", img: "assets/images/cliente1.webp", img_mobile: "", title: "Estilo Lifestyle", desc: "Visual esculpido de acordo com a personalidade do cliente." },
+            { id: "clientes-1", category: "clientes", img: "assets/images/cliente2.webp", img_mobile: "", title: "Clube Barber", desc: "O ponto de encontro de grandes homens de negócios." }
           ],
           location: {
             title: "Sofisticação no Coração de São Paulo",
@@ -1293,9 +932,279 @@
             });
         });
 
+        function escapeHTML(str) {
+            if (!str) return '';
+            return str
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+
+        function migrateGalleryFormat(configObj) {
+            if (!configObj) return configObj;
+            if (configObj.gallery && configObj.gallery.length > 0 && typeof configObj.gallery[0] === 'object') {
+                return configObj;
+            }
+
+            const newGallery = [];
+            
+            // Cortes
+            if (configObj.gallery && Array.isArray(configObj.gallery)) {
+                configObj.gallery.forEach((img, i) => {
+                    if (img) {
+                        newGallery.push({
+                            id: 'cortes-' + i + '-' + Date.now(),
+                            category: 'cortes',
+                            img: img,
+                            img_mobile: configObj.gallery_mobile ? (configObj.gallery_mobile[i] || '') : '',
+                            title: configObj.gallery_titles ? (configObj.gallery_titles[i] || '') : 'Corte Signature',
+                            desc: configObj.gallery_subtitles ? (configObj.gallery_subtitles[i] || '') : 'Degradê preciso e finalização impecável.'
+                        });
+                    }
+                });
+            }
+            
+            // Interno
+            if (configObj.gallery_interno && Array.isArray(configObj.gallery_interno)) {
+                configObj.gallery_interno.forEach((img, i) => {
+                    if (img) {
+                        newGallery.push({
+                            id: 'interno-' + i + '-' + Date.now(),
+                            category: 'interno',
+                            img: img,
+                            img_mobile: configObj.gallery_interno_mobile ? (configObj.gallery_interno_mobile[i] || '') : '',
+                            title: configObj.gallery_interno_titles ? (configObj.gallery_interno_titles[i] || '') : 'Lounge VIP',
+                            desc: configObj.gallery_interno_subtitles ? (configObj.gallery_interno_subtitles[i] || '') : 'Poltronas premium para relaxamento completo.'
+                        });
+                    }
+                });
+            }
+            
+            // Externo
+            if (configObj.gallery_externo) {
+                newGallery.push({
+                    id: 'externo-0-' + Date.now(),
+                    category: 'interno',
+                    img: configObj.gallery_externo,
+                    img_mobile: configObj.gallery_externo_mobile || '',
+                    title: configObj.gallery_externo_title || 'Nossa Fachada',
+                    desc: configObj.gallery_externo_subtitle || 'Presença majestosa com arquitetura moderna e luxuosa.'
+                });
+            }
+            
+            // Clientes
+            if (configObj.gallery_clientes && Array.isArray(configObj.gallery_clientes)) {
+                configObj.gallery_clientes.forEach((img, i) => {
+                    if (img) {
+                        newGallery.push({
+                            id: 'clientes-' + i + '-' + Date.now(),
+                            category: 'clientes',
+                            img: img,
+                            img_mobile: configObj.gallery_clientes_mobile ? (configObj.gallery_clientes_mobile[i] || '') : '',
+                            title: configObj.gallery_clientes_titles ? (configObj.gallery_clientes_titles[i] || '') : 'Estilo Lifestyle',
+                            desc: configObj.gallery_clientes_subtitles ? (configObj.gallery_clientes_subtitles[i] || '') : 'Visual esculpido de acordo com a personalidade do cliente.'
+                        });
+                    }
+                });
+            }
+            
+            configObj.gallery = newGallery;
+            return configObj;
+        }
+
+        let currentGalleryData = [];
+
+        function renderAdminGallery() {
+            const containers = {
+                cortes: document.getElementById('admin-gallery-cortes'),
+                interno: document.getElementById('admin-gallery-ambiente'),
+                clientes: document.getElementById('admin-gallery-clientes')
+            };
+
+            if (!containers.cortes || !containers.interno || !containers.clientes) return;
+
+            containers.cortes.innerHTML = '';
+            containers.interno.innerHTML = '';
+            containers.clientes.innerHTML = '';
+
+            const categoryCounters = { cortes: 0, interno: 0, clientes: 0 };
+
+            currentGalleryData.forEach((item) => {
+                const cat = item.category || 'cortes';
+                const container = containers[cat];
+                if (!container) return;
+
+                categoryCounters[cat]++;
+                const count = categoryCounters[cat];
+
+                const cardHTML = `
+                    <div class="border-b border-outline-variant/10 pb-5 mb-1" id="gallery-card-${item.id}">
+                        <div class="flex justify-between items-center mb-3">
+                            <span class="text-xs font-semibold text-on-surface">Foto ${count}</span>
+                            <button type="button" onclick="deleteGalleryItem('${item.id}')" class="text-red-400 hover:text-red-300 text-[10px] font-bold uppercase transition-colors flex items-center gap-1">
+                                <span class="material-symbols-outlined text-sm">delete</span> Excluir
+                            </button>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-3">
+                            <div class="flex flex-col gap-1.5">
+                                <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Headline (Título)</label>
+                                <input type="text" class="w-full px-3 py-2 text-xs rounded-lg g-item-title" data-id="${item.id}" value="${escapeHTML(item.title || '')}" placeholder="Título da Foto">
+                            </div>
+                            <div class="flex flex-col gap-1.5">
+                                <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Sub-headline (Descrição)</label>
+                                <input type="text" class="w-full px-3 py-2 text-xs rounded-lg g-item-desc" data-id="${item.id}" value="${escapeHTML(item.desc || '')}" placeholder="Descrição da Foto">
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="flex flex-col gap-1.5">
+                                <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Desktop <span class="text-primary-container font-bold text-[9px] lowercase">(recomendado: 800x600 px - 4:3)</span></label>
+                                <div class="flex gap-2">
+                                    <input type="text" class="flex-grow px-3 py-2 text-xs rounded-lg g-item-img" data-id="${item.id}" value="${item.img || ''}" placeholder="Caminho local ou Base64">
+                                    <label class="bg-surface-container-high hover:bg-surface-container-highest border border-outline-variant/30 text-primary-container px-3 py-2 rounded-lg text-[10px] font-bold uppercase transition-colors shrink-0 flex items-center gap-1 cursor-pointer">
+                                        <span class="material-symbols-outlined text-sm">upload</span> Enviar
+                                        <input type="file" class="hidden img-upload-trigger" data-target-id="${item.id}" data-type="desktop" accept="image/*">
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="flex flex-col gap-1.5">
+                                <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Mobile (Opcional) <span class="text-primary-container font-bold text-[9px] lowercase">(recomendado: 600x800 px - 3:4)</span></label>
+                                <div class="flex gap-2">
+                                    <input type="text" class="flex-grow px-3 py-2 text-xs rounded-lg g-item-img-mobile" data-id="${item.id}" value="${item.img_mobile || ''}" placeholder="Herda desktop se vazio">
+                                    <label class="bg-surface-container-high hover:bg-surface-container-highest border border-outline-variant/30 text-primary-container px-3 py-2 rounded-lg text-[10px] font-bold uppercase transition-colors shrink-0 flex items-center gap-1 cursor-pointer">
+                                        <span class="material-symbols-outlined text-sm">upload</span> Enviar
+                                        <input type="file" class="hidden img-upload-trigger" data-target-id="${item.id}" data-type="mobile" accept="image/*">
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                container.insertAdjacentHTML('beforeend', cardHTML);
+            });
+
+            document.querySelectorAll('.g-item-title').forEach(input => {
+                input.addEventListener('input', (e) => {
+                    const id = e.target.getAttribute('data-id');
+                    const item = currentGalleryData.find(g => g.id === id);
+                    if (item) item.title = e.target.value;
+                });
+            });
+
+            document.querySelectorAll('.g-item-desc').forEach(input => {
+                input.addEventListener('input', (e) => {
+                    const id = e.target.getAttribute('data-id');
+                    const item = currentGalleryData.find(g => g.id === id);
+                    if (item) item.desc = e.target.value;
+                });
+            });
+
+            document.querySelectorAll('.g-item-img').forEach(input => {
+                input.addEventListener('input', (e) => {
+                    const id = e.target.getAttribute('data-id');
+                    const item = currentGalleryData.find(g => g.id === id);
+                    if (item) item.img = e.target.value;
+                });
+            });
+
+            document.querySelectorAll('.g-item-img-mobile').forEach(input => {
+                input.addEventListener('input', (e) => {
+                    const id = e.target.getAttribute('data-id');
+                    const item = currentGalleryData.find(g => g.id === id);
+                    if (item) item.img_mobile = e.target.value;
+                });
+            });
+
+            document.querySelectorAll('.img-upload-trigger[data-target-id]').forEach(input => {
+                input.addEventListener('change', function(e) {
+                    const id = this.getAttribute('data-target-id');
+                    const type = this.getAttribute('data-type');
+                    const file = e.target.files[0];
+                    if (!file) return;
+
+                    const reader = new FileReader();
+                    reader.onload = function(event) {
+                        const img = new Image();
+                        img.onload = function() {
+                            const canvas = document.createElement('canvas');
+                            const ctx = canvas.getContext('2d');
+                            
+                            const maxW = 800;
+                            const maxH = 800;
+                            let width = img.width;
+                            let height = img.height;
+                            
+                            if (width > maxW || height > maxH) {
+                                if (width > height) {
+                                    height *= maxW / width;
+                                    width = maxW;
+                                } else {
+                                    width *= maxH / height;
+                                    height = maxH;
+                                }
+                            }
+                            
+                            canvas.width = width;
+                            canvas.height = height;
+                            ctx.drawImage(img, 0, 0, width, height);
+                            
+                            let base64;
+                            if (file.type === 'image/webp') {
+                                base64 = canvas.toDataURL('image/webp', 0.8);
+                            } else if (file.type === 'image/png') {
+                                base64 = canvas.toDataURL('image/png');
+                            } else {
+                                base64 = canvas.toDataURL('image/jpeg', 0.7);
+                            }
+                            
+                            const item = currentGalleryData.find(g => g.id === id);
+                            if (item) {
+                                if (type === 'mobile') {
+                                    item.img_mobile = base64;
+                                    const textInput = document.querySelector(`.g-item-img-mobile[data-id="${id}"]`);
+                                    if (textInput) textInput.value = base64;
+                                } else {
+                                    item.img = base64;
+                                    const textInput = document.querySelector(`.g-item-img[data-id="${id}"]`);
+                                    if (textInput) textInput.value = base64;
+                                }
+                            }
+                        };
+                        img.src = event.target.result;
+                    };
+                    reader.readAsDataURL(file);
+                });
+            });
+        }
+
+        function addGalleryItem(category) {
+            const newItem = {
+                id: category + '-' + Date.now(),
+                category: category,
+                img: '',
+                img_mobile: '',
+                title: '',
+                desc: ''
+            };
+            currentGalleryData.push(newItem);
+            renderAdminGallery();
+        }
+
+        function deleteGalleryItem(id) {
+            currentGalleryData = currentGalleryData.filter(item => item.id !== id);
+            renderAdminGallery();
+        }
+
         // FUNÇÃO PARA PREENCHER CAMPOS DO FORMULÁRIO DE CONFIGURAÇÃO
         function populateFormFields(data) {
             if (!data) return;
+            
+            // Normaliza o formato da galeria
+            data = migrateGalleryFormat(data);
+            currentGalleryData = data.gallery || [];
+            renderAdminGallery();
             // Geral
             document.getElementById('g-name').value = data.general.name;
             document.getElementById('g-whatsapp').value = data.general.whatsapp;
@@ -1351,29 +1260,6 @@
                 document.getElementById(`serv-${i}-desc`).value = data.services[i].desc;
                 document.getElementById(`serv-${i}-price`).value = data.services[i].price;
             }
-            
-            // Galeria
-            for (let i = 0; i < 4; i++) {
-                document.getElementById(`g-img-${i}`).value = data.gallery[i] || '';
-                document.getElementById(`g-img-${i}-mobile`).value = data.gallery_mobile ? (data.gallery_mobile[i] || '') : '';
-                document.getElementById(`g-title-${i}`).value = data.gallery_titles ? (data.gallery_titles[i] || '') : (DEFAULT_CONFIG.gallery_titles[i] || '');
-                document.getElementById(`g-subtitle-${i}`).value = data.gallery_subtitles ? (data.gallery_subtitles[i] || '') : (DEFAULT_CONFIG.gallery_subtitles[i] || '');
-            }
-            // Galeria Ambiente
-            for (let i = 0; i < 2; i++) {
-                document.getElementById(`g-img-interno-${i}`).value = data.gallery_interno ? (data.gallery_interno[i] || '') : '';
-                document.getElementById(`g-img-interno-${i}-mobile`).value = data.gallery_interno_mobile ? (data.gallery_interno_mobile[i] || '') : '';
-                document.getElementById(`g-title-interno-${i}`).value = data.gallery_interno_titles ? (data.gallery_interno_titles[i] || '') : (DEFAULT_CONFIG.gallery_interno_titles[i] || '');
-                document.getElementById(`g-subtitle-interno-${i}`).value = data.gallery_interno_subtitles ? (data.gallery_interno_subtitles[i] || '') : (DEFAULT_CONFIG.gallery_interno_subtitles[i] || '');
-                document.getElementById(`g-img-cliente-${i}`).value = data.gallery_clientes ? (data.gallery_clientes[i] || '') : '';
-                document.getElementById(`g-img-cliente-${i}-mobile`).value = data.gallery_clientes_mobile ? (data.gallery_clientes_mobile[i] || '') : '';
-                document.getElementById(`g-title-cliente-${i}`).value = data.gallery_clientes_titles ? (data.gallery_clientes_titles[i] || '') : (DEFAULT_CONFIG.gallery_clientes_titles[i] || '');
-                document.getElementById(`g-subtitle-cliente-${i}`).value = data.gallery_clientes_subtitles ? (data.gallery_clientes_subtitles[i] || '') : (DEFAULT_CONFIG.gallery_clientes_subtitles[i] || '');
-            }
-            document.getElementById('g-img-externo-0').value = data.gallery_externo || '';
-            document.getElementById('g-img-externo-0-mobile').value = data.gallery_externo_mobile || '';
-            document.getElementById('g-title-externo-0').value = data.gallery_externo_title || DEFAULT_CONFIG.gallery_externo_title || '';
-            document.getElementById('g-subtitle-externo-0').value = data.gallery_externo_subtitle || DEFAULT_CONFIG.gallery_externo_subtitle || '';
             
             // Localização
             document.getElementById('l-title').value = data.location.title || '';
@@ -1506,66 +1392,7 @@
                         price: document.getElementById('serv-2-price').value
                     }
                 ],
-                gallery: [
-                    document.getElementById('g-img-0').value,
-                    document.getElementById('g-img-1').value,
-                    document.getElementById('g-img-2').value,
-                    document.getElementById('g-img-3').value
-                ],
-                gallery_mobile: [
-                    document.getElementById('g-img-0-mobile').value,
-                    document.getElementById('g-img-1-mobile').value,
-                    document.getElementById('g-img-2-mobile').value,
-                    document.getElementById('g-img-3-mobile').value
-                ],
-                gallery_titles: [
-                    document.getElementById('g-title-0').value,
-                    document.getElementById('g-title-1').value,
-                    document.getElementById('g-title-2').value,
-                    document.getElementById('g-title-3').value
-                ],
-                gallery_subtitles: [
-                    document.getElementById('g-subtitle-0').value,
-                    document.getElementById('g-subtitle-1').value,
-                    document.getElementById('g-subtitle-2').value,
-                    document.getElementById('g-subtitle-3').value
-                ],
-                gallery_interno: [
-                    document.getElementById('g-img-interno-0').value,
-                    document.getElementById('g-img-interno-1').value
-                ],
-                gallery_interno_mobile: [
-                    document.getElementById('g-img-interno-0-mobile').value,
-                    document.getElementById('g-img-interno-1-mobile').value
-                ],
-                gallery_interno_titles: [
-                    document.getElementById('g-title-interno-0').value,
-                    document.getElementById('g-title-interno-1').value
-                ],
-                gallery_interno_subtitles: [
-                    document.getElementById('g-subtitle-interno-0').value,
-                    document.getElementById('g-subtitle-interno-1').value
-                ],
-                gallery_externo: document.getElementById('g-img-externo-0').value,
-                gallery_externo_mobile: document.getElementById('g-img-externo-0-mobile').value,
-                gallery_externo_title: document.getElementById('g-title-externo-0').value,
-                gallery_externo_subtitle: document.getElementById('g-subtitle-externo-0').value,
-                gallery_clientes: [
-                    document.getElementById('g-img-cliente-0').value,
-                    document.getElementById('g-img-cliente-1').value
-                ],
-                gallery_clientes_mobile: [
-                    document.getElementById('g-img-cliente-0-mobile').value,
-                    document.getElementById('g-img-cliente-1-mobile').value
-                ],
-                gallery_clientes_titles: [
-                    document.getElementById('g-title-cliente-0').value,
-                    document.getElementById('g-title-cliente-1').value
-                ],
-                gallery_clientes_subtitles: [
-                    document.getElementById('g-subtitle-cliente-0').value,
-                    document.getElementById('g-subtitle-cliente-1').value
-                ],
+                gallery: currentGalleryData,
                 location: {
                     title: document.getElementById('l-title').value,
                     city: document.getElementById('l-city').value,

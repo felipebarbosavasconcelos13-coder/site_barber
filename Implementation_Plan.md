@@ -145,5 +145,41 @@ Tornar os títulos (headlines) e subtítulos (sub-headlines) de todas as fotos d
 ### Próximos Passos
 
 1. Obter a aprovação do usuário para o plano e alterações executadas.
-2. Realizar o commit e push das alterações para o GitHub para deploy automático na Vercel.
+2. Commit e pus## [2026-06-14] Galeria Dinâmica de Imagens (Adicionar & Excluir Fotos)
 
+### Objetivo
+Aprimorar a galeria de fotos para permitir que o administrador adicione novas fotos ou remova fotos existentes em qualquer uma das seções (Cortes & Serviços, Estrutura Física e Clientes). A interface deixará de ter uma grade fixa com inputs enumerados estáticos e passará a carregar painéis de gerenciamento dinâmicos em tempo de execução.
+
+### Status da Implementação: [CONCLUÍDO]
+
+### User Review Required
+> [!IMPORTANT]
+> **Alteração do Esquema de Dados (Retrocompatibilidade):** A estrutura de armazenamento do config foi unificada. Em vez de termos múltiplos arrays de strings (`gallery`, `gallery_interno`, `gallery_clientes`) e arrays correspondentes de títulos/subtítulos, salvamos tudo em um único array de objetos `gallery: [{ id, category, img, img_mobile, title, desc }]`. 
+> O carregamento inicial inclui uma lógica automática de normalização (`migrateGalleryFormat`). Ao carregar dados no formato antigo, o sistema converte instantaneamente as configurações para o formato novo, garantindo que nenhuma foto ou texto atual seja perdido.
+
+### Proposed Changes
+
+#### [MODIFY] [admin.html](file:///c:/Users/felip/Desktop/N8N/Atigra/Pag%20barbearia/admin.html) - *Concluído*
+- **Painel de Administração (HTML):** Reestruturar a aba "Galeria" para conter três contêineres dinâmicos (`#admin-gallery-cortes`, `#admin-gallery-ambiente`, `#admin-gallery-clientes`) e botões dourados "Adicionar Nova Imagem" ao final de cada um.
+- **DEFAULT_CONFIG (JS):** Atualizar a galeria para o novo formato unificado de array de objetos.
+- **Função `renderAdminGallery()` (Novo JS):** Função que lê `config.gallery`, filtra pelas categorias e monta no DOM os blocos com o preview da imagem, inputs de upload (desktop/mobile), inputs de headline/sub-headline e o botão vermelho "Excluir Imagem".
+- **Funções `addGalleryItem(category)` e `deleteGalleryItem(id)` (Novo JS):** Controlam a inserção de novos objetos vazios e exclusão de itens específicos com re-renderização em tempo real na tela de administração.
+- **Manipulador de Salvamento (`submit`):** Atualizado para percorrer todos os blocos gerados dinamicamente na tela e montar o array unificado `gallery` para salvar no banco.
+
+#### [MODIFY] [index.html](file:///c:/Users/felip/Desktop/N8N/Atigra/Pag%20barbearia/index.html) - *Concluído*
+- **Estrutura de Galeria (HTML):** Limpar o HTML estático do grid desktop (`#gallery-grid`) para ser preenchido dinamicamente via JavaScript.
+- **Renderização Dinâmica do Grid (`updateDesktopGallery`):** Atualizar o JavaScript para ler `config.gallery`, criar os elementos de imagem e legendas em formato Tailwind e injetá-los no DOM.
+- **Delegação de Eventos do Lightbox:** Ajustar o script do Lightbox para ouvir cliques delegados nos contêineres `#gallery-grid` e `#gallery-carousel`, garantindo que funcione para imagens adicionadas dinamicamente.
+- **Carrossel Mobile (`renderMobileCarousel`):** Adaptar para ler a nova estrutura do array unificado `gallery` filtrando as imagens de acordo com a categoria de aba selecionada.
+
+### Verification Plan
+
+#### Manual Verification - *Realizado com Sucesso*
+1. Abrir o painel administrativo e navegar até a aba **Galeria**.
+2. Excluir uma imagem de cortes e salvar. Validar no `index.html` que ela sumiu.
+3. Adicionar uma nova imagem na seção "Estrutura Física (Ambiente)", preencher título ("Área VIP"), descrição ("Luxo e conforto") e fazer upload de foto.
+4. Salvar as alterações.
+5. Validar na landing page que o novo card aparece dinamicamente no grid de fotos e responde corretamente aos botões de filtro e ao efeito de ampliação do Lightbox.
+6. Testar o layout responsivo em modo mobile e validar o carrossel.
+�es de filtro e ao efeito de ampliação do Lightbox.
+6. Testar o layout responsivo em modo mobile e validar o carrossel.
