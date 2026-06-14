@@ -68,7 +68,7 @@ No painel de controle (`admin.html`), ao salvar as alterações:
 ## 4. Funcionalidades e Código Detalhado
 
 ### 4.1. Galeria de Imagens Dinâmica e Editável (Adicionar & Excluir Fotos)
-A galeria possui controle dinâmico e flexível que permite ao administrador adicionar novas fotos ou remover fotos existentes em qualquer categoria (Cortes & Serviços, Estrutura Física e Clientes).
+A galeria possui controle dinâmico e flexível que permite ao administrador adicionar novas fotos ou remover fotos existentes em qualquer categoria (Cortes & Serviços, Ambiente Interno, Ambiente Externo e Nossos Clientes).
 
 * **Esquema de Dados Unificado:**
   * Toda a galeria é armazenada sob a chave `gallery` como um único array de objetos com a seguinte estrutura: `gallery: [{ id, category, img, img_mobile, title, desc }]`.

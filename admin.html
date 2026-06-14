@@ -518,15 +518,28 @@
                         </div>
                     </div>
 
-                    <!-- Categoria: Ambiente Interno e Externo -->
+                    <!-- Categoria: Ambiente Interno -->
                     <div class="bg-[#1a1919] p-5 rounded-xl border border-outline-variant/15 flex flex-col gap-4">
                         <div class="flex justify-between items-center border-b border-outline-variant/10 pb-3">
-                            <span class="text-xs font-bold uppercase tracking-wider text-primary">Estrutura Física (Ambiente)</span>
+                            <span class="text-xs font-bold uppercase tracking-wider text-primary">Ambiente Interno</span>
                             <button type="button" onclick="addGalleryItem('interno')" class="bg-primary-container/10 hover:bg-primary-container/20 border border-primary-container/30 text-primary-container px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase transition-all flex items-center gap-1">
                                 <span class="material-symbols-outlined text-sm">add</span> Adicionar Foto
                             </button>
                         </div>
-                        <div id="admin-gallery-ambiente" class="flex flex-col gap-6">
+                        <div id="admin-gallery-interno" class="flex flex-col gap-6">
+                            <!-- Gerado Dinamicamente -->
+                        </div>
+                    </div>
+
+                    <!-- Categoria: Ambiente Externo -->
+                    <div class="bg-[#1a1919] p-5 rounded-xl border border-outline-variant/15 flex flex-col gap-4">
+                        <div class="flex justify-between items-center border-b border-outline-variant/10 pb-3">
+                            <span class="text-xs font-bold uppercase tracking-wider text-primary">Ambiente Externo</span>
+                            <button type="button" onclick="addGalleryItem('externo')" class="bg-primary-container/10 hover:bg-primary-container/20 border border-primary-container/30 text-primary-container px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase transition-all flex items-center gap-1">
+                                <span class="material-symbols-outlined text-sm">add</span> Adicionar Foto
+                            </button>
+                        </div>
+                        <div id="admin-gallery-externo" class="flex flex-col gap-6">
                             <!-- Gerado Dinamicamente -->
                         </div>
                     </div>
@@ -986,7 +999,7 @@
             if (configObj.gallery_externo) {
                 newGallery.push({
                     id: 'externo-0-' + Date.now(),
-                    category: 'interno',
+                    category: 'externo',
                     img: configObj.gallery_externo,
                     img_mobile: configObj.gallery_externo_mobile || '',
                     title: configObj.gallery_externo_title || 'Nossa Fachada',
@@ -1019,17 +1032,19 @@
         function renderAdminGallery() {
             const containers = {
                 cortes: document.getElementById('admin-gallery-cortes'),
-                interno: document.getElementById('admin-gallery-ambiente'),
+                interno: document.getElementById('admin-gallery-interno'),
+                externo: document.getElementById('admin-gallery-externo'),
                 clientes: document.getElementById('admin-gallery-clientes')
             };
 
-            if (!containers.cortes || !containers.interno || !containers.clientes) return;
+            if (!containers.cortes || !containers.interno || !containers.externo || !containers.clientes) return;
 
             containers.cortes.innerHTML = '';
             containers.interno.innerHTML = '';
+            containers.externo.innerHTML = '';
             containers.clientes.innerHTML = '';
 
-            const categoryCounters = { cortes: 0, interno: 0, clientes: 0 };
+            const categoryCounters = { cortes: 0, interno: 0, externo: 0, clientes: 0 };
 
             currentGalleryData.forEach((item) => {
                 const cat = item.category || 'cortes';

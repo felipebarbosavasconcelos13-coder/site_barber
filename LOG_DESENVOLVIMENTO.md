@@ -646,3 +646,24 @@ Permitir ao administrador adicionar novas fotos ou remover fotos existentes em q
 
 * Normalização de configurações legadas testada e funcionando sem perda de conteúdo.
 * Lógica de delegação de eventos para filtros e lightbox validada.
+
+## [2026-06-14] - Separação do Bloco de Ambiente Externo na Galeria
+
+### Objetivo
+Tornar o "Ambiente Externo" uma categoria independente na galeria, permitindo ao administrador gerenciar (adicionar/excluir) fotos especificamente para o ambiente externo através de um bloco próprio no painel administrativo e corrigir a exibição do filtro "Ambiente Externo" no site principal.
+
+### Alterações Realizadas
+
+1. **Painel de Administração (`admin.html`):**
+   - Substituição do contêiner único "Estrutura Física (Ambiente)" por dois blocos individuais: **Ambiente Interno** (ID `#admin-gallery-interno`, categoria `'interno'`) e **Ambiente Externo** (ID `#admin-gallery-externo`, categoria `'externo'`).
+   - Atualizado o mapeamento de contêineres e a contagem de elementos na função `renderAdminGallery()`.
+   - Ajustada a função `migrateGalleryFormat()` para mapear os dados antigos da chave `gallery_externo` para a categoria `'externo'` em vez de `'interno'`.
+
+2. **Landing Page Pública (`index.html`):**
+   - Atualizada a função `migrateGalleryFormat()` para que os dados legados com a propriedade `gallery_externo` sejam convertidos com a categoria `'externo'`.
+   - Com isso, o filtro "Ambiente Externo" do site principal volta a exibir perfeitamente as fotos pertencentes a essa categoria.
+
+### Verificação
+* Validada a persistência e visualização correta do bloco na tela de administração.
+* Confirmada a exibição dinâmica de fotos no filtro de Ambiente Externo do site principal.
+

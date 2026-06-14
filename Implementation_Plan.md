@@ -85,7 +85,7 @@ Corrigir botoes que apareciam com texto escuro sobre fundo escuro, principalment
 ### Implementacao
 
 1. **Classe `dynamic-outline-button`:** Concluido.
-   - Texto, borda e fundo translúcido usam `--dynamic-primary` e `--dynamic-primary-rgb`.
+   - Texto, borda e fundo translÃºcido usam `--dynamic-primary` e `--dynamic-primary-rgb`.
    - Hover usa gradiente dinamico com `--dynamic-primary` e `--dynamic-secondary`.
 
 2. **Botoes atualizados:** Concluido.
@@ -104,11 +104,11 @@ Corrigir botoes que apareciam com texto escuro sobre fundo escuro, principalment
 
 ---
 
-## [2026-06-14] Galeria de Imagens Editável (Headline e Sub-headline)
+## [2026-06-14] Galeria de Imagens EditÃ¡vel (Headline e Sub-headline)
 
 ### Objetivo
 
-Tornar os títulos (headlines) e subtítulos (sub-headlines) de todas as fotos da galeria editáveis no painel de administração (`admin.html`) e injetados de forma dinâmica na landing page (`index.html`).
+Tornar os tÃ­tulos (headlines) e subtÃ­tulos (sub-headlines) de todas as fotos da galeria editÃ¡veis no painel de administraÃ§Ã£o (`admin.html`) e injetados de forma dinÃ¢mica na landing page (`index.html`).
 
 ### Arquivos Afetados
 
@@ -118,68 +118,95 @@ Tornar os títulos (headlines) e subtítulos (sub-headlines) de todas as fotos d
 * `Implementation_Plan.md`
 * `DOCUMENTACAO.md`
 
-### Implementação
+### ImplementaÃ§Ã£o
 
-1. **Estrutura HTML do Painel (`admin.html`):** Concluído.
-   - Criados inputs de texto no formulário da aba Galeria para headlines e sub-headlines de cortes, ambiente interno, ambiente externo e clientes.
+1. **Estrutura HTML do Painel (`admin.html`):** ConcluÃ­do.
+   - Criados inputs de texto no formulÃ¡rio da aba Galeria para headlines e sub-headlines de cortes, ambiente interno, ambiente externo e clientes.
 
-2. **Lógica de Salvamento e Carregamento (`admin.html`):** Concluído.
-   - Mapeados os novos campos na `DEFAULT_CONFIG` (com textos padrões para evitar inputs vazios), em `populateFormFields()` para carregar os dados e no manipulador de salvamento (`submit`) para enviá-los ao LocalStorage/Supabase.
+2. **LÃ³gica de Salvamento e Carregamento (`admin.html`):** ConcluÃ­do.
+   - Mapeados os novos campos na `DEFAULT_CONFIG` (com textos padrÃµes para evitar inputs vazios), em `populateFormFields()` para carregar os dados e no manipulador de salvamento (`submit`) para enviÃ¡-los ao LocalStorage/Supabase.
 
-3. **Injeção Dinâmica na Landing Page (`index.html`):** Concluído.
-   - Adicionados IDs descritivos para cada texto de imagem na seção da galeria desktop.
-   - Atualizada a função `updateDesktopGallery()` para ler do objeto de configuração e injetar o texto correto no DOM.
-   - Atualizado o carrossel mobile `renderMobileCarousel()` para ler os mesmos arrays de texto do objeto de configuração.
+3. **InjeÃ§Ã£o DinÃ¢mica na Landing Page (`index.html`):** ConcluÃ­do.
+   - Adicionados IDs descritivos para cada texto de imagem na seÃ§Ã£o da galeria desktop.
+   - Atualizada a funÃ§Ã£o `updateDesktopGallery()` para ler do objeto de configuraÃ§Ã£o e injetar o texto correto no DOM.
+   - Atualizado o carrossel mobile `renderMobileCarousel()` para ler os mesmos arrays de texto do objeto de configuraÃ§Ã£o.
 
-4. **Criação da Documentação:** Concluído.
-   - Criado o arquivo `DOCUMENTACAO.md` contendo a arquitetura e detalhes técnicos atualizados.
+4. **CriaÃ§Ã£o da DocumentaÃ§Ã£o:** ConcluÃ­do.
+   - Criado o arquivo `DOCUMENTACAO.md` contendo a arquitetura e detalhes tÃ©cnicos atualizados.
 
-### Criterios de Validação
+### Criterios de ValidaÃ§Ã£o
 
-1. Acessar o Painel de Administração (`/admin`).
+1. Acessar o Painel de AdministraÃ§Ã£o (`/admin`).
 2. Abrir a aba **Galeria**.
-3. Alterar os títulos e subtítulos de qualquer categoria de imagem (ex: mudar "Corte Signature" para "Corte Estilizado").
-4. Salvar as alterações.
-5. Acessar a página principal (`/`) e confirmar que o texto foi atualizado no desktop e no carrossel mobile.
+3. Alterar os tÃ­tulos e subtÃ­tulos de qualquer categoria de imagem (ex: mudar "Corte Signature" para "Corte Estilizado").
+4. Salvar as alteraÃ§Ãµes.
+5. Acessar a pÃ¡gina principal (`/`) e confirmar que o texto foi atualizado no desktop e no carrossel mobile.
 
-### Próximos Passos
+### PrÃ³ximos Passos
 
-1. Obter a aprovação do usuário para o plano e alterações executadas.
-2. Commit e pus## [2026-06-14] Galeria Dinâmica de Imagens (Adicionar & Excluir Fotos)
+1. Obter a aprovaÃ§Ã£o do usuÃ¡rio para o plano e alteraÃ§Ãµes executadas.
+2. Commit e pus## [2026-06-14] Galeria DinÃ¢mica de Imagens (Adicionar & Excluir Fotos)
 
 ### Objetivo
-Aprimorar a galeria de fotos para permitir que o administrador adicione novas fotos ou remova fotos existentes em qualquer uma das seções (Cortes & Serviços, Estrutura Física e Clientes). A interface deixará de ter uma grade fixa com inputs enumerados estáticos e passará a carregar painéis de gerenciamento dinâmicos em tempo de execução.
+Aprimorar a galeria de fotos para permitir que o administrador adicione novas fotos ou remova fotos existentes em qualquer uma das seÃ§Ãµes (Cortes & ServiÃ§os, Estrutura FÃ­sica e Clientes). A interface deixarÃ¡ de ter uma grade fixa com inputs enumerados estÃ¡ticos e passarÃ¡ a carregar painÃ©is de gerenciamento dinÃ¢micos em tempo de execuÃ§Ã£o.
 
-### Status da Implementação: [CONCLUÍDO]
+### Status da ImplementaÃ§Ã£o: [CONCLUÃ�DO]
 
 ### User Review Required
 > [!IMPORTANT]
-> **Alteração do Esquema de Dados (Retrocompatibilidade):** A estrutura de armazenamento do config foi unificada. Em vez de termos múltiplos arrays de strings (`gallery`, `gallery_interno`, `gallery_clientes`) e arrays correspondentes de títulos/subtítulos, salvamos tudo em um único array de objetos `gallery: [{ id, category, img, img_mobile, title, desc }]`. 
-> O carregamento inicial inclui uma lógica automática de normalização (`migrateGalleryFormat`). Ao carregar dados no formato antigo, o sistema converte instantaneamente as configurações para o formato novo, garantindo que nenhuma foto ou texto atual seja perdido.
+> **AlteraÃ§Ã£o do Esquema de Dados (Retrocompatibilidade):** A estrutura de armazenamento do config foi unificada. Em vez de termos mÃºltiplos arrays de strings (`gallery`, `gallery_interno`, `gallery_clientes`) e arrays correspondentes de tÃ­tulos/subtÃ­tulos, salvamos tudo em um Ãºnico array de objetos `gallery: [{ id, category, img, img_mobile, title, desc }]`. 
+> O carregamento inicial inclui uma lÃ³gica automÃ¡tica de normalizaÃ§Ã£o (`migrateGalleryFormat`). Ao carregar dados no formato antigo, o sistema converte instantaneamente as configuraÃ§Ãµes para o formato novo, garantindo que nenhuma foto ou texto atual seja perdido.
 
 ### Proposed Changes
 
-#### [MODIFY] [admin.html](file:///c:/Users/felip/Desktop/N8N/Atigra/Pag%20barbearia/admin.html) - *Concluído*
-- **Painel de Administração (HTML):** Reestruturar a aba "Galeria" para conter três contêineres dinâmicos (`#admin-gallery-cortes`, `#admin-gallery-ambiente`, `#admin-gallery-clientes`) e botões dourados "Adicionar Nova Imagem" ao final de cada um.
+#### [MODIFY] [admin.html](file:///c:/Users/felip/Desktop/N8N/Atigra/Pag%20barbearia/admin.html) - *ConcluÃ­do*
+- **Painel de AdministraÃ§Ã£o (HTML):** Reestruturar a aba "Galeria" para conter trÃªs contÃªineres dinÃ¢micos (`#admin-gallery-cortes`, `#admin-gallery-ambiente`, `#admin-gallery-clientes`) e botÃµes dourados "Adicionar Nova Imagem" ao final de cada um.
 - **DEFAULT_CONFIG (JS):** Atualizar a galeria para o novo formato unificado de array de objetos.
-- **Função `renderAdminGallery()` (Novo JS):** Função que lê `config.gallery`, filtra pelas categorias e monta no DOM os blocos com o preview da imagem, inputs de upload (desktop/mobile), inputs de headline/sub-headline e o botão vermelho "Excluir Imagem".
-- **Funções `addGalleryItem(category)` e `deleteGalleryItem(id)` (Novo JS):** Controlam a inserção de novos objetos vazios e exclusão de itens específicos com re-renderização em tempo real na tela de administração.
+- **FunÃ§Ã£o `renderAdminGallery()` (Novo JS):** FunÃ§Ã£o que lÃª `config.gallery`, filtra pelas categorias e monta no DOM os blocos com o preview da imagem, inputs de upload (desktop/mobile), inputs de headline/sub-headline e o botÃ£o vermelho "Excluir Imagem".
+- **FunÃ§Ãµes `addGalleryItem(category)` e `deleteGalleryItem(id)` (Novo JS):** Controlam a inserÃ§Ã£o de novos objetos vazios e exclusÃ£o de itens especÃ­ficos com re-renderizaÃ§Ã£o em tempo real na tela de administraÃ§Ã£o.
 - **Manipulador de Salvamento (`submit`):** Atualizado para percorrer todos os blocos gerados dinamicamente na tela e montar o array unificado `gallery` para salvar no banco.
 
-#### [MODIFY] [index.html](file:///c:/Users/felip/Desktop/N8N/Atigra/Pag%20barbearia/index.html) - *Concluído*
-- **Estrutura de Galeria (HTML):** Limpar o HTML estático do grid desktop (`#gallery-grid`) para ser preenchido dinamicamente via JavaScript.
-- **Renderização Dinâmica do Grid (`updateDesktopGallery`):** Atualizar o JavaScript para ler `config.gallery`, criar os elementos de imagem e legendas em formato Tailwind e injetá-los no DOM.
-- **Delegação de Eventos do Lightbox:** Ajustar o script do Lightbox para ouvir cliques delegados nos contêineres `#gallery-grid` e `#gallery-carousel`, garantindo que funcione para imagens adicionadas dinamicamente.
+#### [MODIFY] [index.html](file:///c:/Users/felip/Desktop/N8N/Atigra/Pag%20barbearia/index.html) - *ConcluÃ­do*
+- **Estrutura de Galeria (HTML):** Limpar o HTML estÃ¡tico do grid desktop (`#gallery-grid`) para ser preenchido dinamicamente via JavaScript.
+- **RenderizaÃ§Ã£o DinÃ¢mica do Grid (`updateDesktopGallery`):** Atualizar o JavaScript para ler `config.gallery`, criar os elementos de imagem e legendas em formato Tailwind e injetÃ¡-los no DOM.
+- **DelegaÃ§Ã£o de Eventos do Lightbox:** Ajustar o script do Lightbox para ouvir cliques delegados nos contÃªineres `#gallery-grid` e `#gallery-carousel`, garantindo que funcione para imagens adicionadas dinamicamente.
 - **Carrossel Mobile (`renderMobileCarousel`):** Adaptar para ler a nova estrutura do array unificado `gallery` filtrando as imagens de acordo com a categoria de aba selecionada.
 
 ### Verification Plan
 
 #### Manual Verification - *Realizado com Sucesso*
-1. Abrir o painel administrativo e navegar até a aba **Galeria**.
+1. Abrir o painel administrativo e navegar atÃ© a aba **Galeria**.
 2. Excluir uma imagem de cortes e salvar. Validar no `index.html` que ela sumiu.
-3. Adicionar uma nova imagem na seção "Estrutura Física (Ambiente)", preencher título ("Área VIP"), descrição ("Luxo e conforto") e fazer upload de foto.
-4. Salvar as alterações.
-5. Validar na landing page que o novo card aparece dinamicamente no grid de fotos e responde corretamente aos botões de filtro e ao efeito de ampliação do Lightbox.
+3. Adicionar uma nova imagem na seÃ§Ã£o "Estrutura FÃ­sica (Ambiente)", preencher tÃ­tulo ("Ã�rea VIP"), descriÃ§Ã£o ("Luxo e conforto") e fazer upload de foto.
+4. Salvar as alteraÃ§Ãµes.
+5. Validar na landing page que o novo card aparece dinamicamente no grid de fotos e responde corretamente aos botÃµes de filtro e ao efeito de ampliaÃ§Ã£o do Lightbox.
 6. Testar o layout responsivo em modo mobile e validar o carrossel.
-�es de filtro e ao efeito de ampliação do Lightbox.
+µes de filtro e ao efeito de ampliaÃ§Ã£o do Lightbox.
 6. Testar o layout responsivo em modo mobile e validar o carrossel.
+
+---
+
+## [2026-06-14] Separação do Bloco de Ambiente Externo na Galeria
+
+### Objetivo
+Tornar o "Ambiente Externo" uma categoria independente na galeria, permitindo ao administrador gerenciar (adicionar/excluir) fotos especificamente para o ambiente externo através de um bloco próprio no painel administrativo e corrigir a exibição do filtro "Ambiente Externo" no site principal.
+
+### Proposed Changes
+
+#### [MODIFY] [admin.html](file:///c:/Users/felip/Desktop/N8N/Atigra/Pag%20barbearia/admin.html)
+- **Painel de Administração (HTML):** Desmembrar a seção "Estrutura Física (Ambiente)" em dois contêineres dinâmicos separados: "Ambiente Interno" (`#admin-gallery-interno`) e "Ambiente Externo" (`#admin-gallery-externo`).
+- **Lógica JavaScript:** 
+  - Atualizar `renderAdminGallery()` para mapear as categorias para os respectivos contêineres e atualizar o `categoryCounters`.
+  - Atualizar `migrateGalleryFormat()` para definir o campo `category` de qualquer imagem antiga convertida de `gallery_externo` para `'externo'`.
+
+#### [MODIFY] [index.html](file:///c:/Users/felip/Desktop/N8N/Atigra/Pag%20barbearia/index.html)
+- **Lógica JavaScript:**
+  - Atualizar `migrateGalleryFormat()` para converter dados antigos de `gallery_externo` com a categoria `'externo'` (em vez de `'interno'`).
+
+### Verification Plan
+
+#### Manual Verification
+1. Abrir o painel administrativo na aba Galeria e verificar os blocos separados de Ambiente Interno e Ambiente Externo.
+2. Adicionar uma imagem no bloco de Ambiente Externo, salvar, e conferir no site público que o botão de filtro "Ambiente Externo" exibe a imagem correspondente.
+3. Testar o funcionamento do Lightbox sobre a nova foto do ambiente externo.
+
