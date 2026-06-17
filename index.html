@@ -437,9 +437,9 @@
     <!-- Team Section (Nossos Barbeiros - Gerado Dinamicamente) -->
     <section class="py-section-gap px-container-padding w-full max-w-[1200px] mx-auto scroll-mt-24 hidden" id="team-section">
         <div class="text-center mb-16">
-            <h2 class="font-display text-3xl md:text-5xl font-bold text-primary mb-4">Mestres da Navalha</h2>
+            <h2 class="font-display text-3xl md:text-5xl font-bold text-primary mb-4" id="team-section-title">Mestres da Navalha</h2>
             <div class="w-16 h-1 gold-gradient mx-auto rounded-full mb-6"></div>
-            <p class="text-on-surface-variant max-w-2xl mx-auto font-light">Profissionais altamente qualificados, especialistas em visagismo e no ritual clássico de barbearia.</p>
+            <p class="text-on-surface-variant max-w-2xl mx-auto font-light" id="team-section-subtitle">Profissionais altamente qualificados, especialistas em visagismo e no ritual clássico de barbearia.</p>
         </div>
         
         <div id="team-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 justify-center">
@@ -1013,13 +1013,23 @@
                     
                     if (teamItems.length > 0) {
                         teamSection.classList.remove('hidden');
+                        
+                        // Atualizar textos da seção dinamicamente
+                        const teamSecConf = config.team_section || {};
+                        const sectionTitle = teamSecConf.title || "Mestres da Navalha";
+                        const sectionSubtitle = teamSecConf.subtitle || "Profissionais altamente qualificados, especialistas em visagismo e no ritual clássico de barbearia.";
+                        document.getElementById('team-section-title').innerText = sectionTitle;
+                        document.getElementById('team-section-subtitle').innerText = sectionSubtitle;
+                        
                         const whatsappNum = config.general.whatsapp ? config.general.whatsapp.replace(/\D/g, '') : "5511999999999";
+                        const waMsgTemplate = teamSecConf.wa_message_template || "Olá! Gostaria de agendar um horário com o barbeiro {nome}.";
                         
                         teamItems.forEach(barber => {
                             const imgSrc = getImgUrl(barber.img, barber.img_mobile);
                             if (!imgSrc || imgSrc.trim() === '') return;
                             
-                            const text = `Olá! Gostaria de agendar um horário com o barbeiro ${barber.title}.`;
+                            // Substituição case-insensitive de {nome} pelo nome do barbeiro
+                            const text = waMsgTemplate.replace(/{nome}/gi, barber.title);
                             const waUrl = `https://wa.me/${whatsappNum}?text=${encodeURIComponent(text)}`;
                             
                             const barberHTML = `

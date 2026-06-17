@@ -77,7 +77,9 @@ A galeria possui controle dinâmico e flexível que permite ao administrador adi
 * **Destaque Visual de Equipe (Mestres da Navalha):**
   * A categoria `'equipe'` permite o gerenciamento completo de barbeiros de forma flexível diretamente na aba Galeria do painel.
   * O sistema renderiza os barbeiros de duas maneiras integradas: como um filtro de galeria pública ("Nossa Equipe") e em uma seção dedicada exclusiva (`#team-section`) posicionada logo abaixo da galeria.
-  * Cada barbeiro é apresentado em um card premium que exibe sua foto, nome (título), especialidade (descrição) e um botão individual "Agendar com Ele", que abre o WhatsApp pré-preenchido com o texto direcionado àquele profissional (ex: *"Olá! Gostaria de agendar um horário com o barbeiro Bruno Navalha"*).
+  * Cada barbeiro é apresentado em um card premium que exibe sua foto, nome (título), especialidade (descrição) e um botão individual "Agendar com Ele", que abre o WhatsApp pré-preenchido com o texto parametrizado no painel.
+  * **Customização Dinâmica e Template de WhatsApp:** O painel administrativo possui uma aba dedicada chamada **"Mestres da Navalha"** (`#tab-content-equipesecao`) onde o administrador pode editar o Título da Seção, o Subtítulo da Seção e a estrutura da mensagem que é enviada ao WhatsApp do estabelecimento.
+  * **Uso da Tag `{nome}`:** O template de mensagem suporta a tag `{nome}` (ex: *"Olá! Desejo agendar um horário com o profissional {nome}."*). O script do cliente substitui dinamicamente `{nome}` (case-insensitive) pelo nome do barbeiro selecionado no momento do clique.
   * A seção de equipe é reativa: caso não existam barbeiros cadastrados no array de galeria com a categoria `'equipe'`, a seção oculta-se do DOM automaticamente.
 
 * **admin.html:**

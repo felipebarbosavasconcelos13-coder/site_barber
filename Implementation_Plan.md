@@ -249,4 +249,41 @@ Adicionar a categoria de fotos "Nossa Equipe" à galeria e criar uma seção ded
 4. Rolar até a seção "Mestres da Navalha" e validar o visual premium dos cards e o funcionamento do botão de agendamento do WhatsApp com mensagem personalizada contendo o nome do barbeiro.
 5. Remover todos os barbeiros no painel, salvar, e conferir que a seção "Nossa Equipe" desapareceu da landing page de forma resiliente.
 
+---
 
+## [2026-06-17] Customização da Mensagem de WhatsApp da Equipe
+
+### Objetivo
+Criar uma aba dedicada no painel administrativo (`admin.html`) chamada **"Mestres da Navalha"** para permitir ao administrador editar o título da seção, o subtítulo, e o template da mensagem de WhatsApp enviada pelo cliente ao agendar com um profissional específico, usando suporte a tags dinâmicas como `{nome}`.
+
+### Arquivos Afetados
+* `index.html`
+* `admin.html`
+* `Implementation_Plan.md`
+* `LOG_DESENVOLVIMENTO.md`
+* `DOCUMENTACAO.md`
+
+### Mudanças Propostas
+
+#### [MODIFY] [admin.html](file:///c:/Users/felip/Desktop/N8N/Atigra/Pag%20barbearia/admin.html)
+- **HTML:** 
+  - Adicionar o botão de aba lateral "Mestres da Navalha" (`data-tab="equipesecao"`).
+  - Adicionar a div de conteúdo da aba `#tab-content-equipesecao` com inputs para Título, Subtítulo e o Template de Mensagem do WhatsApp.
+- **Lógica JavaScript:** 
+  - Atualizar `DEFAULT_CONFIG` com a propriedade `team_section` padrão.
+  - Sincronizar em `populateFormFields()` para carregar os valores do Supabase/LocalStorage.
+  - Atualizar a lógica do formulário no evento `submit` para salvar as edições de `team_section`.
+
+#### [MODIFY] [index.html](file:///c:/Users/felip/Desktop/N8N/Atigra/Pag%20barbearia/index.html)
+- **HTML:** Adicionar IDs `#team-section-title` e `#team-section-subtitle` para o título e subtítulo da seção de equipe.
+- **Lógica JavaScript:** 
+  - Ler e injetar dinamicamente o título e subtítulo da seção de equipe salvos em `config.team_section`.
+  - Ler o template da mensagem do WhatsApp, substituir a tag `{nome}` pelo nome do profissional selecionado e gerar o link correto de agendamento por WhatsApp para cada barbeiro.
+
+### Criterios de Validação
+
+#### Manual Verification
+1. Acessar o painel administrativo na aba **Mestres da Navalha**.
+2. Alterar o título, subtítulo e customizar a mensagem de WhatsApp (ex: *"Olá! Quero agendar com o profissional {nome}."*).
+3. Salvar as edições e conferir na landing page pública que o título da seção foi atualizado.
+4. Clicar no agendamento de um barbeiro e conferir se o redirecionamento contém a mensagem personalizada com o nome substituído adequadamente.

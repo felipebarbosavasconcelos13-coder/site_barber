@@ -130,6 +130,9 @@
                     <button data-tab="galeria" class="tab-btn flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-semibold tracking-wide uppercase transition-colors text-left text-on-surface-variant hover:bg-surface-container-high hover:text-primary">
                         <span class="material-symbols-outlined text-lg">photo_library</span> Galeria
                     </button>
+                    <button data-tab="equipesecao" class="tab-btn flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-semibold tracking-wide uppercase transition-colors text-left text-on-surface-variant hover:bg-surface-container-high hover:text-primary">
+                        <span class="material-symbols-outlined text-lg">badge</span> Mestres da Navalha
+                    </button>
                     <button data-tab="localizacao" class="tab-btn flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-semibold tracking-wide uppercase transition-colors text-left text-on-surface-variant hover:bg-surface-container-high hover:text-primary">
                         <span class="material-symbols-outlined text-lg">map</span> Localização
                     </button>
@@ -570,6 +573,38 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- ABA: MESTRES DA NAVALHA (EQUIPE) -->
+                <div id="tab-content-equipesecao" class="tab-content hidden flex flex-col gap-6">
+                    <p class="text-xs text-on-surface-variant font-light">Configure os textos da seção da equipe de barbeiros ("Mestres da Navalha") no site e o template de mensagem que o cliente envia no WhatsApp ao agendar com um profissional.</p>
+                    
+                    <div class="bg-[#1a1919] p-5 rounded-xl border border-outline-variant/15 flex flex-col gap-4">
+                        <span class="text-xs font-bold uppercase tracking-wider text-primary flex items-center gap-2">
+                            <span class="material-symbols-outlined text-base">badge</span> Textos da Seção de Equipe
+                        </span>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                            <div class="flex flex-col gap-2">
+                                <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Título Principal da Seção</label>
+                                <input type="text" id="eq-section-title" class="w-full px-3 py-2 text-xs rounded-lg" placeholder="Mestres da Navalha">
+                            </div>
+                            <div class="flex flex-col gap-2">
+                                <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Subtítulo da Seção</label>
+                                <input type="text" id="eq-section-subtitle" class="w-full px-3 py-2 text-xs rounded-lg" placeholder="Profissionais altamente qualificados, especialistas em visagismo e no ritual clássico de barbearia.">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-[#1a1919] p-5 rounded-xl border border-outline-variant/15 flex flex-col gap-4">
+                        <span class="text-xs font-bold uppercase tracking-wider text-primary flex items-center gap-2">
+                            <span class="material-symbols-outlined text-base">chat</span> Mensagem do WhatsApp
+                        </span>
+                        <div class="flex flex-col gap-2">
+                            <label class="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">Template de Mensagem de Agendamento</label>
+                            <textarea id="eq-wa-message-template" rows="3" class="w-full px-3 py-2 text-xs rounded-lg" placeholder="Olá! Gostaria de agendar um horário com o barbeiro {nome}."></textarea>
+                            <span class="text-[10px] text-on-surface-variant font-light">Use a tag **{nome}** para injetar dinamicamente o nome do barbeiro na mensagem final enviada pelo cliente.</span>
+                        </div>
+                    </div>
+                </div>
                 
                 <!-- ABA: LOCALIZACAO -->
                 <div id="tab-content-localizacao" class="tab-content hidden flex flex-col gap-5">
@@ -794,6 +829,11 @@
             loc_directions: "Como Chegar",
             loc_reception: "Falar com Recepção",
             cta_footer: "Agendar Agora via WhatsApp"
+          },
+          team_section: {
+            title: "Mestres da Navalha",
+            subtitle: "Profissionais altamente qualificados, especialistas em visagismo e no ritual clássico de barbearia.",
+            wa_message_template: "Olá! Gostaria de agendar um horário com o barbeiro {nome}."
           }
         };
 
@@ -1330,6 +1370,12 @@
                 document.getElementById('b-loc-reception').value = DEFAULT_CONFIG.buttons.loc_reception;
                 document.getElementById('b-cta-footer').value = DEFAULT_CONFIG.buttons.cta_footer;
             }
+
+            // Equipe (Mestres da Navalha)
+            const teamSec = data.team_section || DEFAULT_CONFIG.team_section;
+            document.getElementById('eq-section-title').value = teamSec.title || DEFAULT_CONFIG.team_section.title;
+            document.getElementById('eq-section-subtitle').value = teamSec.subtitle || DEFAULT_CONFIG.team_section.subtitle;
+            document.getElementById('eq-wa-message-template').value = teamSec.wa_message_template || DEFAULT_CONFIG.team_section.wa_message_template;
         }
 
         // CARREGAR E PREENCHER CONFIGURAÇÕES ATUAIS (HÍBRIDO: LOCAL + NUVEM)
@@ -1450,6 +1496,11 @@
                     loc_directions: document.getElementById('b-loc-directions').value,
                     loc_reception: document.getElementById('b-loc-reception').value,
                     cta_footer: document.getElementById('b-cta-footer').value
+                },
+                team_section: {
+                    title: document.getElementById('eq-section-title').value,
+                    subtitle: document.getElementById('eq-section-subtitle').value,
+                    wa_message_template: document.getElementById('eq-wa-message-template').value
                 }
             };
             

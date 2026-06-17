@@ -690,3 +690,32 @@ Tornar o "Ambiente Externo" uma categoria independente na galeria, permitindo ao
 * Validada a persistência e visualização correta do bloco na tela de administração.
 * Confirmada a exibição dinâmica de fotos no filtro de Ambiente Externo do site principal.
 
+## [2026-06-17] - Customização da Mensagem de WhatsApp da Equipe (Mestres da Navalha)
+
+### Objetivo
+Criar uma aba dedicada no painel administrativo (`admin.html`) chamada **"Mestres da Navalha"** para permitir ao proprietário editar o título da seção, o subtítulo, e o template da mensagem de WhatsApp enviada pelo cliente ao agendar com um profissional específico, usando suporte a tags dinâmicas como `{nome}`.
+
+### Alterações Realizadas
+
+1. **Painel Administrativo (`admin.html`):**
+   - **Botão de Aba:** Adicionado o botão lateral com ícone e texto "Mestres da Navalha" (`data-tab="equipesecao"`).
+   - **Contêiner HTML:** Criada a seção `#tab-content-equipesecao` com campos de texto para Título da Seção, Subtítulo da Seção e Área de Texto para o Template da Mensagem de WhatsApp.
+   - **Lógica e Persistência:**
+     - Adicionado o objeto padrão `team_section` nas configurações padrão (`DEFAULT_CONFIG`).
+     - Sincronização dos campos em `populateFormFields()` para carregar as strings configuradas.
+     - Atualização do formulário no evento `submit` para coletar os dados e salvar no banco de dados Supabase e no LocalStorage.
+
+2. **Landing Page Pública (`index.html`):**
+   - **HTML Dinâmico:** Adicionados IDs `#team-section-title` e `#team-section-subtitle` para o título e o subtítulo da seção da equipe no layout.
+   - **Injeção Dinâmica:** Ajustado o método de aplicação das configurações (`applyConfig`) para carregar o título e subtítulo dinâmicos da equipe e renderizá-los dinamicamente.
+   - **Template de WhatsApp:** Implementada a extração da mensagem `wa_message_template` configurada no painel e substituição dinâmica da tag `{nome}` (usando regex case-insensitive) pelo nome do respectivo barbeiro no momento de gerar o link de agendamento por WhatsApp de cada profissional.
+
+3. **Documentação e Planejamento:**
+   - Atualizado o [DOCUMENTACAO.md](file:///c:/Users/felip/Desktop/N8N/Atigra/Pag%20barbearia/DOCUMENTACAO.md) detalhando as novas mecânicas de substituição dinámica de tags no WhatsApp.
+   - Atualizado o [Implementation_Plan.md](file:///c:/Users/felip/Desktop/N8N/Atigra/Pag%20barbearia/Implementation_Plan.md) com os detalhes do escopo implementado.
+
+### Verificação
+* Validada a renderização da nova aba no painel e o salvamento em LocalStorage e envio do JSON de configuração na API.
+* Confirmada a substituição da tag `{nome}` pelo nome do barbeiro no link do WhatsApp gerado na landing page.
+
+
