@@ -287,3 +287,32 @@ Criar uma aba dedicada no painel administrativo (`admin.html`) chamada **"Mestre
 2. Alterar o título, subtítulo e customizar a mensagem de WhatsApp (ex: *"Olá! Quero agendar com o profissional {nome}."*).
 3. Salvar as edições e conferir na landing page pública que o título da seção foi atualizado.
 4. Clicar no agendamento de um barbeiro e conferir se o redirecionamento contém a mensagem personalizada com o nome substituído adequadamente.
+
+---
+
+## [2026-06-17] Correção do Disparo de Webhook por Delegação de Eventos
+
+### Objetivo
+Corrigir a falha no disparo de webhook de rastreamento do WhatsApp nos botões que são gerados ou atualizados dinamicamente no DOM (como os botões da equipe "Mestres da Navalha" e outros re-renderizados após o carregamento inicial da página), aplicando o padrão de delegação de eventos (Event Delegation) no `document`.
+
+### Arquivos Afetados
+* `index.html`
+* `Implementation_Plan.md`
+* `LOG_DESENVOLVIMENTO.md`
+
+### Mudanças Propostas
+
+#### [MODIFY] [index.html](file:///c:/Users/felip/Desktop/N8N/Atigra/Pag%20barbearia/index.html)
+- **Lógica JavaScript:**
+  - Substituir o anexo de event listeners estáticos em `window.addEventListener('DOMContentLoaded')` por uma escuta de cliques delegada em `document.addEventListener('click')` para elementos que correspondam ou estejam dentro da classe `.wa-link`.
+  - Capturar o clique em qualquer link do WhatsApp mesmo que tenha sido injetado assincronamente (como os botões da equipe).
+  - Adicionar suporte específico para a seção de equipe (`#team-section`), identificando quando o clique ocorreu no botão "Agendar com Ele" e extraindo o nome do barbeiro no card para enviar como `service_name` no payload do webhook (ex: `"Agendamento com o profissional: Bruno Navalha"`).
+
+### Criterios de Validação
+
+#### Manual Verification
+1. Configurar um webhook de teste nas integrações do painel administrativo.
+2. Abrir a landing page (`index.html`) e habilitar a ferramenta de desenvolvedor do navegador na aba de rede (Network).
+3. Clicar em botões estáticos de WhatsApp (como "Reservar Experiência" no cabeçalho) e verificar se o disparo assíncrono do webhook (POST) é enviado no console/rede.
+4. Clicar no botão "Agendar com Ele" de um barbeiro específico e verificar se a requisição de webhook também é disparada com sucesso e se o payload contém o campo `service_name` customizado com o nome do barbeiro correspondente.
+

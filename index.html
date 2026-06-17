@@ -1313,56 +1313,64 @@
                 if (config.integrations && config.integrations.webhook_url && config.integrations.webhook_url.trim() !== '') {
                     const webhookUrl = config.integrations.webhook_url.trim();
                     
-                    window.addEventListener('DOMContentLoaded', () => {
-                        const waLinks = document.querySelectorAll('.wa-link');
-                        waLinks.forEach(link => {
-                            link.addEventListener('click', function(e) {
-                                let serviceName = "Agendamento Geral";
-                                let price = "0";
-                                
-                                // Detectar se o clique veio de um botão de serviço com ID específico
-                                const idAttr = link.getAttribute('id');
-                                if (idAttr && idAttr.startsWith('serv-')) {
-                                    const index = idAttr.split('-')[1]; // Ex: serv-0-btn -> 0
-                                    if (config.services && config.services[index]) {
-                                        serviceName = config.services[index].name;
-                                        price = config.services[index].price;
-                                    }
-                                } else if (link.closest('#services')) {
-                                    // Caso especial de fallback por proximidade de container
-                                    const card = link.closest('.group');
-                                    if (card) {
-                                        const nameEl = card.querySelector('h3');
-                                        const priceEl = card.querySelector('span');
-                                        if (nameEl) serviceName = nameEl.innerText.trim();
-                                        if (priceEl) price = priceEl.innerText.replace('R$', '').trim();
-                                    }
+                    // Escuta de cliques por Delegação de Eventos (Event Delegation) no document para elementos .wa-link
+                    document.addEventListener('click', function(e) {
+                        const link = e.target.closest('.wa-link');
+                        if (!link) return;
+                        
+                        let serviceName = "Agendamento Geral";
+                        let price = "0";
+                        
+                        // Detectar se o clique veio de um botão de serviço com ID específico
+                        const idAttr = link.getAttribute('id');
+                        if (idAttr && idAttr.startsWith('serv-')) {
+                            const index = idAttr.split('-')[1]; // Ex: serv-0-btn -> 0
+                            if (config.services && config.services[index]) {
+                                serviceName = config.services[index].name;
+                                price = config.services[index].price;
+                            }
+                        } else if (link.closest('#services')) {
+                            // Caso especial de fallback por proximidade de container
+                            const card = link.closest('.group');
+                            if (card) {
+                                const nameEl = card.querySelector('h3');
+                                const priceEl = card.querySelector('span');
+                                if (nameEl) serviceName = nameEl.innerText.trim();
+                                if (priceEl) price = priceEl.innerText.replace('R$', '').trim();
+                            }
+                        } else if (link.closest('#team-section')) {
+                            // Detectar se o clique veio do botão de agendamento de um barbeiro da equipe
+                            const card = link.closest('.group');
+                            if (card) {
+                                const nameEl = card.querySelector('h3');
+                                if (nameEl) {
+                                    serviceName = `Agendamento com o profissional: ${nameEl.innerText.trim()}`;
                                 }
-                                
-                                // Recuperar UTMs e IDs de anúncio salvos no sessionStorage
-                                const trackingData = JSON.parse(sessionStorage.getItem('elegance_barber_tracking') || '{}');
-                                
-                                const payload = {
-                                    event: "click_whatsapp",
-                                    timestamp: new Date().toISOString(),
-                                    barber_name: (config.general && config.general.name) ? config.general.name : "Barber Premium",
-                                    service_name: serviceName,
-                                    price: price,
-                                    tracking: trackingData
-                                };
-                                
-                                // Envia a requisição assíncrona POST sem bloquear a navegação (no-cors)
-                                fetch(webhookUrl, {
-                                    method: 'POST',
-                                    mode: 'no-cors',
-                                    headers: {
-                                        'Content-Type': 'application/json'
-                                    },
-                                    body: JSON.stringify(payload)
-                                }).catch(err => {
-                                    console.warn("Erro ao notificar webhook:", err);
-                                });
-                            });
+                            }
+                        }
+                        
+                        // Recuperar UTMs e IDs de anúncio salvos no sessionStorage
+                        const trackingData = JSON.parse(sessionStorage.getItem('elegance_barber_tracking') || '{}');
+                        
+                        const payload = {
+                            event: "click_whatsapp",
+                            timestamp: new Date().toISOString(),
+                            barber_name: (config.general && config.general.name) ? config.general.name : "Barber Premium",
+                            service_name: serviceName,
+                            price: price,
+                            tracking: trackingData
+                        };
+                        
+                        // Envia a requisição assíncrona POST sem bloquear a navegação (no-cors)
+                        fetch(webhookUrl, {
+                            method: 'POST',
+                            mode: 'no-cors',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(payload)
+                        }).catch(err => {
+                            console.warn("Erro ao notificar webhook:", err);
                         });
                     });
                 }

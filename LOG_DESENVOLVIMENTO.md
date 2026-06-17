@@ -718,4 +718,23 @@ Criar uma aba dedicada no painel administrativo (`admin.html`) chamada **"Mestre
 * Validada a renderização da nova aba no painel e o salvamento em LocalStorage e envio do JSON de configuração na API.
 * Confirmada a substituição da tag `{nome}` pelo nome do barbeiro no link do WhatsApp gerado na landing page.
 
+## [2026-06-17] - Correção do Disparo de Webhook por Delegação de Eventos
+
+### Objetivo
+Corrigir o mau funcionamento do disparo do webhook de conversão do WhatsApp que falhava nos botões de agendamento de barbeiros ("Mestres da Navalha") e em outros elementos renderizados assincronamente a partir de respostas de APIs remotas.
+
+### Alterações Realizadas
+
+1. **Landing Page Pública (`index.html`):**
+   - **Delegação de Eventos (Event Delegation):** Removidos os bindings estáticos de click no evento `DOMContentLoaded` que falhavam com elementos injetados a posteriori. Em seu lugar, implementado o listener centralizado `document.addEventListener('click')` interceptando qualquer elemento filho ou ancestral que corresponda à classe `.wa-link`.
+   - **Enriquecimento do Payload:** Adicionada lógica para detectar cliques na seção de profissionais (`#team-section`). Caso o link clicado pertença a essa seção, o script extrai o nome do respectivo profissional do card (`h3`) e injeta no campo `service_name` do payload enviado para o webhook (ex: `"Agendamento com o profissional: Bruno Navalha"`), permitindo rastrear o profissional escolhido no n8n/CRM.
+
+2. **Planejamento:**
+   - Atualizado o arquivo [Implementation_Plan.md](file:///c:/Users/felip/Desktop/N8N/Atigra/Pag%20barbearia/Implementation_Plan.md) com o escopo de delegação de eventos do webhook.
+
+### Verificação
+* Validada a persistência da escuta de cliques após recarregamento assíncrono das configurações remotas.
+* Disparo do POST de webhook confirmado para todos os botões que carregam a classe `.wa-link` (estáticos e dinâmicos de equipe), incluindo metadados do barbeiro selecionado.
+
+
 
