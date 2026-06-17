@@ -2,6 +2,29 @@
 
 Este arquivo registra detalhadamente todas as alterações, decisões de design e etapas de implementação efetuadas no projeto da página de Barbearia.
 
+## [2026-06-17] - Adição do Bloco de Equipe (Barbeiros)
+
+### Alterações Realizadas
+1. **Nova Categoria na Galeria Dinâmica do Painel Administrativo (`admin.html`):**
+   - Adicionado o contêiner dinâmico `#admin-gallery-equipe` na aba Galeria para gerenciar os barbeiros de forma flexível.
+   - Atualizada a lógica da função `renderAdminGallery()` para renderizar itens de categoria `'equipe'`.
+   - Adicionada a equipe de barbeiros padrão (`Bruno Navalha` e `Lucas Fade`) no array `gallery` do `DEFAULT_CONFIG` para novos cadastros ou resets de fábrica.
+2. **Nova Aba de Filtro "Nossa Equipe" na Landing Page (`index.html`):**
+   - Incluído o botão de filtro "Nossa Equipe" nas abas de filtros da Galeria para exibir as fotos dos barbeiros integradas ao grid.
+3. **Seção Premium de Equipe Dedicada ("Mestres da Navalha") no `index.html`:**
+   - Criada a seção `<section id="team-section">` logo abaixo da Galeria pública com layout em CSS Grid responsivo de alta qualidade.
+   - Desenvolvida a lógica de renderização dinâmica no injetor JS (`applyConfig`) que consome o array `config.gallery`, filtrando itens com `category === 'equipe'` e construindo cards elegantes que expõem fotos, nomes, especialidades e botões individuais de agendamento por WhatsApp.
+   - Integrado o agendamento individualizado no WhatsApp: cada card de barbeiro possui um link exclusivo que inicia a conversa contendo o nome daquele profissional (ex: *"Olá! Gostaria de agendar um horário com o barbeiro Bruno Navalha"*).
+   - Implementada resiliência visual: se nenhum barbeiro estiver cadastrado na categoria `'equipe'`, a seção de equipe oculta-se automaticamente (`hidden`) para manter o design limpo.
+4. **Atualizações de Documentação e Metadados:**
+   - Atualizado o arquivo `DOCUMENTACAO.md` detalhando o novo componente e a lógica reativa de equipe.
+   - Registrado o planejamento e progresso nos planos de implementação físico e de artefatos.
+
+### Impacto e Criterios de Validação
+- O sistema mantém 100% de retrocompatibilidade com bancos antigos de Supabase/LocalStorage graças ao modelo unificado e flexível.
+- A experiência de conversão (CRO) é maximizada com CTA específico e mensagens customizadas direcionadas para cada barbeiro.
+- O layout atende às diretrizes de design visual premium ("Obsidian & Gold") e é totalmente responsivo no desktop e em dispositivos móveis.
+
 ## [2026-05-28] - Otimização Radical de Performance: Core Web Vitals para Mobile (PageSpeed 100)
 
 ### Alterações Realizadas

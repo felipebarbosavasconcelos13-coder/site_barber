@@ -210,3 +210,43 @@ Tornar o "Ambiente Externo" uma categoria independente na galeria, permitindo ao
 2. Adicionar uma imagem no bloco de Ambiente Externo, salvar, e conferir no site público que o botão de filtro "Ambiente Externo" exibe a imagem correspondente.
 3. Testar o funcionamento do Lightbox sobre a nova foto do ambiente externo.
 
+---
+
+## [2026-06-17] Adição do Bloco de Equipe (Barbeiros)
+
+### Objetivo
+Adicionar a categoria de fotos "Nossa Equipe" à galeria e criar uma seção dedicada "Nossa Equipe" (Mestres da Navalha) na landing page pública (`index.html`), permitindo ao administrador gerenciar a equipe de barbeiros (adicionar/excluir fotos, nomes e especialidades) através da aba Galeria no painel administrativo (`admin.html`).
+
+### Arquivos Afetados
+* `index.html`
+* `admin.html`
+* `Implementation_Plan.md`
+* `LOG_DESENVOLVIMENTO.md`
+* `DOCUMENTACAO.md`
+
+### Mudanças Propostas
+
+#### [MODIFY] [admin.html](file:///c:/Users/felip/Desktop/N8N/Atigra/Pag%20barbearia/admin.html)
+- **HTML:** Adicionar o bloco dinâmico `#admin-gallery-equipe` na aba Galeria do painel administrativo.
+- **Lógica JavaScript:** 
+  - Atualizar a função `renderAdminGallery()` para gerenciar e renderizar itens sob a categoria `'equipe'`.
+  - Adicionar exemplos de barbeiros no `DEFAULT_CONFIG` inicial.
+
+#### [MODIFY] [index.html](file:///c:/Users/felip/Desktop/N8N/Atigra/Pag%20barbearia/index.html)
+- **HTML:** 
+  - Adicionar o botão de filtro "Nossa Equipe" na seção da Galeria.
+  - Criar a nova seção `<section id="team-section">` logo abaixo da galeria com o grid de cards dos barbeiros.
+- **Lógica JavaScript:**
+  - Atualizar `applyConfig()` para popular dinamicamente a seção de equipe usando dados de `config.gallery` e gerar links personalizados de agendamento por WhatsApp para cada barbeiro.
+  - Ocultar automaticamente a seção de equipe caso não existam barbeiros cadastrados.
+
+### Criterios de Validação
+
+#### Manual Verification
+1. Abrir o painel administrativo na aba Galeria e verificar a nova seção "Nossa Equipe (Barbeiros)".
+2. Adicionar fotos de barbeiros, definir nome (título) e especialidade (descrição) e salvar as alterações.
+3. Abrir o site principal (`index.html`) e validar que o filtro "Nossa Equipe" exibe as fotos corretas.
+4. Rolar até a seção "Mestres da Navalha" e validar o visual premium dos cards e o funcionamento do botão de agendamento do WhatsApp com mensagem personalizada contendo o nome do barbeiro.
+5. Remover todos os barbeiros no painel, salvar, e conferir que a seção "Nossa Equipe" desapareceu da landing page de forma resiliente.
+
+

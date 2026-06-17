@@ -68,14 +68,20 @@ No painel de controle (`admin.html`), ao salvar as alterações:
 ## 4. Funcionalidades e Código Detalhado
 
 ### 4.1. Galeria de Imagens Dinâmica e Editável (Adicionar & Excluir Fotos)
-A galeria possui controle dinâmico e flexível que permite ao administrador adicionar novas fotos ou remover fotos existentes em qualquer categoria (Cortes & Serviços, Ambiente Interno, Ambiente Externo e Nossos Clientes).
+A galeria possui controle dinâmico e flexível que permite ao administrador adicionar novas fotos ou remover fotos existentes em qualquer categoria (Cortes & Serviços, Ambiente Interno, Ambiente Externo, Nossos Clientes e Nossa Equipe).
 
 * **Esquema de Dados Unificado:**
   * Toda a galeria é armazenada sob a chave `gallery` como um único array de objetos com a seguinte estrutura: `gallery: [{ id, category, img, img_mobile, title, desc }]`.
-  * Um migrador automático (`migrateGalleryFormat()`) reconstrói e unifica automaticamente as configurações antigas com múltiplos arrays para o novo formato de objetos on-the-fly, mantendo a compatibilidade total e evitando perdas de dados.
+  * Um migrador automático (`migrateGalleryFormat()`) reconstrói e unifica automaticamente as configurações antigas com múltiplos arrays para o novo formato de objetos on-the-fly, mantendo a total compatibilidade e evitando perdas de dados.
+
+* **Destaque Visual de Equipe (Mestres da Navalha):**
+  * A categoria `'equipe'` permite o gerenciamento completo de barbeiros de forma flexível diretamente na aba Galeria do painel.
+  * O sistema renderiza os barbeiros de duas maneiras integradas: como um filtro de galeria pública ("Nossa Equipe") e em uma seção dedicada exclusiva (`#team-section`) posicionada logo abaixo da galeria.
+  * Cada barbeiro é apresentado em um card premium que exibe sua foto, nome (título), especialidade (descrição) e um botão individual "Agendar com Ele", que abre o WhatsApp pré-preenchido com o texto direcionado àquele profissional (ex: *"Olá! Gostaria de agendar um horário com o barbeiro Bruno Navalha"*).
+  * A seção de equipe é reativa: caso não existam barbeiros cadastrados no array de galeria com a categoria `'equipe'`, a seção oculta-se do DOM automaticamente.
 
 * **admin.html:**
-  * Exibe contêineres vazios que são populados dinamicamente via `renderAdminGallery()` baseado na lista de fotos em `currentGalleryData`.
+  * Exibe contêineres vazios que são populados dinamicamente via `renderAdminGallery()` baseado na lista de fotos em `currentGalleryData`, incluindo o bloco para a categoria `'equipe'`.
   * Cada imagem possui controle individual para Headline, Sub-headline, upload de imagem Desktop e upload opcional para Mobile.
   * A compressão e redimensionamento client-side via HTML5 Canvas são mantidos para reduzir o consumo de banco e tráfego.
   * Botões dedicados "Adicionar Nova Imagem" e "Excluir" emitem comandos de re-renderização em tempo real e consolidação de dados ao salvar.

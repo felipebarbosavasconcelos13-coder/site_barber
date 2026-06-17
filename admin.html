@@ -556,6 +556,19 @@
                             <!-- Gerado Dinamicamente -->
                         </div>
                     </div>
+
+                    <!-- Categoria: Nossa Equipe -->
+                    <div class="bg-[#1a1919] p-5 rounded-xl border border-outline-variant/15 flex flex-col gap-4">
+                        <div class="flex justify-between items-center border-b border-outline-variant/10 pb-3">
+                            <span class="text-xs font-bold uppercase tracking-wider text-primary">Nossa Equipe (Barbeiros)</span>
+                            <button type="button" onclick="addGalleryItem('equipe')" class="bg-primary-container/10 hover:bg-primary-container/20 border border-primary-container/30 text-primary-container px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase transition-all flex items-center gap-1">
+                                <span class="material-symbols-outlined text-sm">add</span> Adicionar Barbeiro
+                            </button>
+                        </div>
+                        <div id="admin-gallery-equipe" class="flex flex-col gap-6">
+                            <!-- Gerado Dinamicamente -->
+                        </div>
+                    </div>
                 </div>
                 
                 <!-- ABA: LOCALIZACAO -->
@@ -752,7 +765,9 @@
             { id: "interno-1", category: "interno", img: "assets/images/interno2.webp", img_mobile: "", title: "Bar Gourmet", desc: "Cafés e destilados selecionados para nossos convidados." },
             { id: "externo-0", category: "interno", img: "assets/images/externo.webp", img_mobile: "", title: "Nossa Fachada", desc: "Presença majestosa com arquitetura moderna e luxuosa." },
             { id: "clientes-0", category: "clientes", img: "assets/images/cliente1.webp", img_mobile: "", title: "Estilo Lifestyle", desc: "Visual esculpido de acordo com a personalidade do cliente." },
-            { id: "clientes-1", category: "clientes", img: "assets/images/cliente2.webp", img_mobile: "", title: "Clube Barber", desc: "O ponto de encontro de grandes homens de negócios." }
+            { id: "clientes-1", category: "clientes", img: "assets/images/cliente2.webp", img_mobile: "", title: "Clube Barber", desc: "O ponto de encontro de grandes homens de negócios." },
+            { id: "equipe-0", category: "equipe", img: "assets/images/barbeiro1.webp", img_mobile: "", title: "Bruno Navalha", desc: "Mestre em Cortes Clássicos e Visagismo" },
+            { id: "equipe-1", category: "equipe", img: "assets/images/barbeiro2.webp", img_mobile: "", title: "Lucas Fade", desc: "Especialista em Degradê e Design de Barba" }
           ],
           location: {
             title: "Sofisticação no Coração de São Paulo",
@@ -1034,17 +1049,19 @@
                 cortes: document.getElementById('admin-gallery-cortes'),
                 interno: document.getElementById('admin-gallery-interno'),
                 externo: document.getElementById('admin-gallery-externo'),
-                clientes: document.getElementById('admin-gallery-clientes')
+                clientes: document.getElementById('admin-gallery-clientes'),
+                equipe: document.getElementById('admin-gallery-equipe')
             };
 
-            if (!containers.cortes || !containers.interno || !containers.externo || !containers.clientes) return;
+            if (!containers.cortes || !containers.interno || !containers.externo || !containers.clientes || !containers.equipe) return;
 
             containers.cortes.innerHTML = '';
             containers.interno.innerHTML = '';
             containers.externo.innerHTML = '';
             containers.clientes.innerHTML = '';
+            containers.equipe.innerHTML = '';
 
-            const categoryCounters = { cortes: 0, interno: 0, externo: 0, clientes: 0 };
+            const categoryCounters = { cortes: 0, interno: 0, externo: 0, clientes: 0, equipe: 0 };
 
             currentGalleryData.forEach((item) => {
                 const cat = item.category || 'cortes';
