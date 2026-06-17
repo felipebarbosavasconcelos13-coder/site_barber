@@ -316,3 +316,33 @@ Corrigir a falha no disparo de webhook de rastreamento do WhatsApp nos botões q
 3. Clicar em botões estáticos de WhatsApp (como "Reservar Experiência" no cabeçalho) e verificar se o disparo assíncrono do webhook (POST) é enviado no console/rede.
 4. Clicar no botão "Agendar com Ele" de um barbeiro específico e verificar se a requisição de webhook também é disparada com sucesso e se o payload contém o campo `service_name` customizado com o nome do barbeiro correspondente.
 
+---
+
+## [2026-06-17] Visualização de Miniatura de Imagem na Galeria do Painel Administrativo
+
+### Objetivo
+Implementar áreas de visualização (previews/miniaturas) em tempo real nos cards de imagens da galeria no painel administrativo (`admin.html`), exibindo previews individuais das fotos Desktop e Mobile, seja ao digitar um link ou ao realizar o upload do arquivo local.
+
+### Arquivos Afetados
+* `admin.html`
+* `Implementation_Plan.md`
+* `LOG_DESENVOLVIMENTO.md`
+
+### Mudanças Propostas
+
+#### [MODIFY] [admin.html](file:///c:/Users/felip/Desktop/N8N/Atigra/Pag%20barbearia/admin.html)
+- **Interface Gráfica (`renderAdminGallery`):**
+  - Ajustar o contêiner `cardHTML` para adotar um layout flexível. Inserir uma coluna à esquerda com duas caixas de preview (80x80px) lado a lado (uma para imagem Desktop e outra para Mobile), exibindo placeholders gráficos caso não haja foto definida.
+- **Mecanismo de Reatividade JavaScript:**
+  - Adicionar atualização visual instantânea ao digitar caminhos/URLs nos inputs de imagem.
+  - Atualizar os previews de miniatura no encerramento do processo de upload de arquivo via `FileReader` (quando a imagem é convertida em string Base64).
+
+### Criterios de Validação
+
+#### Manual Verification
+1. Acessar o painel administrativo (`admin.html`) e rolar até as categorias da Galeria.
+2. Cada imagem pré-carregada deve exibir a miniatura correspondente nos formatos desktop e mobile.
+3. Digitar um endereço de imagem ou fazer upload de uma nova imagem local e verificar se o preview exibe a nova imagem reativamente no painel sem a necessidade de recarregar a página ou salvar previamente.
+4. Salvar as edições e conferir a manutenção dos previews após recarregar a tela do painel.
+
+

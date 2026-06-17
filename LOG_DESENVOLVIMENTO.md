@@ -736,5 +736,27 @@ Corrigir o mau funcionamento do disparo do webhook de conversão do WhatsApp que
 * Validada a persistência da escuta de cliques após recarregamento assíncrono das configurações remotas.
 * Disparo do POST de webhook confirmado para todos os botões que carregam a classe `.wa-link` (estáticos e dinâmicos de equipe), incluindo metadados do barbeiro selecionado.
 
+## [2026-06-17] - Visualização de Miniatura de Imagem na Galeria do Painel Administrativo
+
+### Objetivo
+Atender ao pedido do usuário de introduzir visualizações gráficas (miniaturas) nos cards das imagens do painel de administração (`admin.html`), facilitando a identificação visual rápida de cada imagem cadastrada.
+
+### Alterações Realizadas
+
+1. **Painel Administrativo (`admin.html`):**
+   - **Interface Gráfica (`renderAdminGallery`):** Reestruturado o layout HTML do card (`cardHTML`) substituindo a estrutura antiga por um design flexível de duas colunas. A coluna esquerda abriga duas caixas quadradas (`80x80px`) para os previews Desktop e Mobile, estilizadas com bordas arredondadas e fundo de alto contraste.
+   - **Controles de Fallback:** placeholders visuais são exibidos automaticamente via ícone `image` quando os inputs estão vazios.
+   - **Reatividade JavaScript:**
+     - Vinculados listeners nos inputs `.g-item-img` e `.g-item-img-mobile` atualizando dinamicamente a propriedade `.src` dos elementos de preview na digitação ou colagem de caminhos.
+     - Ajustado o fluxo de upload de arquivos (`FileReader`) para forçar a atualização imediata da propriedade `.src` das miniaturas com a string Base64 assim que o processamento do canvas é encerrado.
+
+2. **Planejamento:**
+   - Atualizado o [Implementation_Plan.md](file:///c:/Users/felip/Desktop/N8N/Atigra/Pag%20barbearia/Implementation_Plan.md) com a seção de previews na galeria.
+
+### Verificação
+* Validado o carregamento das miniaturas após o preenchimento de URLs.
+* Confirmado que o upload de arquivo local altera instantaneamente a imagem de preview correspondente no card sem requerer salvamento prévio.
+
+
 
 
