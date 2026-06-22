@@ -1395,8 +1395,48 @@
                 return match ? decodeURIComponent(match[2]) : '';
             };
 
+            const toNull = (value) => {
+                return value === undefined || value === null || value === '' ? null : value;
+            };
+
+            const getButtonText = (link) => {
+                const clone = link.cloneNode(true);
+                clone.querySelectorAll('.material-symbols-outlined').forEach(icon => icon.remove());
+                return clone.innerText.trim().replace(/\s+/g, ' ');
+            };
+
+            const groupTrackingData = (trackingData) => {
+                return {
+                    utm: {
+                        source: toNull(trackingData.utm_source),
+                        medium: toNull(trackingData.utm_medium),
+                        campaign: toNull(trackingData.utm_campaign),
+                        term: toNull(trackingData.utm_term),
+                        content: toNull(trackingData.utm_content),
+                        id: toNull(trackingData.utm_id)
+                    },
+                    google: {
+                        gclid: toNull(trackingData.gclid),
+                        gbraid: toNull(trackingData.gbraid),
+                        wbraid: toNull(trackingData.wbraid),
+                        gad_source: toNull(trackingData.gad_source)
+                    },
+                    meta: {
+                        fbclid: toNull(trackingData.fbclid),
+                        fbp: toNull(trackingData._fbp),
+                        fbc: toNull(trackingData._fbc)
+                    },
+                    other: {
+                        ttclid: toNull(trackingData.ttclid),
+                        msclkid: toNull(trackingData.msclkid)
+                    },
+                    raw: trackingData
+                };
+            };
+
             const getClickContext = (link, config) => {
                 let serviceName = "Agendamento Geral";
+                let serviceCategory = "general";
                 let price = "0";
                 let clickSection = "general";
                 let professionalName = "";
@@ -1407,10 +1447,12 @@
                     const index = idAttr.split('-')[1];
                     if (config.services && config.services[index]) {
                         serviceName = config.services[index].name;
+                        serviceCategory = "service";
                         price = config.services[index].price;
                     }
                 } else if (link.closest('#services')) {
                     clickSection = "services";
+                    serviceCategory = "service";
                     const card = link.closest('.group');
                     if (card) {
                         const nameEl = card.querySelector('h3');
@@ -1425,7 +1467,8 @@
                         const nameEl = card.querySelector('h3');
                         if (nameEl) {
                             professionalName = nameEl.innerText.trim();
-                            serviceName = `Agendamento com o profissional: ${professionalName}`;
+                            serviceName = "Agendamento com profissional";
+                            serviceCategory = "professional_booking";
                         }
                     }
                 } else if (link.closest('nav')) {
@@ -1436,20 +1479,19 @@
                     clickSection = "footer";
                 }
 
-                return { serviceName, price, clickSection, professionalName };
+                return { serviceName, serviceCategory, price, clickSection, professionalName };
             };
 
-            const sendWebhook = (webhookUrl, payload) => {
-                const body = JSON.stringify(payload);
-                const endpoint = `${webhookUrl}${webhookUrl.includes('?') ? '&' : '?'}_t=${Date.now()}`;
-
-                fetch(endpoint, {
+            const sendTrackingPayload = (payload) => {
+                fetch('/api/track-whatsapp', {
                     method: 'POST',
-                    mode: 'no-cors',
                     keepalive: true,
-                    body: body
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(payload)
                 }).catch(err => {
-                    console.warn("Erro ao notificar webhook:", err);
+                    console.warn("Erro ao notificar rastreamento de WhatsApp:", err);
                 });
             };
 
@@ -1466,31 +1508,62 @@
                 if (fbp && !trackingData._fbp) trackingData._fbp = fbp;
                 if (fbc && !trackingData._fbc) trackingData._fbc = fbc;
 
+                const cleanPrice = context.price && context.price !== "0" ? context.price : null;
+                const tracking = groupTrackingData(trackingData);
+
                 const payload = {
-                    event: "click_whatsapp",
-                    timestamp: new Date().toISOString(),
-                    barber_name: (config.general && config.general.name) ? config.general.name : "Barber Premium",
-                    service_name: context.serviceName,
-                    price: context.price,
-                    professional_name: context.professionalName,
-                    click_section: context.clickSection,
-                    button_id: link.getAttribute('id') || '',
-                    button_text: link.innerText.trim().replace(/\s+/g, ' '),
-                    whatsapp_url: link.href,
-                    page_url: window.location.href,
-                    page_path: window.location.pathname,
-                    referrer: document.referrer || '',
-                    user_agent: navigator.userAgent,
-                    tracking: trackingData
+                    event: {
+                        name: "click_whatsapp",
+                        timestamp: new Date().toISOString(),
+                        source: "website",
+                        version: "1.0"
+                    },
+                    business: {
+                        name: (config.general && config.general.name) ? config.general.name : "Barber Premium"
+                    },
+                    conversion: {
+                        type: "whatsapp_click",
+                        section: context.clickSection,
+                        service: context.serviceName,
+                        service_category: context.serviceCategory,
+                        price: cleanPrice,
+                        professional: toNull(context.professionalName)
+                    },
+                    button: {
+                        id: toNull(link.getAttribute('id')),
+                        text: getButtonText(link),
+                        whatsapp_url: link.href
+                    },
+                    page: {
+                        url: window.location.href,
+                        path: window.location.pathname,
+                        referrer: toNull(document.referrer)
+                    },
+                    tracking: tracking,
+                    visitor: {
+                        user_agent: navigator.userAgent,
+                        language: navigator.language || null,
+                        platform: navigator.platform || null,
+                        screen: {
+                            width: window.screen ? window.screen.width : null,
+                            height: window.screen ? window.screen.height : null
+                        }
+                    }
                 };
 
                 window.dataLayer = window.dataLayer || [];
-                window.dataLayer.push(payload);
+                window.dataLayer.push({
+                    event: "click_whatsapp",
+                    conversion: payload.conversion,
+                    business: payload.business,
+                    button: payload.button,
+                    page: payload.page,
+                    tracking: payload.tracking,
+                    visitor: payload.visitor,
+                    webhook_payload: payload
+                });
 
-                const webhookUrl = config.integrations && config.integrations.webhook_url ? config.integrations.webhook_url.trim() : '';
-                if (webhookUrl) {
-                    sendWebhook(webhookUrl, payload);
-                }
+                sendTrackingPayload(payload);
             });
 
             try {
