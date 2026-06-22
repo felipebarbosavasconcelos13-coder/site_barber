@@ -688,6 +688,7 @@
             function applyConfig(config) {
                 if (!config) return;
                 config = migrateGalleryFormat(config);
+                window.__eleganceBarberConfig = config;
                 try {
                 
                 // Função auxiliar para escapar caracteres HTML (Proteção contra XSS)
@@ -1268,7 +1269,10 @@
         (function() {
             try {
                 const urlParams = new URLSearchParams(window.location.search);
-                const trackingKeys = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'fbclid', 'gclid', 'ttclid', 'msclkid'];
+                const trackingKeys = [
+                    'utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'utm_id',
+                    'fbclid', 'gclid', 'gbraid', 'wbraid', 'gad_source', 'ttclid', 'msclkid'
+                ];
                 let sessionTracking = {};
                 try {
                     const stored = sessionStorage.getItem('elegance_barber_tracking');
@@ -1298,82 +1302,168 @@
                 if (hasNewParams) {
                     sessionStorage.setItem('elegance_barber_tracking', JSON.stringify(sessionTracking));
                 }
+
+                const getCookieValue = (name) => {
+                    const match = document.cookie.match(new RegExp('(^|; )' + name + '=([^;]*)'));
+                    return match ? decodeURIComponent(match[2]) : '';
+                };
+
+                const metaTracking = {
+                    _fbp: getCookieValue('_fbp'),
+                    _fbc: getCookieValue('_fbc')
+                };
+
+                Object.keys(metaTracking).forEach(key => {
+                    if (metaTracking[key] && !sessionTracking[key]) {
+                        sessionTracking[key] = metaTracking[key];
+                        hasNewParams = true;
+                    }
+                });
+
+                if (hasNewParams) {
+                    sessionStorage.setItem('elegance_barber_tracking', JSON.stringify(sessionTracking));
+                }
             } catch (e) {
                 console.error("Erro ao capturar parâmetros de rastreamento:", e);
             }
         })();
 
-        // Interceptação e Rastreamento de Conversões via Webhook (n8n / CRM) com Atribuição de Anúncios
+        // Interceptação e Rastreamento de Conversões via dataLayer e Webhook (n8n / CRM) com Atribuição de Anúncios
         (function() {
-            const configStr = localStorage.getItem('elegance_barber_config');
-            if (!configStr) return;
-            
-            try {
-                const config = JSON.parse(configStr);
-                if (config.integrations && config.integrations.webhook_url && config.integrations.webhook_url.trim() !== '') {
-                    const webhookUrl = config.integrations.webhook_url.trim();
-                    
-                    // Escuta de cliques por Delegação de Eventos (Event Delegation) no document para elementos .wa-link
-                    document.addEventListener('click', function(e) {
-                        const link = e.target.closest('.wa-link');
-                        if (!link) return;
-                        
-                        let serviceName = "Agendamento Geral";
-                        let price = "0";
-                        
-                        // Detectar se o clique veio de um botão de serviço com ID específico
-                        const idAttr = link.getAttribute('id');
-                        if (idAttr && idAttr.startsWith('serv-')) {
-                            const index = idAttr.split('-')[1]; // Ex: serv-0-btn -> 0
-                            if (config.services && config.services[index]) {
-                                serviceName = config.services[index].name;
-                                price = config.services[index].price;
-                            }
-                        } else if (link.closest('#services')) {
-                            // Caso especial de fallback por proximidade de container
-                            const card = link.closest('.group');
-                            if (card) {
-                                const nameEl = card.querySelector('h3');
-                                const priceEl = card.querySelector('span');
-                                if (nameEl) serviceName = nameEl.innerText.trim();
-                                if (priceEl) price = priceEl.innerText.replace('R$', '').trim();
-                            }
-                        } else if (link.closest('#team-section')) {
-                            // Detectar se o clique veio do botão de agendamento de um barbeiro da equipe
-                            const card = link.closest('.group');
-                            if (card) {
-                                const nameEl = card.querySelector('h3');
-                                if (nameEl) {
-                                    serviceName = `Agendamento com o profissional: ${nameEl.innerText.trim()}`;
-                                }
-                            }
-                        }
-                        
-                        // Recuperar UTMs e IDs de anúncio salvos no sessionStorage
-                        const trackingData = JSON.parse(sessionStorage.getItem('elegance_barber_tracking') || '{}');
-                        
-                        const payload = {
-                            event: "click_whatsapp",
-                            timestamp: new Date().toISOString(),
-                            barber_name: (config.general && config.general.name) ? config.general.name : "Barber Premium",
-                            service_name: serviceName,
-                            price: price,
-                            tracking: trackingData
-                        };
-                        
-                        // Envia a requisição assíncrona POST sem bloquear a navegação (no-cors)
-                        fetch(webhookUrl, {
-                            method: 'POST',
-                            mode: 'no-cors',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify(payload)
-                        }).catch(err => {
-                            console.warn("Erro ao notificar webhook:", err);
-                        });
-                    });
+            const getCurrentConfig = () => {
+                if (window.__eleganceBarberConfig) return window.__eleganceBarberConfig;
+
+                try {
+                    const configStr = localStorage.getItem('elegance_barber_config');
+                    return configStr ? JSON.parse(configStr) : {};
+                } catch (e) {
+                    console.warn("Erro ao ler configuração para rastreamento:", e);
+                    return {};
                 }
+            };
+
+            const getStoredTracking = () => {
+                try {
+                    return JSON.parse(sessionStorage.getItem('elegance_barber_tracking') || '{}');
+                } catch (e) {
+                    console.warn("Erro ao ler dados de rastreamento da sessão:", e);
+                    return {};
+                }
+            };
+
+            const getCookieValue = (name) => {
+                const match = document.cookie.match(new RegExp('(^|; )' + name + '=([^;]*)'));
+                return match ? decodeURIComponent(match[2]) : '';
+            };
+
+            const getClickContext = (link, config) => {
+                let serviceName = "Agendamento Geral";
+                let price = "0";
+                let clickSection = "general";
+                let professionalName = "";
+
+                const idAttr = link.getAttribute('id');
+                if (idAttr && idAttr.startsWith('serv-')) {
+                    clickSection = "services";
+                    const index = idAttr.split('-')[1];
+                    if (config.services && config.services[index]) {
+                        serviceName = config.services[index].name;
+                        price = config.services[index].price;
+                    }
+                } else if (link.closest('#services')) {
+                    clickSection = "services";
+                    const card = link.closest('.group');
+                    if (card) {
+                        const nameEl = card.querySelector('h3');
+                        const priceEl = card.querySelector('[id$="-price"], span');
+                        if (nameEl) serviceName = nameEl.innerText.trim();
+                        if (priceEl) price = priceEl.innerText.replace('R$', '').trim();
+                    }
+                } else if (link.closest('#team-section')) {
+                    clickSection = "team";
+                    const card = link.closest('.group');
+                    if (card) {
+                        const nameEl = card.querySelector('h3');
+                        if (nameEl) {
+                            professionalName = nameEl.innerText.trim();
+                            serviceName = `Agendamento com o profissional: ${professionalName}`;
+                        }
+                    }
+                } else if (link.closest('nav')) {
+                    clickSection = "navigation";
+                } else if (link.closest('#location')) {
+                    clickSection = "location";
+                } else if (link.closest('footer')) {
+                    clickSection = "footer";
+                }
+
+                return { serviceName, price, clickSection, professionalName };
+            };
+
+            const sendWebhook = (webhookUrl, payload) => {
+                const body = JSON.stringify(payload);
+
+                if (navigator.sendBeacon) {
+                    try {
+                        const sent = navigator.sendBeacon(webhookUrl, new Blob([body], { type: 'application/json' }));
+                        if (sent) return;
+                    } catch (e) {
+                        console.warn("Erro ao enviar webhook via sendBeacon:", e);
+                    }
+                }
+
+                fetch(webhookUrl, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    keepalive: true,
+                    body: body
+                }).catch(err => {
+                    console.warn("Erro ao notificar webhook:", err);
+                });
+            };
+
+            document.addEventListener('click', function(e) {
+                const link = e.target.closest('.wa-link');
+                if (!link) return;
+
+                const config = getCurrentConfig();
+                const context = getClickContext(link, config);
+                const trackingData = getStoredTracking();
+                const fbp = getCookieValue('_fbp');
+                const fbc = getCookieValue('_fbc');
+
+                if (fbp && !trackingData._fbp) trackingData._fbp = fbp;
+                if (fbc && !trackingData._fbc) trackingData._fbc = fbc;
+
+                const payload = {
+                    event: "click_whatsapp",
+                    timestamp: new Date().toISOString(),
+                    barber_name: (config.general && config.general.name) ? config.general.name : "Barber Premium",
+                    service_name: context.serviceName,
+                    price: context.price,
+                    professional_name: context.professionalName,
+                    click_section: context.clickSection,
+                    button_id: link.getAttribute('id') || '',
+                    button_text: link.innerText.trim().replace(/\s+/g, ' '),
+                    whatsapp_url: link.href,
+                    page_url: window.location.href,
+                    page_path: window.location.pathname,
+                    referrer: document.referrer || '',
+                    user_agent: navigator.userAgent,
+                    tracking: trackingData
+                };
+
+                window.dataLayer = window.dataLayer || [];
+                window.dataLayer.push(payload);
+
+                const webhookUrl = config.integrations && config.integrations.webhook_url ? config.integrations.webhook_url.trim() : '';
+                if (webhookUrl) {
+                    sendWebhook(webhookUrl, payload);
+                }
+            });
+
+            try {
+                window.dataLayer = window.dataLayer || [];
             } catch(e) {
                 console.error("Erro no script de monitoramento do Webhook:", e);
             }
