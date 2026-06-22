@@ -684,11 +684,50 @@
                 return configObj;
             }
 
+            function injectGoogleTagManager(config) {
+                const gtmId = config && config.integrations && config.integrations.gtm_id ? config.integrations.gtm_id.trim() : '';
+                const hasGtmScript = Array.from(document.scripts).some(script => {
+                    return script.src.includes('googletagmanager.com/gtm.js') && script.src.includes(`id=${encodeURIComponent(gtmId)}`);
+                });
+                if (!gtmId || hasGtmScript || document.querySelector(`script[data-dynamic-gtm="${gtmId}"]`)) return;
+
+                window.dataLayer = window.dataLayer || [];
+                window.dataLayer.push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+
+                const firstScript = document.getElementsByTagName('script')[0];
+                const gtmScript = document.createElement('script');
+                gtmScript.async = true;
+                gtmScript.src = `https://www.googletagmanager.com/gtm.js?id=${encodeURIComponent(gtmId)}`;
+                gtmScript.setAttribute('data-dynamic-gtm', gtmId);
+                firstScript.parentNode.insertBefore(gtmScript, firstScript);
+
+                const addNoScript = () => {
+                    if (document.querySelector(`noscript[data-dynamic-gtm="${gtmId}"]`)) return;
+                    const noscript = document.createElement('noscript');
+                    noscript.setAttribute('data-dynamic-gtm', gtmId);
+                    const iframe = document.createElement('iframe');
+                    iframe.src = `https://www.googletagmanager.com/ns.html?id=${encodeURIComponent(gtmId)}`;
+                    iframe.height = "0";
+                    iframe.width = "0";
+                    iframe.style.display = "none";
+                    iframe.style.visibility = "hidden";
+                    noscript.appendChild(iframe);
+                    document.body.insertBefore(noscript, document.body.firstChild);
+                };
+
+                if (document.body) {
+                    addNoScript();
+                } else {
+                    window.addEventListener('DOMContentLoaded', addNoScript, { once: true });
+                }
+            }
+
             // Função centralizada para injetar todas as edições no DOM de forma segura
             function applyConfig(config) {
                 if (!config) return;
                 config = migrateGalleryFormat(config);
                 window.__eleganceBarberConfig = config;
+                injectGoogleTagManager(config);
                 try {
                 
                 // Função auxiliar para escapar caracteres HTML (Proteção contra XSS)
@@ -1402,17 +1441,9 @@
 
             const sendWebhook = (webhookUrl, payload) => {
                 const body = JSON.stringify(payload);
+                const endpoint = `${webhookUrl}${webhookUrl.includes('?') ? '&' : '?'}_t=${Date.now()}`;
 
-                if (navigator.sendBeacon) {
-                    try {
-                        const sent = navigator.sendBeacon(webhookUrl, new Blob([body], { type: 'application/json' }));
-                        if (sent) return;
-                    } catch (e) {
-                        console.warn("Erro ao enviar webhook via sendBeacon:", e);
-                    }
-                }
-
-                fetch(webhookUrl, {
+                fetch(endpoint, {
                     method: 'POST',
                     mode: 'no-cors',
                     keepalive: true,
