@@ -42,6 +42,27 @@ module.exports = async (req, res) => {
         const config = configData && configData[0] && configData[0].dados ? configData[0].dados : null;
         const webhookUrl = config && config.integrations && config.integrations.webhook_url ? config.integrations.webhook_url.trim() : '';
 
+        if (payload.attendance && payload.attendance.password) {
+            const updateResponse = await fetch(`${supabaseUrl}/rest/v1/attendance_passwords?password=eq.${encodeURIComponent(payload.attendance.password)}`, {
+                method: 'PATCH',
+                headers: {
+                    apikey: supabaseKey,
+                    Authorization: `Bearer ${supabaseKey}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    status: 'tracking_received',
+                    whatsapp_message: payload.attendance.whatsapp_message || null,
+                    payload
+                })
+            });
+
+            if (!updateResponse.ok) {
+                const updateError = await updateResponse.text();
+                console.warn(`Nao foi possivel atualizar a senha de atendimento: ${updateError}`);
+            }
+        }
+
         if (!webhookUrl) {
             return res.status(200).json({ success: false, skipped: true, error: 'Webhook nao configurado.' });
         }
@@ -57,6 +78,20 @@ module.exports = async (req, res) => {
         if (!webhookResponse.ok) {
             const errorText = await webhookResponse.text();
             throw new Error(`Webhook retornou ${webhookResponse.status}: ${errorText}`);
+        }
+
+        if (payload.attendance && payload.attendance.password) {
+            await fetch(`${supabaseUrl}/rest/v1/attendance_passwords?password=eq.${encodeURIComponent(payload.attendance.password)}`, {
+                method: 'PATCH',
+                headers: {
+                    apikey: supabaseKey,
+                    Authorization: `Bearer ${supabaseKey}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    status: 'sent_to_webhook'
+                })
+            });
         }
 
         return res.status(200).json({ success: true });

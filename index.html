@@ -1405,6 +1405,46 @@
                 return clone.innerText.trim().replace(/\s+/g, ' ');
             };
 
+            const reserveAttendancePassword = async () => {
+                const response = await fetch('/api/create-attendance-password', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ source: 'website_whatsapp_click' })
+                });
+
+                const data = await response.json().catch(() => ({}));
+
+                if (!response.ok || !data.success || !data.password) {
+                    throw new Error(data.error || 'Nao foi possivel gerar a senha de atendimento.');
+                }
+
+                return data.password;
+            };
+
+            const buildWhatsappMessageWithAttendancePassword = (message, password) => {
+                const baseMessage = (message || 'Olá! Gostaria de agendar um horário.')
+                    .replace(/\s*Senha de atendimento:\s*WPP-[A-Z0-9]{6}\s*\([^)]*apague\)\s*/i, ' ')
+                    .trim()
+                    .replace(/\s+/g, ' ');
+
+                return `${baseMessage} Senha de atendimento: ${password} (Não apague)`;
+            };
+
+            const buildFinalWhatsappUrl = (link, attendancePassword) => {
+                const url = new URL(link.href, window.location.href);
+                const currentMessage = url.searchParams.get('text') || 'Olá! Gostaria de agendar um horário.';
+                const finalMessage = buildWhatsappMessageWithAttendancePassword(currentMessage, attendancePassword);
+
+                url.searchParams.set('text', finalMessage);
+
+                return {
+                    href: url.toString(),
+                    message: finalMessage
+                };
+            };
+
             const groupTrackingData = (trackingData) => {
                 return {
                     utm: {
@@ -1495,9 +1535,14 @@
                 });
             };
 
-            document.addEventListener('click', function(e) {
-                const link = e.target.closest('.wa-link');
+            document.addEventListener('click', async function(e) {
+                const link = e.target.closest('.wa-link, a[href*="wa.me"], a[href*="api.whatsapp.com"]');
                 if (!link) return;
+
+                e.preventDefault();
+
+                if (link.dataset.attendanceLoading === 'true') return;
+                link.dataset.attendanceLoading = 'true';
 
                 const config = getCurrentConfig();
                 const context = getClickContext(link, config);
@@ -1510,6 +1555,22 @@
 
                 const cleanPrice = context.price && context.price !== "0" ? context.price : null;
                 const tracking = groupTrackingData(trackingData);
+                let attendancePassword = null;
+                let finalWhatsappUrl = link.href;
+                let finalWhatsappMessage = null;
+
+                try {
+                    attendancePassword = await reserveAttendancePassword();
+                    const finalWhatsapp = buildFinalWhatsappUrl(link, attendancePassword);
+                    finalWhatsappUrl = finalWhatsapp.href;
+                    finalWhatsappMessage = finalWhatsapp.message;
+                    link.setAttribute('href', finalWhatsappUrl);
+                } catch (err) {
+                    console.error('Erro ao gerar senha de atendimento:', err);
+                    alert('Não foi possível gerar a senha de atendimento. Tente novamente em alguns segundos.');
+                    link.dataset.attendanceLoading = 'false';
+                    return;
+                }
 
                 const payload = {
                     event: {
@@ -1532,7 +1593,11 @@
                     button: {
                         id: toNull(link.getAttribute('id')),
                         text: getButtonText(link),
-                        whatsapp_url: link.href
+                        whatsapp_url: finalWhatsappUrl
+                    },
+                    attendance: {
+                        password: attendancePassword,
+                        whatsapp_message: finalWhatsappMessage
                     },
                     page: {
                         url: window.location.href,
@@ -1557,6 +1622,7 @@
                     conversion: payload.conversion,
                     business: payload.business,
                     button: payload.button,
+                    attendance: payload.attendance,
                     page: payload.page,
                     tracking: payload.tracking,
                     visitor: payload.visitor,
@@ -1564,6 +1630,7 @@
                 });
 
                 sendTrackingPayload(payload);
+                window.location.href = finalWhatsappUrl;
             });
 
             try {
